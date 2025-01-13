@@ -21,14 +21,14 @@
                         <label for="email" class="form-label">Email</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                            <input type="email" id="email" class="form-control" name="email" required placeholder="Enter your email">
+                            <input type="email" id="email" class="form-control" name="userEmail" required placeholder="Enter your email">
                         </div>
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label">Password</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                            <input type="password" id="password" class="form-control" name="password" required placeholder="Enter your password">
+                            <input type="password" id="password" class="form-control" name="userPassword" required placeholder="Enter your password">
                         </div>
                     </div>
                     <div class="mb-3 form-check">

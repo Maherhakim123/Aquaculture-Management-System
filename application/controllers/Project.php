@@ -34,7 +34,6 @@ class Project extends CI_Controller
     // Handle the form submission to create a new project
     public function add()
     {
-
         $projectID = $this->input->post('projectID');
         $projectName = $this->input->post('projectName');
         $projectLocation = $this->input->post('projectLocation');
@@ -42,6 +41,8 @@ class Project extends CI_Controller
         $endDate = $this->input->post('endDate');
         $budget = $this->input->post('budget');
         $budgetSource = $this->input->post('budgetSource');
+
+        $userID = $this->session->userdata('userID');
 
         $data = [
             'projectID' => $projectID,
@@ -51,7 +52,7 @@ class Project extends CI_Controller
             'endDate' => $endDate,
             'budget' => $budget,
             'budgetSource' => $budgetSource,
-            'leaderID' => 1
+            'userID' =>  $userID
         ];
 
         $status = $this->Project_model->add($data);

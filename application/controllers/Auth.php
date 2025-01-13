@@ -16,20 +16,20 @@ class Auth extends CI_Controller {
 	}
 
 	public function add(){
-		$leaderName = $this->input->post('leaderName');
-		$leaderEmail = $this->input->post('leaderEmail');
-		$leaderPassword = $this->input->post('leaderPassword');
-		$leaderPhoneNo = $this->input->post('leaderPhoneNo');
-		$department = $this->input->post('department');
-		$majorExpertise = $this->input->post('majorExpertise');
+		$userName = $this->input->post('userName');
+		$userEmail = $this->input->post('userEmail');
+		$userPassword = $this->input->post('userPassword');
+		$userIC = $this->input->post('userIC');
+		$userPhoneNo = $this->input->post('userPhoneNo');
+		$userRole = $this->input->post('userRole');
 
 		$data = [
-			'leaderName' => $leaderName,
-			'leaderEmail' => $leaderEmail,
-			'leaderPassword' => $leaderPassword,
-			'leaderPhoneNo' => $leaderPhoneNo,
-			'department' => $department,
-			'majorExpertise' => $majorExpertise
+			'userName' => $userName,
+			'userEmail' => $userEmail,
+			'userPassword' => $userPassword,
+			'userIC' => $userIC,
+			'userPhoneNo' => $userPhoneNo,
+			'userRole' => $userRole
 		];
 
 		$status = $this->Register_model->add($data);
@@ -38,29 +38,60 @@ class Auth extends CI_Controller {
 		}
 	}
 
+	// public function validate_login() {
+	// 	$userEmail = $this->input->post('userEmail');
+	// 	$userPassword = $this->input->post('userPassword');
+
+	// 	//Check credentials in database
+	// 	$this->load->model('Register_model');
+	// 	$user = $this->Register_model->get_user_by_email($userEmail);
+
+
+	// 	if ($user->userPassword == $userPassword) {
+	// 		// Store user session
+	// 		$this->session->set_userdata([
+	// 			'logged_in' => true,
+	// 			'user_id' => $user->id,
+	// 			'user_name' => $user->userName
+	// 		]);
+	// 		redirect('dashboard/dashboard');
+	// 	} else {
+	// 		// Redirect back with error message
+	// 		$this->session->set_flashdata('error', 'Invalid email or password');
+	// 		redirect('auth/login');
+	// 	}
+	// }
+
 	public function validate_login() {
-		$leaderEmail = $this->input->post('leaderEmail');
-		$leaderPassword = $this->input->post('leaderPassword');
-
-		//Check credentials in database
+		$userEmail = $this->input->post('userEmail');
+		$userPassword = $this->input->post('userPassword');
+	
+		// Check credentials in the database
 		$this->load->model('Register_model');
-		$user = $this->Register_model->get_user_by_email($leaderEmail);
-
-
-		if ($user->leaderPassword == $leaderPassword) {
-			// Store user session
-			$this->session->set_userdata([
+		$user = $this->Register_model->get_user_by_email($userEmail);
+	
+		// Check if the user exists and verify the password
+		if ($user && $user->userPassword == $userPassword) {
+			// Store user data in the session
+			$session_data = [
 				'logged_in' => true,
-				'user_id' => $user->id,
-				'user_name' => $user->leaderName
-			]);
+				'userID' => $user->userID,      // Assuming `userID` is the primary key in your `users` table
+				'userName' => $user->userName, // Other user details you want to store
+			];
+			$this->session->set_userdata($session_data);
+	
+			// Redirect to dashboard
 			redirect('dashboard/dashboard');
 		} else {
-			// Redirect back with error message
-			$this->session->set_flashdata('error', 'Invalid email or password');
+			// Handle invalid credentials
+			$this->session->set_flashdata('error', 'Invalid email or password.');
 			redirect('auth/login');
 		}
 	}
+	
+
+	
+
 
 	public function dashboard()
 	{
@@ -76,14 +107,6 @@ class Auth extends CI_Controller {
 	}
 
 	
-
-
-
-
-
-
-
-
 
 	public function login(){
 		$this->load->view('login');

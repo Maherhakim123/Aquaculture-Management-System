@@ -70,5 +70,7 @@ $route['project/edit/(:num)'] = 'project/edit/$1'; // Edit route
 $route['project/update/(:num)'] = 'project/update/$1'; // Update route
 $route['project/delete/(:num)'] = 'project/delete/$1'; // Delete route
 
+$route['auth/profile'] = 'auth/profile';
+
 
 

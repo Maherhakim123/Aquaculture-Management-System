@@ -15,27 +15,31 @@
     <form action="<?php echo base_url('auth/add')?>" method="POST" class="shadow p-4 rounded bg-light">
         <div class="mb-3">
             <label for="name" class="form-label">Name:</label>
-            <input type="text" id="name" name="leaderName" class="form-control" value="<?php echo set_value('name'); ?>">
+            <input type="text" id="name" name="userName" class="form-control" value="<?php echo set_value('name'); ?>">
         </div>
         <div class="mb-3">
             <label for="email" class="form-label">Email:</label>
-            <input type="email" id="email" name="leaderEmail" class="form-control" value="<?php echo set_value('email'); ?>">
+            <input type="email" id="email" name="userEmail" class="form-control" value="<?php echo set_value('email'); ?>">
         </div>
         <div class="mb-3">
             <label for="password" class="form-label">Password:</label>
-            <input type="password" id="password" name="leaderPassword" class="form-control" value="<?php echo set_value('password'); ?>">
+            <input type="password" id="password" name="userPassword" class="form-control" value="<?php echo set_value('password'); ?>">
+        </div>
+        <div class="mb-3">
+            <label for="ic" class="form-label">IC:</label>
+            <input type="text" id="ic" name="userIC" class="form-control" value="<?php echo set_value('ic'); ?>">
         </div>
         <div class="mb-3">
             <label for="phoneNo" class="form-label">Phone Number:</label>
-            <input type="text" id="phoneNo" name="leaderPhoneNo" class="form-control" value="<?php echo set_value('phoneNo'); ?>">
-        </div>
+            <input type="text" id="phoneNo" name="userPhoneNo" class="form-control" value="<?php echo set_value('phoneNo'); ?>">
+        </div>                            
         <div class="mb-3">
-            <label for="department" class="form-label">Department:</label>
-            <input type="text" id="department" name="department" class="form-control">
-        </div>
-        <div class="mb-3">
-            <label for="majorExpertise" class="form-label">Major Expertise:</label>
-            <input type="text" id="majorExpertise" name="majorExpertise" class="form-control">
+            <label for="role" class="form-label">Role:</label>
+            <select id="role" name="userRole" class="form-control">
+            <option value="" disabled selected>Role?</option>
+            <option value="Project Leader">Project Leader</option>
+            <option value="Local Community">Local Community</option>
+            </select>
         </div>
         <div class="d-grid">
             <button type="submit" class="btn btn-primary">Register</button>
