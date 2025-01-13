@@ -12,11 +12,26 @@
         <a href="index3.html" class="nav-link">AQUACULTURE MANAGEMENT SYSTEM</a>
       </li>
     </ul>
+
+                                        
+    <div class="dropdown">
+    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+        My Profile
+    </button>
+    <div class="dropdown-menu">
+        <a class="dropdown-item" href="<?= base_url('dashboard/profile'); ?>">Profile</a>
+        <a class="dropdown-item" href="<?php echo base_url('dashboard/homepage'); ?>">Log Out</a>
+    </div>
+</div>
+
+
+
+
  </nav>
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <aside class="main-sidebar sidebar-dark-primary elevation-4 position-fixed">
     <!-- Sidebar -->
     <div class="sidebar">
  

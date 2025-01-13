@@ -38,6 +38,33 @@ class Auth extends CI_Controller {
 		}
 	}
 
+	// public function add() {
+	// 	$userName = $this->input->post('userName');
+	// 	$userEmail = $this->input->post('userEmail');
+	// 	$userPassword = $this->input->post('userPassword');
+	// 	$userIC = $this->input->post('userIC');
+	// 	$userPhoneNo = $this->input->post('userPhoneNo');
+	// 	$userRole = $this->input->post('userRole');
+	
+	// 	// Encrypt the password
+	// 	$hashedPassword = password_hash($userPassword, PASSWORD_BCRYPT);
+	
+	// 	$data = [
+	// 		'userName' => $userName,
+	// 		'userEmail' => $userEmail,
+	// 		'userPassword' => $hashedPassword,
+	// 		'userIC' => $userIC,
+	// 		'userPhoneNo' => $userPhoneNo,
+	// 		'userRole' => $userRole
+	// 	];
+	
+	// 	$status = $this->Register_model->add($data);
+	// 	if ($status > 0) {
+	// 		redirect('auth/login');
+	// 	}
+	// }
+	
+
 	// public function validate_login() {
 	// 	$userEmail = $this->input->post('userEmail');
 	// 	$userPassword = $this->input->post('userPassword');
@@ -88,9 +115,7 @@ class Auth extends CI_Controller {
 			redirect('auth/login');
 		}
 	}
-	
 
-	
 
 
 	public function dashboard()

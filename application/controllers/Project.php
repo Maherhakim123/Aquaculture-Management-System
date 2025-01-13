@@ -77,8 +77,12 @@ class Project extends CI_Controller
     // View a project
     public function view($projectID)
     {
+        
         $data['project'] = $this->Project_model->get_project_by_id($projectID);
+        $this->load->view('templates/header');
+        $this->load->view('templates/sidebar');
         $this->load->view('view_project', $data);
+        $this->load->view('templates/footer');
     }
 
 
@@ -86,7 +90,10 @@ class Project extends CI_Controller
     public function edit($projectID)
     {
         $data['project'] = $this->Project_model->get_project_by_id($projectID); // Get the project by its ID
+        $this->load->view('templates/header');
+        $this->load->view('templates/sidebar');
         $this->load->view('edit_project', $data); // Load the edit form with the project data
+        $this->load->view('templates/footer');
     }
 
     // Update project

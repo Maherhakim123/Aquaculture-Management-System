@@ -16,6 +16,11 @@ class Dashboard extends CI_Controller {
         $this->load->view('templates/footer');
     }
 
+	public function homepage(){
+		$this->load->view('HOMEPAGE');
+	}
+
+
     public function profile() {
         // Ensure the user is logged in
         if (!$this->session->userdata('logged_in')) {

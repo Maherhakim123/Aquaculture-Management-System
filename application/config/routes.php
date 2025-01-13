@@ -72,5 +72,7 @@ $route['project/delete/(:num)'] = 'project/delete/$1'; // Delete route
 
 $route['auth/profile'] = 'auth/profile';
 
+$route['dashboard/dashboard'] = 'dashboard/dashboard';
+
 
 
