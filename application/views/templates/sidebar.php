@@ -14,15 +14,30 @@
     </ul>
 
                                         
-    <div class="dropdown">
-    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-        My Profile
-    </button>
-    <div class="dropdown-menu">
-        <a class="dropdown-item" href="<?= base_url('dashboard/profile'); ?>">Profile</a>
-        <a class="dropdown-item" href="<?php echo base_url('dashboard/homepage'); ?>">Log Out</a>
+    <div class="dropdown ml-auto">
+  <button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown" style="border: none; padding: 0;">
+    <i class="fas fa-user-circle" style="font-size: 40px; color: grey;"></i>
+  </button>
+  <div class="dropdown-menu">
+    <a class="dropdown-item" href="<?= base_url('dashboard/profile'); ?>">Profile</a>
+    <a class="dropdown-item" href="#" onclick="confirmLogout(event)">Log Out</a>
     </div>
 </div>
+
+<script>
+  function confirmLogout(event) {
+    event.preventDefault(); // Prevents the default action of the link
+    const confirmation = confirm("Are you sure you want to log out?");
+    
+    if (confirmation) {
+      // Redirect to the log out URL if confirmed
+      window.location.href = "<?php echo base_url('dashboard/homepage'); ?>";
+    }
+  }
+</script>
+
+
+
 
 
 
