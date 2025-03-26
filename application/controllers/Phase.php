@@ -19,12 +19,15 @@ class Phase extends CI_Controller {
     }
 
     // Show form to create a new phase
-    public function create($projectID) {
+    public function create($projectID = null) {
+        if ($projectID === null) {
+            show_error("Invalid Project ID", 400);
+        }
         $data['projectID'] = $projectID;
 
         $this->load->view('templates/header');
         $this->load->view('templates/sidebar');
-        $this->load->view('phase_create', $data);
+        $this->load->view('create_phase', $data);
         $this->load->view('templates/footer');
     }
 
@@ -34,11 +37,16 @@ class Phase extends CI_Controller {
             'projectID' => $this->input->post('projectID'),
             'phaseName' => $this->input->post('phaseName'),
             'startDate' => $this->input->post('startDate'),
-            'endDate' => $this->input->post('endDate')
+            'deadline' => $this->input->post('deadline'),
+            'status' => $this->input->post('status'),
+            'progress' => $this->input->post('progress')
         ];
 
-        $this->Phase_model->add_phase($data);
-        redirect('phase/index/' . $data['projectID']);
+        if ($this->Phase_model->add_phase($data)) {
+            redirect('phase/index/' . $data['projectID']);
+        } else {
+            show_error("Failed to create phase.", 500);
+        }
     }
 
     // Delete a phase

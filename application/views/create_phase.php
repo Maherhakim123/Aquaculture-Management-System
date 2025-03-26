@@ -11,29 +11,33 @@
     <div class="container p-3">
         <h2>Create New Phase</h2>
 
-    <form action="<?= site_url('phase/create') ?>" method="post">
-        <label>Phase Name:</label>
-        <input type="text" name="phaseName" required><br>
+        <form action="<?= site_url('phase/add') ?>" method="post">
+            <input type="hidden" name="projectID" value="<?= $projectID ?>">
 
-        <label>Start Date:</label>
-        <input type="date" name="startDate" required><br>
+            <label>Phase Name:</label>
+            <input type="text" name="phaseName" required><br>
 
-        <label>Deadline:</label>
-        <input type="date" name="deadline" required><br>
+            <label>Start Date:</label>
+            <input type="date" name="startDate" required><br>
 
-        <label>Status:</label>
-        <select name="status" required>
-            <option value="Not Started">Not Started</option>
-            <option value="In Progress">In Progress</option>
-            <option value="Completed">Completed</option>
-        </select><br>
+            <label>Deadline:</label>
+            <input type="date" name="deadline" required><br>
 
-        <label>Progress (%):</label>
-        <input type="number" name="progress" min="0" max="100" required><br>
+            <label>Status:</label>
+            <select name="status" required>
+                <option value="Not Started">Not Started</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Completed">Completed</option>
+            </select><br>
 
-        <input type="submit" value="Create Phase">
-    </form>
+            <label>Progress (%):</label>
+            <input type="number" name="progress" min="0" max="100" required><br>
 
+            <input type="submit" value="Create Phase">
+        </form>
+
+        <!-- Back Button -->
+        <a href="<?= site_url('project/view/'.$projectID) ?>" class="btn btn-secondary">Back to Project</a>
     </div>
 </div>
 

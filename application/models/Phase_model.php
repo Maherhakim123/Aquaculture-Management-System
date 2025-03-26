@@ -2,45 +2,28 @@
 class Phase_model extends CI_Model {
 
     // Insert a new phase into the database
-    function add_phase($data) {
-        $status = $this->db->insert('phase', $data);
-        return $status;
+    public function add_phase($data) {
+        return $this->db->insert('phase', $data);
     }
 
-
-    // Get all phase for a specific project
+    // Get all phases for a specific project
     public function get_phase($projectID) {
-        $this->db->where('projectID', $projectID);
-        $query = $this->db->get('phase');
-        return $query->result();
+        return $this->db->where('projectID', $projectID)->get('phase')->result();
     }
-    
 
     // Get a single phase by its ID
     public function get_phase_by_id($phaseID) {
-        $query = $this->db->get_where('phase', ['phaseID' => $phaseID]);
-        return $query->row(); // Return a single row object
+        return $this->db->get_where('phase', ['phaseID' => $phaseID])->row();
     }
 
     // Update a phase by its ID
     public function update($phaseID, $data) {
-        $this->db->where('phaseID', $phaseID);
-        return $this->db->update('phase', $data); // Update the phase
+        return $this->db->where('phaseID', $phaseID)->update('phase', $data);
     }
 
     // Delete a phase by its ID
-    public function delete($phaseID) {
-        $this->db->where('phaseID', $phaseID);
-        return $this->db->delete('phase'); // Delete the phase
+    public function delete_phase($phaseID) {
+        return $this->db->where('phaseID', $phaseID)->delete('phase');
     }
 }
-
-
-
-
-
-
-
-
-
-
+?>
