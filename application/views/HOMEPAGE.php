@@ -32,8 +32,7 @@
     </nav>
 
     <div class="container text-center mt-5">
-        <h1>Welcome to My Website</h1>
-        <p>Your one-stop solution to manage your projects and tasks efficiently.</p>
+        <h1>Welcome to Aquaculture Management System</h1>
         <div class="mt-4">
             <a href="<?= base_url('auth/login'); ?>" class="btn btn-primary btn-lg">Log In</a>
             <a href="<?= base_url('auth/register'); ?>" class="btn btn-success btn-lg">Sign Up</a>

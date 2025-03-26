@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,7 +18,6 @@
 </head>
 <body>
 
-
 <div class="content-wrapper">
 <div class="container p-3">
     <div class="row justify-content-center">
@@ -29,7 +27,7 @@
                     <h2>ADD NEW PROJECT</h2>
                 </div>
                 <div class="card-body">
-                    <form action="<?php echo base_url('project/add')?>" method="POST">
+                    <form id="projectForm" action="<?php echo base_url('project/add')?>" method="POST" onsubmit="return showSuccessMessage()">
                         <div class="mb-1">
                             <label for="name" class="form-label">Project Name: </label>
                             <input type="text" id="name" name="projectName" class="form-control" value="<?php echo set_value('name'); ?>" placeholder="Enter Project name">
@@ -85,9 +83,14 @@
             this.value = ''; // Clear the end date
         }
     });
+
+    // Show success message after form submission
+    function showSuccessMessage() {
+        // Triggered when the form is submitted
+        alert('Project Created Successfully!');
+        return true; // Allow the form to submit
+    }
 </script>
-
-
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-Ym2G28oVuKMbcbUP46OEuEUmPO0IkUfyRfMkgL37dkwSfVP1GMv4VJkxjNhypGn4" crossorigin="anonymous"></script>
 </body>

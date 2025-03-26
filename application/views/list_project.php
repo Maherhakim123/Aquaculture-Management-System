@@ -20,7 +20,7 @@
 
 
 <div class="content-wrapper">
-<div class="container p-5">
+<div class="container p-3">
     <div class="row justify-content-center">
     <div class="col-md-12">
     <div class="card shadow">

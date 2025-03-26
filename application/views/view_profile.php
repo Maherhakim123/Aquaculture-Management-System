@@ -25,14 +25,17 @@
                             <strong>Phone Number:</strong> <?php echo $users->userPhoneNo; ?><br>
                             <strong>Role:</strong> <?php echo $users->userRole; ?>
 
-                            <a href="<?= base_url('dashboard/edit_profile'); ?>" class="btn btn-warning">Edit Profile</a>
-                            <a href="<?= base_url('dashboard/delete_profile'); ?>" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete your profile? This action cannot be undone.');">Delete Profile</a>
+                           
 
                         </p>
+
+                       
                     <?php else: ?>
                         <p class="text-danger">Error: User details not available.</p>
                     <?php endif; ?>
                     <a href="<?= base_url('dashboard/dashboard'); ?>" class="btn btn-primary">Back to Dashboard</a>
+                    <a href="<?= base_url('dashboard/edit_profile'); ?>" class="btn btn-warning">Edit Profile</a>
+                    <a href="<?= base_url('dashboard/delete_profile'); ?>" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete your profile? This action cannot be undone.');">Delete Profile</a>
                 </div>
             </div>
         </div>
