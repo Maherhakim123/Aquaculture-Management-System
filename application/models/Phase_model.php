@@ -8,8 +8,11 @@ class Phase_model extends CI_Model {
 
     // Get all phases for a specific project
     public function get_phase($projectID) {
-        return $this->db->where('projectID', $projectID)->get('phase')->result();
+        $this->db->where('projectID', $projectID);
+        $query = $this->db->get('phase');
+        return $query->result(); // Ensure it returns an array of results
     }
+    
 
     // Get a single phase by its ID
     public function get_phase_by_id($phaseID) {

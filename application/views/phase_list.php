@@ -26,15 +26,11 @@
             <tbody>
                 <?php foreach ($phases as $phase): ?>
                     <tr>
-                        <td><?= htmlspecialchars($phase->phaseName) ?></td>
-                        <td><?= htmlspecialchars($phase->startDate) ?></td>
-                        <td><?= htmlspecialchars($phase->deadline) ?></td>
-                        <td><?= htmlspecialchars($phase->status) ?></td>
-                        <td><?= htmlspecialchars($phase->progress) ?>%</td>
-                        <td>
-                            <a href="<?= site_url('phase/edit/' . $phase->phaseID) ?>">Edit</a> |
-                            <a href="<?= site_url('phase/delete/' . $phase->phaseID) ?>" onclick="return confirm('Are you sure?')">Delete</a>
-                        </td>
+                        <td><?= $phase->phaseName; ?></td>
+                        <td><?= $phase->startDate; ?></td>
+                        <td><?= $phase->deadline; ?></td>
+                        <td><?= $phase->status; ?></td>
+                        <td><?= $phase->progress; ?>%</td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>

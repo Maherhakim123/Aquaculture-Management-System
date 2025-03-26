@@ -9,14 +9,15 @@ class Phase extends CI_Controller {
 
     // Show phase for a specific project
     public function index($projectID) {
-        $data['phase'] = $this->Phase_model->get_phase($projectID);
+        $data['phases'] = $this->Phase_model->get_phase($projectID); // Ensure the key matches the view
         $data['projectID'] = $projectID;
-
+    
         $this->load->view('templates/header');
         $this->load->view('templates/sidebar');
         $this->load->view('phase_list', $data);
         $this->load->view('templates/footer');
     }
+    
 
     // Show form to create a new phase
     public function create($projectID = null) {
