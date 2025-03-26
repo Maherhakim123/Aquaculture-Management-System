@@ -53,12 +53,17 @@
                             </div>
                             </div>
 
+                            <a href="<?php echo site_url('phase/index/'.$project->projectID); ?>" class="btn btn-primary btn-sm">Manage Phases</a>
+
+
                 </div>
             </div>
         </div>
     </div>
 </div>
 </div>
+
+
 
 </body>
 </html>
