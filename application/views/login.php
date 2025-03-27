@@ -13,24 +13,21 @@
         .password-toggle {
             cursor: pointer;
         }
-
         .form-header {
             background: #007bff;
             color: #fff;
             padding: 0.5px;
             border-radius: 5px 5px 0 0;
-        
         }
     </style>
 </head>
-
 <body class="bg-light">
     <div class="container d-flex justify-content-center align-items-center min-vh-100">
         <div class="card shadow-lg" style="width: 400px;">
             <div class="card-body">
-            <div class="form-header text-center">
-                <h3 class="card-title text-center mb-4">Sign In</h3>
-    </div>
+                <div class="form-header text-center">
+                    <h3 class="card-title text-center mb-4">Sign In</h3>
+                </div>
                 <form action="<?php echo base_url('auth/validate_login'); ?>" method="POST" id="login-form">
                     <div class="mb-3">
                         <label for="email" class="form-label">Email</label>
@@ -47,6 +44,14 @@
                             <span class="input-group-text password-toggle"><i class="fas fa-eye" id="togglePassword"></i></span>
                         </div>
                     </div>
+                    <div class="mb-3">
+                        <label for="role" class="form-label">Role</label>
+                        <select id="role" class="form-control" name="userRole" required>
+                            <option value="">Select Role</option>
+                            <option value="Project Leader">Project Leader</option>
+                            <option value="Community Member">Community Member</option>
+                        </select>
+                    </div>
                     <div class="mb-3 form-check">
                         <input type="checkbox" class="form-check-input" id="remember">
                         <label class="form-check-label" for="remember">Remember Me</label>
@@ -59,28 +64,22 @@
                     <a href="#">Forgot Password?</a>
                 </div>
                 <div class="text-center mt-2">
-                    <small>Don't have an account?  <a href="<?php echo base_url('auth/register'); ?>">Register here</a></small>
+                    <small>Don't have an account? <a href="<?php echo base_url('auth/register'); ?>">Register here</a></small>
                 </div>
             </div>
         </div>
     </div>
-
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-Yi3kjnDSp+x1nzBYJXJcwxh2Hltlf9xPDLlM/I2ibVY3hQdcGiWd+g8jQfKfvj9E" crossorigin="anonymous"></script>
     <script>
         const togglePassword = document.querySelector('#togglePassword');
         const passwordField = document.querySelector('#password');
-
         togglePassword.addEventListener('click', function () {
-            // Toggle the password field type between password and text
             const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
             passwordField.setAttribute('type', type);
-
-            // Toggle the eye icon between open and closed
             this.classList.toggle('fa-eye');
             this.classList.toggle('fa-eye-slash');
         });
-    </script> <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
-
+    </script>
 </body>
 </html>

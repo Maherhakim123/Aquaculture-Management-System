@@ -9,12 +9,39 @@ class Dashboard extends CI_Controller {
         $this->load->library('session'); // Load session library
     }
 
-    public function dashboard() {
-        $this->load->view('templates/header');
-        $this->load->view('templates/sidebar');
-        $this->load->view('dashboard');
-        $this->load->view('templates/footer');
-    }
+    // public function dashboard() {
+    //     $this->load->view('templates/header');
+    //     $this->load->view('templates/sidebar');
+    //     $this->load->view('dashboard');
+    //     $this->load->view('templates/footer');
+    // }
+
+	public function dashboard() {
+		// Check if the user is logged in
+		if (!$this->session->userdata('logged_in')) {
+			redirect('auth/login');
+		}
+	
+		// Get user role from session
+		$userRole = $this->session->userdata('userRole');
+	
+		// Load header
+		$this->load->view('templates/header');
+	
+		// Load sidebar based on user role
+		if ($userRole == 'Project Leader') {
+			$this->load->view('templates/sidebar');  // Sidebar for Project Leader
+		} else {
+			$this->load->view('templates/community_sidebar');  // Sidebar for Community Member
+		}
+	
+		// Load main dashboard content
+		$this->load->view('dashboard');
+	
+		// Load footer
+		$this->load->view('templates/footer');
+	}
+	
 
 	public function homepage(){
 		$this->load->view('HOMEPAGE');
