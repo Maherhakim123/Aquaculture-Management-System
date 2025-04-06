@@ -6,11 +6,6 @@
     <title>Register</title>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="<?= base_url('assets/template/plugins/fontawesome-free/css/all.min.css') ?>">
-    <!-- Ionicons -->
-    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-    <!-- DataTables -->
-    <link rel="stylesheet" href="<?= base_url('assets/template/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') ?>">
-    <link rel="stylesheet" href="<?= base_url('assets/template/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') ?>">
     <!-- Theme style -->
     <link rel="stylesheet" href="<?= base_url('assets/template/dist/css/adminlte.min.css') ?>">
     <!-- Google Font: Source Sans Pro -->
@@ -23,8 +18,8 @@
         }
         .form-container {
             max-width: 800px;
-            margin: 50px auto;
-            padding: 5px;
+            padding: 60px;
+            margin: 20px auto 10px;
         }
         .form-header {
             background: #007bff;
@@ -34,7 +29,7 @@
         }
         .form-body {
             background: #fff;
-            padding: 30px;
+            padding: 20px;
             border: 1px solid #ddd;
             border-radius: 0 0 5px 5px;
         }
@@ -85,6 +80,9 @@
             </select>
         </div>
         <button type="submit" class="btn btn-primary btn-block">Register</button>
+        <div class="text-center mt-2">
+                    <small>You have an account? <a href="<?php echo base_url('auth/login'); ?>">Login here</a></small>
+                </div>
     </form>
 </div>
 

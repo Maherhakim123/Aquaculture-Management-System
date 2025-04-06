@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
     <title>Login</title>
     <style>
         .password-toggle {
@@ -18,6 +20,7 @@
             color: #fff;
             padding: 0.5px;
             border-radius: 5px 5px 0 0;
+            margin-bottom: 5px;
         }
     </style>
 </head>
@@ -32,14 +35,12 @@
                     <div class="mb-3">
                         <label for="email" class="form-label">Email</label>
                         <div class="input-group">
-                            <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                             <input type="email" id="email" class="form-control" name="userEmail" required placeholder="Enter your email">
                         </div>
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label">Password</label>
                         <div class="input-group">
-                            <span class="input-group-text"><i class="fas fa-lock"></i></span>
                             <input type="password" id="password" class="form-control" name="userPassword" required placeholder="Enter your password">
                             <span class="input-group-text password-toggle"><i class="fas fa-eye" id="togglePassword"></i></span>
                         </div>
@@ -57,10 +58,10 @@
                         <label class="form-check-label" for="remember">Remember Me</label>
                     </div>
                     <div class="d-grid">
-                        <button type="submit" class="btn btn-primary">Sign In</button>
+                        <button type="submit" class="btn btn-primary">LogIn</button>
                     </div>
                 </form>
-                <div class="text-center mt-3">
+                <div class="text-center mt-2">
                     <a href="#">Forgot Password?</a>
                 </div>
                 <div class="text-center mt-2">

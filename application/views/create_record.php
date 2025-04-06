@@ -36,15 +36,20 @@
                                 <input type="number" id="incomeGenerated" name="incomeGenerated" class="form-control" required>
                             </div>
                             <div class="mb-2">
-                                <label for="situation" class="form-label">Situation:</label>
-                                <input type="text" id="situation" name="situation" class="form-control" required>
+                                <label for="situation" class="form-label">Condition:</label>
+                                <select id="situation" name="situation" class="form-control" placeholder="Condition?">
+                                <option value="" disabled selected></option>
+                                <option value="Good">Good</option>
+                                <option value="Moderate">Moderate</option>
+                                <option value="Bad">Bad</option>
+                                </select>
                             </div>
                             <div class="d-grid">
                                 <button type="submit" class="btn btn-primary btn-lg">Save</button>
                             </div>
                         </form>
                         <div class="mt-3 text-center">
-                            <a href="<?= site_url('record') ?>" class="btn btn-secondary">Back to Records</a>
+                            <a href="<?= site_url('record/list') ?>" class="btn btn-secondary">Record History</a>
                         </div>
                     </div>
                 </div>
@@ -54,5 +59,15 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const today = new Date().toISOString().split('T')[0];
+        const recordDateInput = document.getElementById('recordDate');
+        recordDateInput.setAttribute('min', today);
+        recordDateInput.setAttribute('max', today);
+        recordDateInput.value = today;
+    });
+</script>
+
 </body>
 </html>
