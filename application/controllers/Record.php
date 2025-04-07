@@ -15,8 +15,29 @@ class Record extends CI_Controller {
         $data['records'] = $this->Record_model->get_all_records(); // Fetch all records
 
         // Load the view and pass the data
-        $this->load->view('list_record', $data);
+        $this->load->view('templates/header');
+        $this->load->view('templates/sidebar');
+        $this->load->view('list_ALLrecord', $data);
     }
+
+    
+    //show the record by specific user
+    public function userList() {
+        // Get userID from session
+        $userID = $this->session->userdata('userID');
+
+        // Fetch specific user records
+        $data['records'] = $this->Record_model->get_record_by_user_id($userID); 
+
+        // Load the view and pass the data
+        $this->load->view('templates/header');
+		$this->load->view('templates/community_sidebar');
+        $this->load->view('list_record', $data);
+        //$this->load->view('templates/footer');
+
+    }
+
+
 
     // Load create record form
     public function create() {
@@ -39,7 +60,7 @@ class Record extends CI_Controller {
         );
 
         $this->Record_model->insert_record($data);
-        redirect('record');
+        redirect('record/userList');
     }
 
     // Load edit form

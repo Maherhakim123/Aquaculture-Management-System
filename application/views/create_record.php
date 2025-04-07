@@ -49,7 +49,7 @@
                             </div>
                         </form>
                         <div class="mt-3 text-center">
-                            <a href="<?= site_url('record/list') ?>" class="btn btn-secondary">Record History</a>
+                            <a href="<?= site_url('record/userList') ?>" class="btn btn-secondary">Record History</a>
                         </div>
                     </div>
                 </div>
