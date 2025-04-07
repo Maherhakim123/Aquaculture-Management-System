@@ -30,40 +30,42 @@
                         <div class="mb-3 text-end">
                         </div>
                         <table class="table table-bordered table-striped">
-                            <thead class="table-primary text-center">
-                                <tr>
-                                    <th>Record</th>
-                                    <th>Quantity</th>
-                                    <th>Record Date</th>
-                                    <th>Income Generated (RM)</th>
-                                    <th>Condition</th>
-                                    <!-- <th>Project ID</th> -->
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php if (!empty($records)): ?>
-                                    <?php foreach ($records as $index => $record): ?>
-                                        <tr>
-                                            <td><?= $index + 1; ?></td>
-                                            <td><?= $record['quantity']; ?></td>
-                                            <td><?= $record['recordDate']; ?></td>
-                                            <td>RM<?= $record['incomeGenerated']; ?></td>
-                                            <td><?= $record['situation']; ?></td>
-                                            <!-- <td><?= $record['projectID']; ?></td> -->
-                                            <td class="text-center">
-                                                <a href="<?= site_url('record/view/' . $record['recordID']) ?>" class="btn btn-success btn-sm">View</a>
-                                                <a href="<?= site_url('record/edit/' . $record['recordID']) ?>" class="btn btn-warning btn-sm">Edit</a>
-                                                <a href="<?= site_url('record/delete/' . $record['recordID']) ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this record?');">Delete</a>
-                                            </td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                <?php else: ?>
-                                    <tr>
-                                        <td colspan="6" class="text-center">No records found.</td>
-                                    </tr>
-                                <?php endif; ?>
-                            </tbody>
+                        <thead class="table-primary text-center">
+    <tr>
+        <th>Record</th>
+        <th>Quantity</th>
+        <th>Record Date</th>
+        <th>Income Generated (RM)</th>
+        <th>Condition</th>
+        <th>Person In Charge</th> <!-- New column -->
+        <th>Actions</th>
+    </tr>
+</thead>
+
+<tbody>
+    <?php if (!empty($records)): ?>
+        <?php foreach ($records as $index => $record): ?>
+            <tr>
+                <td><?= $index + 1; ?></td>
+                <td><?= $record['quantity']; ?></td>
+                <td><?= $record['recordDate']; ?></td>
+                <td>RM<?= $record['incomeGenerated']; ?></td>
+                <td><?= $record['situation']; ?></td>
+                <td><?= $record['userName']; ?></td> <!-- Display user name -->
+                <td class="text-center">
+                    <a href="<?= site_url('record/view/' . $record['recordID']) ?>" class="btn btn-success btn-sm">View</a>
+                    <a href="<?= site_url('record/edit/' . $record['recordID']) ?>" class="btn btn-warning btn-sm">Edit</a>
+                    <a href="<?= site_url('record/delete/' . $record['recordID']) ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this record?');">Delete</a>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <tr>
+            <td colspan="7" class="text-center">No records found.</td>
+        </tr>
+    <?php endif; ?>
+</tbody>
+
                         </table>
                     </div>
                 </div>

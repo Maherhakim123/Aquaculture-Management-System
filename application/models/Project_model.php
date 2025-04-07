@@ -19,6 +19,18 @@ class Project_model extends CI_Model {
         return $query->row(); // Return a single row object
     }
 
+     // Method to view a project and invite users
+     public function view($projectID) {
+        // Fetch project details
+        $data['project'] = $this->Project_model->get_project_by_id($projectID);
+
+        // Get all users (or limit it as needed)
+        $data['users'] = $this->User_model->get_all_users(); // Adjust according to your User model method
+
+        // Load the view
+        $this->load->view('view_project', $data);
+    }
+
     // Update a project
     public function update_project($projectID, $data) {
         $this->db->where('projectID', $projectID);
@@ -30,6 +42,13 @@ class Project_model extends CI_Model {
         $this->db->where('projectID', $projectID);
         return $this->db->delete('project'); // Delete the project
     }
+
+    public function invite_user_to_project($data) {
+        return $this->db->insert('projectMembers', $data);
+    }
+
+    
+    
 }
 
 

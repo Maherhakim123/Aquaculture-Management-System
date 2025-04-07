@@ -79,6 +79,11 @@ class Project extends CI_Controller
     {
         
         $data['project'] = $this->Project_model->get_project_by_id($projectID);
+
+        // Get only local community users
+        $this->load->model('User_model');
+        $data['users'] = $this->User_model->get_local_community_users();
+        
         $this->load->view('templates/header');
         $this->load->view('templates/sidebar');
         $this->load->view('view_project', $data);
@@ -130,6 +135,43 @@ class Project extends CI_Controller
             redirect('project/list'); // Redirect to project list after delete
         }
     }
+
+    // Invite User
+    public function invite_user() {
+        $projectID = $this->input->post('projectID');
+        $userID = $this->input->post('userID');
+        
+        // Assuming project leader is the logged-in user
+        $leaderID = $this->session->userdata('userID'); // Get the logged-in user ID
+        
+        if ($userID && $projectID) {
+            // Prepare data to store in the invitations table (or use another method to associate user with project)
+            $data = [
+                'projectID' => $projectID,
+                'userID' => $userID,
+                'invited_by' => $leaderID,  // Store the leader's userID who is inviting
+                'status' => 'pending'  // Status could be 'pending', 'accepted', etc.
+            ];
+    
+            // Call a method from the model to insert the invitation
+            $this->Project_model->invite_user_to_project($data);
+            
+            // Redirect to the project view page after inviting
+            redirect('project/view/' . $projectID);
+        } else {
+            // Handle the case where no user or project ID is provided
+            $this->session->set_flashdata('error', 'Failed to invite user.');
+            redirect('project/view/' . $projectID);
+        }
+    }
+    
+    
+    
+
+
+
+
+
 }
 
 

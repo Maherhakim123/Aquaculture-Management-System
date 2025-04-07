@@ -11,11 +11,14 @@ class Record_model extends CI_Model {
         return $this->db->insert('record', $data);
     }
 
-    // Fetch all record
     public function get_all_records() {
-        $query = $this->db->get('record'); // Fetch all records from the table
-        return $query->result_array(); // Return the result as an array
+        $this->db->select('record.*, users.userName'); // select record fields and user's name
+        $this->db->from('record');
+        $this->db->join('users', 'users.userID = record.userID'); // join with user table
+        $query = $this->db->get();
+        return $query->result_array();
     }
+    
 
     // Fetch records by userID
     public function get_record_by_user_id($userID) {
