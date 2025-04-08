@@ -18,6 +18,7 @@ class Record extends CI_Controller {
         $this->load->view('templates/header');
         $this->load->view('templates/sidebar');
         $this->load->view('list_ALLrecord', $data);
+        $this->load->view('templates/footer');
     }
 
     
@@ -33,7 +34,7 @@ class Record extends CI_Controller {
         $this->load->view('templates/header');
 		$this->load->view('templates/community_sidebar');
         $this->load->view('list_record', $data);
-        //$this->load->view('templates/footer');
+        $this->load->view('templates/footer');
 
     }
 

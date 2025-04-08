@@ -25,7 +25,7 @@ class Project_model extends CI_Model {
         $data['project'] = $this->Project_model->get_project_by_id($projectID);
 
         // Get all users (or limit it as needed)
-        $data['users'] = $this->User_model->get_all_users(); // Adjust according to your User model method
+        $data['users'] = $this->User_model->get_all_users(); // Adjust according to User model method
 
         // Load the view
         $this->load->view('view_project', $data);
@@ -46,6 +46,30 @@ class Project_model extends CI_Model {
     public function invite_user_to_project($data) {
         return $this->db->insert('projectMembers', $data);
     }
+
+
+    // Pending invitations from local community
+    public function get_pending_invitations_by_user($userID) {
+        $this->db->select('pm.*, p.projectName, p.projectLocation');
+        $this->db->from('projectMembers pm');
+        $this->db->join('project p', 'p.projectID = pm.projectID');
+        $this->db->where('pm.userID', $userID);
+        $this->db->where('pm.status', 'pending');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function get_project_members($projectID)
+{
+    $this->db->select('u.userName, u.userEmail, pm.status');
+    $this->db->from('projectMembers pm');
+    $this->db->join('users u', 'pm.userID = u.userID');
+    $this->db->where('pm.projectID', $projectID);
+    $query = $this->db->get();
+    return $query->result(); // Return list of invited users
+}
+
+    
 
     
     

@@ -51,7 +51,28 @@
 
             <a href="<?php echo site_url('phase/index/'.$project->projectID); ?>" class="btn btn-primary btn-sm">View Phases</a>
 
-            <h4>Invite Users to This Project</h4>
+  
+
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+
+
+<div class="content-wrapper">
+<div class="container p-5">
+    <div class="row justify-content-center">
+    <div class="col-md-12">
+    <div class="card shadow">
+        <div class="card-header">
+            <h3 class="card-title">Project Members</h3>
+        </div>
+        <div class="card-body">
+
+
+        <h4>Invite Users to This Project</h4>
 <?php if (!empty($users)): ?>
     <form action="<?= site_url('project/invite_user') ?>" method="POST">
         <div class="form-group">
@@ -71,9 +92,41 @@
 <?php endif; ?>
 
 
+<h4 class="mt-5">Invited Members</h4>
+<?php if (!empty($members)): ?>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($members as $member): ?>
+                <tr>
+                    <td><?= $member->userName ?></td>
+                    <td><?= $member->userEmail ?></td>
+                    <td>
+                        <?php if ($member->status == 'accepted'): ?>
+                            <span class="badge badge-success">Accepted</span>
+                        <?php elseif ($member->status == 'rejected'): ?>
+                            <span class="badge badge-danger">Rejected</span>
+                        <?php else: ?>
+                            <span class="badge badge-warning">Pending</span>
+                        <?php endif; ?>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+<?php else: ?>
+    <p>No members have been invited yet.</p>
+<?php endif; ?>
+
 
         
-
         </div>
     </div>
 </div>
@@ -82,7 +135,7 @@
 </div>
 
 
-   
+
 
 </body>
 </html>
