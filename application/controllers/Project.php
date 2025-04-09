@@ -74,21 +74,6 @@ class Project extends CI_Controller
 
     }
 
-    // View a project
-    // public function view($projectID)
-    // {
-        
-    //     $data['project'] = $this->Project_model->get_project_by_id($projectID);
-
-    //     // Get only local community users
-    //     $this->load->model('User_model');
-    //     $data['users'] = $this->User_model->get_local_community_users();
-        
-    //     $this->load->view('templates/header');
-    //     $this->load->view('templates/sidebar');
-    //     $this->load->view('view_project', $data);
-    //     $this->load->view('templates/footer');
-    // }
 
         public function view($projectID)
     {
@@ -200,26 +185,6 @@ class Project extends CI_Controller
         }
     }
 
-    // Project Leader Invite User [TAK PASTI GUNA ATAU TIDAK]
-    // public function invitations() {
-    //     $userID = $this->session->userdata('userID');
-    
-    //     $data['invitations'] = $this->Project_model->get_pending_invitations_by_user($userID);
-    //     $this->load->view('invitations', $data);
-    // }
-    
-    // public function respond_invitation($memberID, $response) {
-    //     if (!in_array($response, ['accepted', 'rejected'])) {
-    //         show_error('Invalid response');
-    //         return;
-    //     }
-    
-    //     $this->db->where('id', $memberID); // Assuming 'id' is primary key of projectMembers
-    //     $this->db->update('projectMembers', ['status' => $response]);
-    
-    //     $this->session->set_flashdata('message', 'Invitation ' . $response . ' successfully.');
-    //     redirect('project/invitations');
-    // }
 
     // Project Leader Remove/Cancel Invitations
     public function cancel_invitation($memberID, $projectID)
