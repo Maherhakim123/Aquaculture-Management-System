@@ -43,6 +43,8 @@ class Project_model extends CI_Model {
         return $this->db->delete('project'); // Delete the project
     }
 
+
+    // Project Leader Invite Project Members
     public function invite_user_to_project($data) {
         return $this->db->insert('projectMembers', $data);
     }
@@ -68,6 +70,24 @@ class Project_model extends CI_Model {
     $query = $this->db->get();
     return $query->result(); // Return list of invited users
 }
+
+public function update_invitation_status($userID, $projectID, $status) {
+    $this->db->where('userID', $userID);
+    $this->db->where('projectID', $projectID);
+    return $this->db->update('projectMembers', ['status' => $status]);
+}
+
+public function get_projects_by_user($userID) {
+    $this->db->select('p.*');
+    $this->db->from('projectMembers pm');
+    $this->db->join('project p', 'p.projectID = pm.projectID');
+    $this->db->where('pm.userID', $userID);
+    $this->db->where('pm.status', 'accepted');
+    $query = $this->db->get();
+    return $query->result();
+}
+
+
 
     
 

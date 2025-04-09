@@ -22,7 +22,7 @@
                         <h2>ADD NEW RECORD</h2>
                     </div>
                     <div class="card-body">
-                        <form action="<?= site_url('record/store') ?>" method="post">
+                        <form action="<?= site_url('record/store') ?>" method="post" onsubmit="return showSuccessMessage()">
                             <div class="mb-2">
                                 <label for="quantity" class="form-label">Quantity:</label>
                                 <input type="number" id="quantity" name="quantity" class="form-control" required>
@@ -67,6 +67,15 @@
         recordDateInput.setAttribute('max', today);
         recordDateInput.value = today;
     });
+
+         // Show success message after form submission
+         function showSuccessMessage() {
+        // Triggered when the form is submitted
+        alert('Progress Record Successfully!');
+        return true; // Allow the form to submit
+    }
+
+    
 </script>
 
 </body>
