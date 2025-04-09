@@ -57,7 +57,7 @@ class Project extends CI_Controller
 
         $status = $this->Project_model->add($data);
         if ($status > 0) {
-            redirect('project/list');
+            redirect('dashboard/dashboard');
         }
 
     }
