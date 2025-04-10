@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="<?= base_url('assets/template/dist/css/adminlte.min.css') ?>">
     <link rel="stylesheet" href="<?= base_url('assets/template/plugins/bootstrap/css/bootstrap.min.css') ?>">
 </head>
+
+
 <body class="hold-transition sidebar-mini">
 
 <div class="wrapper">
@@ -66,7 +68,6 @@
 
     </div>
 </div>
-
 <!-- Scripts (optional, for full AdminLTE functionality) -->
 <script src="<?= base_url('assets/template/plugins/jquery/jquery.min.js') ?>"></script>
 <script src="<?= base_url('assets/template/plugins/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
@@ -74,3 +75,5 @@
 
 </body>
 </html>
+
+
