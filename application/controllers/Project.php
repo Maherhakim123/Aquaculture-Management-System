@@ -202,26 +202,26 @@ class Project extends CI_Controller
         }
     }
 
-    // Project Leader Invite User
-    public function invitations() {
-        $userID = $this->session->userdata('userID');
+    // Project Leader Invite User [TAK PASTI GUNA ATAU TIDAK]
+    // public function invitations() {
+    //     $userID = $this->session->userdata('userID');
     
-        $data['invitations'] = $this->Project_model->get_pending_invitations_by_user($userID);
-        $this->load->view('invitations', $data);
-    }
+    //     $data['invitations'] = $this->Project_model->get_pending_invitations_by_user($userID);
+    //     $this->load->view('invitations', $data);
+    // }
     
-    public function respond_invitation($memberID, $response) {
-        if (!in_array($response, ['accepted', 'rejected'])) {
-            show_error('Invalid response');
-            return;
-        }
+    // public function respond_invitation($memberID, $response) {
+    //     if (!in_array($response, ['accepted', 'rejected'])) {
+    //         show_error('Invalid response');
+    //         return;
+    //     }
     
-        $this->db->where('id', $memberID); // Assuming 'id' is primary key of projectMembers
-        $this->db->update('projectMembers', ['status' => $response]);
+    //     $this->db->where('id', $memberID); // Assuming 'id' is primary key of projectMembers
+    //     $this->db->update('projectMembers', ['status' => $response]);
     
-        $this->session->set_flashdata('message', 'Invitation ' . $response . ' successfully.');
-        redirect('project/invitations');
-    }
+    //     $this->session->set_flashdata('message', 'Invitation ' . $response . ' successfully.');
+    //     redirect('project/invitations');
+    // }
 
     // Project Leader Remove/Cancel Invitations
     public function cancel_invitation($memberID, $projectID)
