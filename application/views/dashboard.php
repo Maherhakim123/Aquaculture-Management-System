@@ -26,6 +26,7 @@
             <h1 class="m-0 text-dark">Welcome</h1>
           </div>
         </div>
+        <a href="<?php echo base_url('project/create'); ?>">New Project</a>
 
 
         <!-- <a href="<?= base_url('dashboard/profile'); ?>">Profile</a> -->
