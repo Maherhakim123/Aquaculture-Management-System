@@ -22,7 +22,7 @@
                         <h2>ADD NEW RECORD</h2>
                     </div>
                     <div class="card-body">
-                        <form action="<?= site_url('record/store') ?>" method="post" onsubmit="return showSuccessMessage()">
+                        <form action="<?= site_url('record/store') ?>" method="post">
                             <div class="mb-2">
                                 <label for="quantity" class="form-label">Quantity:</label>
                                 <input type="number" id="quantity" name="quantity" class="form-control" required>
