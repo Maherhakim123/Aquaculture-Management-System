@@ -171,7 +171,7 @@ class Project extends CI_Controller
 
         $this->load->view('templates/header');
         $this->load->view('templates/community_sidebar');
-        $this->load->view('invitations', $data); // <- this is the correct path for the view file
+        $this->load->view('invitations', $data);
         $this->load->view('templates/footer');
     }
 
@@ -202,4 +202,26 @@ class Project extends CI_Controller
         $this->load->view('my_projects', $data);
         $this->load->view('templates/footer');
     }
+
+    public function community_view($projectID)
+{
+    // Load your model if not already loaded
+    $this->load->model('Project_model');
+
+    // Get project by ID
+    $data['project'] = $this->Project_model->get_project_by_id($projectID);
+
+    // Optional: Check if logged-in user is part of this project
+    // $userID = $this->session->userdata('userID');
+    // if (!$this->Project_model->is_user_part_of_project($userID, $projectID)) {
+    //     show_error('You are not authorized to view this project.');
+    // }
+
+    // Load the view
+    $this->load->view('templates/header');
+    $this->load->view('templates/community_sidebar');
+    $this->load->view('community_view_project', $data);
+    $this->load->view('templates/footer');
+}
+
 }

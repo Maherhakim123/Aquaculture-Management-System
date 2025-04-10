@@ -18,6 +18,7 @@ class Project_model extends CI_Model {
         return $query->row(); // Return a single row object
     }
 
+
     // Fetch records associated with a specific project
     public function get_records_by_project_id($projectID) {
         $this->db->select('r.*, u.userName'); // Fetch record details and user's name
@@ -98,6 +99,9 @@ class Project_model extends CI_Model {
         $query = $this->db->get();
         return $query->result();
     }
+
+
+
     
 }
 ?>
