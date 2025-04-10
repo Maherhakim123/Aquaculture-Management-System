@@ -1,8 +1,6 @@
 <?php
 class Project extends CI_Controller
 {
-
-
     public function __construct()
     {
         parent::__construct();
@@ -11,24 +9,20 @@ class Project extends CI_Controller
     }
 
     public function dashboard()
-	{
-		$this->load->view('templates/header');
-		$this->load->view('templates/sidebar');
-		$this->load->view('dashboard');
-		$this->load->view('templates/footer');
-
-	}
-
-
+    {
+        $this->load->view('templates/header');
+        $this->load->view('templates/sidebar');
+        $this->load->view('dashboard');
+        $this->load->view('templates/footer');
+    }
 
     // Display the form to create a new project
     public function create()
     {
         $this->load->view('templates/header');
-		$this->load->view('templates/sidebar');
+        $this->load->view('templates/sidebar');
         $this->load->view('create_project');
         $this->load->view('templates/footer');
-
     }
 
     // Handle the form submission to create a new project
@@ -52,16 +46,14 @@ class Project extends CI_Controller
             'endDate' => $endDate,
             'budget' => $budget,
             'budgetSource' => $budgetSource,
-            'userID' =>  $userID
+            'userID' => $userID
         ];
 
         $status = $this->Project_model->add($data);
         if ($status > 0) {
             redirect('dashboard/dashboard');
         }
-
     }
-
 
     // Fetch all projects and display them
     public function list()
@@ -71,43 +63,24 @@ class Project extends CI_Controller
         $data['projects'] = $this->Project_model->get_all_projects(); // Fetch projects from the model
         $this->load->view('list_project', $data); // Load the view and pass the data
         $this->load->view('templates/footer');
-
     }
 
-    // View a project
-    // public function view($projectID)
-    // {
-        
-    //     $data['project'] = $this->Project_model->get_project_by_id($projectID);
-
-    //     // Get only local community users
-    //     $this->load->model('User_model');
-    //     $data['users'] = $this->User_model->get_local_community_users();
-        
-    //     $this->load->view('templates/header');
-    //     $this->load->view('templates/sidebar');
-    //     $this->load->view('view_project', $data);
-    //     $this->load->view('templates/footer');
-    // }
-
     public function view($projectID)
-{
-    $data['project'] = $this->Project_model->get_project_by_id($projectID);
+    {
+        $data['project'] = $this->Project_model->get_project_by_id($projectID);
 
-    // Get only local community users
-    $this->load->model('User_model');
-    $data['users'] = $this->User_model->get_local_community_users();
+        // Get only local community users
+        $this->load->model('User_model');
+        $data['users'] = $this->User_model->get_local_community_users();
 
-    // Get invited members of the project
-    $data['members'] = $this->Project_model->get_project_members($projectID);
+        // Get invited members of the project
+        $data['members'] = $this->Project_model->get_project_members($projectID);
 
-    $this->load->view('templates/header');
-    $this->load->view('templates/sidebar');
-    $this->load->view('view_project', $data);
-    $this->load->view('templates/footer');
-}
-
-
+        $this->load->view('templates/header');
+        $this->load->view('templates/sidebar');
+        $this->load->view('view_project', $data);
+        $this->load->view('templates/footer');
+    }
 
     // Edit a project
     public function edit($projectID)
@@ -120,7 +93,8 @@ class Project extends CI_Controller
     }
 
     // Update project
-    public function update() {
+    public function update()
+    {
         $projectID = $this->input->post('projectID'); // Get project ID from hidden input
         $projectName = $this->input->post('projectName');
         $projectLocation = $this->input->post('projectLocation');
@@ -128,7 +102,7 @@ class Project extends CI_Controller
         $endDate = $this->input->post('endDate');
         $budget = $this->input->post('budget');
         $budgetSource = $this->input->post('budgetSource');
-    
+
         $data = [
             'projectName' => $projectName,
             'projectLocation' => $projectLocation,
@@ -137,13 +111,12 @@ class Project extends CI_Controller
             'budget' => $budget,
             'budgetSource' => $budgetSource
         ];
-    
+
         $status = $this->Project_model->update_project($projectID, $data);
         if ($status) {
             redirect('project/list'); // Redirect to project list after update
         }
     }
-    
 
     // Delete a project
     public function delete($projectID)
@@ -154,54 +127,30 @@ class Project extends CI_Controller
         }
     }
 
-    // Invite User
-    public function invite_user() {
+    // Project Leader Invite User
+    public function invite_user()
+    {
         $projectID = $this->input->post('projectID');
         $userID = $this->input->post('userID');
-        
+
         // Assuming project leader is the logged-in user
         $leaderID = $this->session->userdata('userID'); // Get the logged-in user ID
-        
+
         if ($userID && $projectID) {
-            // Prepare data to store in the invitations table (or use another method to associate user with project)
+            // Prepare data to store in the invitations table
             $data = [
                 'projectID' => $projectID,
                 'userID' => $userID,
-                'invited_by' => $leaderID,  // Store the leader's userID who is inviting
-                'status' => 'pending'  // Status could be 'pending', 'accepted', etc.
+                'invited_by' => $leaderID,
+                'status' => 'pending'
             ];
-    
-            // Call a method from the model to insert the invitation
+
             $this->Project_model->invite_user_to_project($data);
-            
-            // Redirect to the project view page after inviting
             redirect('project/view/' . $projectID);
         } else {
-            // Handle the case where no user or project ID is provided
             $this->session->set_flashdata('error', 'Failed to invite user.');
             redirect('project/view/' . $projectID);
         }
-    }
-
-    // Project Leader Invite User
-    public function invitations() {
-        $userID = $this->session->userdata('userID');
-    
-        $data['invitations'] = $this->Project_model->get_pending_invitations_by_user($userID);
-        $this->load->view('invitations', $data);
-    }
-    
-    public function respond_invitation($memberID, $response) {
-        if (!in_array($response, ['accepted', 'rejected'])) {
-            show_error('Invalid response');
-            return;
-        }
-    
-        $this->db->where('id', $memberID); // Assuming 'id' is primary key of projectMembers
-        $this->db->update('projectMembers', ['status' => $response]);
-    
-        $this->session->set_flashdata('message', 'Invitation ' . $response . ' successfully.');
-        redirect('project/invitations');
     }
 
     // Project Leader Remove/Cancel Invitations
@@ -209,14 +158,48 @@ class Project extends CI_Controller
     {
         $this->db->where('id', $memberID); // assuming 'id' is the primary key in projectMembers table
         $this->db->delete('projectMembers');
-        
+
         $this->session->set_flashdata('message', 'Invitation cancelled successfully.');
         redirect('project/view/' . $projectID);
     }
-    
 
-    
-    
-    
+    // View invitations for the current local community user
+    public function invitations()
+    {
+        $userID = $this->session->userdata('userID');
+        $data['pending_invitations'] = $this->Project_model->get_pending_invitations_by_user($userID);
 
+        $this->load->view('templates/header');
+        $this->load->view('templates/community_sidebar');
+        $this->load->view('invitations', $data); // <- this is the correct path for the view file
+        $this->load->view('templates/footer');
+    }
+
+    // Accept invitation
+    public function accept_invitation()
+    {
+        $userID = $this->session->userdata('userID');
+        $projectID = $this->input->post('projectID');
+
+        if ($userID && $projectID) {
+            $this->Project_model->update_invitation_status($userID, $projectID, 'accepted');
+            $this->session->set_flashdata('success', 'You have joined the project.');
+        } else {
+            $this->session->set_flashdata('error', 'Failed to accept invitation.');
+        }
+
+        redirect('project/my_projects');
+    }
+
+    // Show projects that the community user has accepted
+    public function my_projects()
+    {
+        $userID = $this->session->userdata('userID');
+        $data['projects'] = $this->Project_model->get_projects_by_user($userID);
+        
+        $this->load->view('templates/header');
+        $this->load->view('templates/community_sidebar');
+        $this->load->view('my_projects', $data);
+        $this->load->view('templates/footer');
+    }
 }

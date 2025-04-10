@@ -4,14 +4,10 @@
     <title>My Project Invitations</title>
     <link rel="stylesheet" href="<?= base_url('assets/template/dist/css/adminlte.min.css') ?>">
 </head>
-<body class="container mt-5">
-    <h2>Pending Project Invitations</h2>
-
-    <?php if ($this->session->flashdata('message')): ?>
-        <div class="alert alert-info"><?= $this->session->flashdata('message') ?></div>
-    <?php endif; ?>
-
-    <?php if (!empty($invitations)): ?>
+<body>
+<div class="container mt-5">
+    <h3>Pending Project Invitations</h3>
+    <?php if (!empty($pending_invitations)): ?>
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -21,20 +17,25 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($invitations as $invite): ?>
+                <?php foreach ($pending_invitations as $invitation): ?>
                     <tr>
-                        <td><?= $invite->projectName ?></td>
-                        <td><?= $invite->projectLocation ?></td>
+                        <td><?= $invitation->projectName ?></td>
+                        <td><?= $invitation->projectLocation ?></td>
                         <td>
-                            <a href="<?= site_url('project/respond_invitation/'.$invite->id.'/accepted') ?>" class="btn btn-success btn-sm">Accept</a>
-                            <a href="<?= site_url('project/respond_invitation/'.$invite->id.'/rejected') ?>" class="btn btn-danger btn-sm">Reject</a>
+                            <form action="<?= site_url('project/accept_invitation') ?>" method="POST">
+                                <input type="hidden" name="projectID" value="<?= $invitation->projectID ?>">
+                                <button type="submit" class="btn btn-success btn-sm">Accept</button>
+                            </form>
                         </td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
         </table>
     <?php else: ?>
-        <p>No invitations available.</p>
+        <p>You have no pending invitations.</p>
     <?php endif; ?>
+</div>
+
 </body>
+
 </html>
