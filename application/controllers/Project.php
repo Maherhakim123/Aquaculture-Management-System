@@ -22,10 +22,8 @@ class Project extends CI_Controller
 
 
     // Display the form to create a new project
-    public function create($projectID)
+    public function create()
     {
-        $data['projectID'] = $projectID;
-
         $this->load->view('templates/header');
 		$this->load->view('templates/sidebar');
         $this->load->view('create_project');
@@ -77,25 +75,22 @@ class Project extends CI_Controller
     }
 
     // View a project
-    public function view($projectID)
-    {
+    // public function view($projectID)
+    // {
         
-        $data['project'] = $this->Project_model->get_project_by_id($projectID);
+    //     $data['project'] = $this->Project_model->get_project_by_id($projectID);
 
-    // Get only local community users
-    $this->load->model('User_model');
-    $data['users'] = $this->User_model->get_local_community_users();
+    //     // Get only local community users
+    //     $this->load->model('User_model');
+    //     $data['users'] = $this->User_model->get_local_community_users();
+        
+    //     $this->load->view('templates/header');
+    //     $this->load->view('templates/sidebar');
+    //     $this->load->view('view_project', $data);
+    //     $this->load->view('templates/footer');
+    // }
 
-    // Get invited members of the project
-    $data['members'] = $this->Project_model->get_project_members($projectID);
-
-    $this->load->view('templates/header');
-    $this->load->view('templates/sidebar');
-    $this->load->view('view_project', $data);
-    $this->load->view('templates/footer');
-
-}
-public function Communityview($projectID)
+    public function view($projectID)
 {
     $data['project'] = $this->Project_model->get_project_by_id($projectID);
 
@@ -107,8 +102,8 @@ public function Communityview($projectID)
     $data['members'] = $this->Project_model->get_project_members($projectID);
 
     $this->load->view('templates/header');
-    $this->load->view('templates/community_sidebar');
-    $this->load->view('community_view_project', $data);
+    $this->load->view('templates/sidebar');
+    $this->load->view('view_project', $data);
     $this->load->view('templates/footer');
 }
 
@@ -187,24 +182,41 @@ public function Communityview($projectID)
             redirect('project/view/' . $projectID);
         }
     }
+
+    // Project Leader Invite User
+    public function invitations() {
+        $userID = $this->session->userdata('userID');
+    
+        $data['invitations'] = $this->Project_model->get_pending_invitations_by_user($userID);
+        $this->load->view('invitations', $data);
+    }
+    
+    public function respond_invitation($memberID, $response) {
+        if (!in_array($response, ['accepted', 'rejected'])) {
+            show_error('Invalid response');
+            return;
+        }
+    
+        $this->db->where('id', $memberID); // Assuming 'id' is primary key of projectMembers
+        $this->db->update('projectMembers', ['status' => $response]);
+    
+        $this->session->set_flashdata('message', 'Invitation ' . $response . ' successfully.');
+        redirect('project/invitations');
+    }
+
+    // Project Leader Remove/Cancel Invitations
+    public function cancel_invitation($memberID, $projectID)
+    {
+        $this->db->where('id', $memberID); // assuming 'id' is the primary key in projectMembers table
+        $this->db->delete('projectMembers');
+        
+        $this->session->set_flashdata('message', 'Invitation cancelled successfully.');
+        redirect('project/view/' . $projectID);
+    }
+    
+
     
     
     
-
-
-
-
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
