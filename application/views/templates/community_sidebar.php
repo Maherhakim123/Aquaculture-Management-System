@@ -69,23 +69,13 @@
 
 
           <li class="nav-item">
-          <a class="nav-link" href="<?= site_url('project/my_projects') ?>">
+            <a href="#" class="nav-link">
               <i class="nav-icon fas fa-file"></i>
               <p>
                 My Project
               </p>
             </a>
           </li>
-
-          <li class="nav-item">
-    <a class="nav-link" href="<?= site_url('project/invitations') ?>">
-        <i class="nav-icon fas fa-envelope-open-text"></i>
-        <p>
-          Project Invitations
-        </p>
-    </a>
-</li>
-
 
 
           <li class="nav-item">
@@ -96,6 +86,8 @@
               </p>
             </a>
           </li>
+
+
 
             </ul>
           </li>
