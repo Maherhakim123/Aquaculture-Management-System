@@ -38,5 +38,17 @@ class Record_model extends CI_Model {
         $this->db->where('recordID', $recordID);
         return $this->db->delete('record');
     }
+
+    // Fetch records by projectID
+public function get_record_by_project_id($projectID) {
+    $this->db->select('record.*, users.userName'); // Select record fields and user's name
+    $this->db->from('record');
+    $this->db->join('users', 'users.userID = record.userID'); // Join with the users table
+    $this->db->where('record.projectID', $projectID); // Filter by projectID
+    $query = $this->db->get();
+    return $query->result_array(); // Return the result as an array
+}
+
+
 }
 ?>

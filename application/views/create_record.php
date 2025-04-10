@@ -69,13 +69,11 @@
     });
 
          // Show success message after form submission
-         function showSuccessMessage() {
+    function showSuccessMessage() {
         // Triggered when the form is submitted
         alert('Progress Record Successfully!');
         return true; // Allow the form to submit
     }
-
-    
 </script>
 
 </body>

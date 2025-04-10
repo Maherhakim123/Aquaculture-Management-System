@@ -18,60 +18,34 @@
 </head>
 <body>
 
-<!-- <div class="content-wrapper"> -->
-    <div class="container p-5">
-        <div class="row justify-content-center">
-            <div class="col-md-12">
-                <div class="card shadow">
-                    <div class="card-header bg-primary text-white text-center">
-                        <h2>Record List</h2>
-                    </div>
-                    <div class="card-body">
-                        <div class="mb-3 text-end">
-                            <a href="<?= site_url('record/create') ?>" class="btn btn-primary"><i class="fas fa-plus"></i> Add New Record</a>
-                        </div>
-                        <table class="table table-bordered table-striped">
-                            <thead class="table-primary text-center">
-                                <tr>
-                                    <th>Record</th>
-                                    <th>Quantity</th>
-                                    <th>Record Date</th>
-                                    <th>Income Generated (RM)</th>
-                                    <th>Condition</th>
-                                    <!-- <th>Project ID</th> -->
-                                    <!-- <th>Actions</th> -->
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php if (!empty($records)): ?>
-                                    <?php foreach ($records as $index => $record): ?>
-                                        <tr>
-                                            <td><?= $index + 1; ?></td>
-                                            <td><?= $record['quantity']; ?></td>
-                                            <td><?= $record['recordDate']; ?></td>
-                                            <td>RM<?= $record['incomeGenerated']; ?></td>
-                                            <td><?= $record['situation']; ?></td>
-                                            <!-- <td><?= $record['projectID']; ?></td> -->
-                                            <!-- <td class="text-center">
-                                                <a href="<?= site_url('record/view/' . $record['recordID']) ?>" class="btn btn-success btn-sm">View</a>
-                                                <a href="<?= site_url('record/edit/' . $record['recordID']) ?>" class="btn btn-warning btn-sm">Edit</a>
-                                                <a href="<?= site_url('record/delete/' . $record['recordID']) ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this record?');">Delete</a>
-                                            </td> -->
-                                        </tr>
-                                    <?php endforeach; ?>
-                                <?php else: ?>
-                                    <tr>
-                                        <td colspan="6" class="text-center">No records found.</td>
-                                    </tr>
-                                <?php endif; ?>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="container">
+    <h2>Project Records</h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Record ID</th>
+                <th>Quantity</th>
+                <th>Record Date</th>
+                <th>Income Generated</th>
+                <th>Situation</th>
+                <th>User Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($records as $record): ?>
+                <tr>
+                    <td><?php echo $record['recordID']; ?></td>
+                    <td><?php echo $record['quantity']; ?></td>
+                    <td><?php echo $record['recordDate']; ?></td>
+                    <td><?php echo $record['incomeGenerated']; ?></td>
+                    <td><?php echo $record['situation']; ?></td>
+                    <td><?php echo $record['userName']; ?></td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
 </div>
+
 
 <!-- Bootstrap Bundle -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
