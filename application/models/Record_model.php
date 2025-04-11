@@ -11,7 +11,7 @@ class Record_model extends CI_Model {
         return $this->db->insert('record', $data);
     }
 
-    public function get_all_records() {
+    public function get_all_records_userID() {
         $this->db->select('record.*, users.userName'); // select record fields and user's name
         $this->db->from('record');
         $this->db->join('users', 'users.userID = record.userID'); // join with user table
@@ -58,6 +58,29 @@ public function get_record_by_project_id($projectID) {
     $query = $this->db->get();
     return $query->result_array(); // Return the result as an array
 }
+
+public function get_record_by_project_id_with_user($projectID) {
+    $this->db->select('record.*, users.userName');  // Corrected table name here
+    $this->db->from('record');  // Corrected table name here
+    $this->db->join('users', 'users.userID = record.userID'); // Corrected table name here
+    $this->db->where('record.projectID', $projectID);  // Corrected table name here
+    $query = $this->db->get();
+    return $query->result_array();
+}
+
+
+public function get_records_by_project($projectID)
+{
+    $this->db->select('record.*, users.userName');
+    $this->db->from('record');
+    $this->db->join('users', 'users.userID = record.userID');
+    $this->db->where('record.projectID', $projectID);
+    return $this->db->get()->result_array();
+}
+
+
+
+
 
 
 }

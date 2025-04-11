@@ -144,39 +144,41 @@
 
 <div class="card mt-4">
     <div class="card-header bg-primary text-white">
-        <h4>Your Progress Records</h4>
+        <h4>
+            <?= ($this->session->userdata('userID') == $project->userID) ? 'All Progress Records in This Project' : 'Your Progress Records' ?>
+        </h4>
     </div>
     <div class="card-body">
-        <table class="table table-bordered table-striped">
-            <thead class="table-primary text-center">
-                <tr>
-                    <th>Record ID</th>
-                    <th>Quantity</th>
-                    <th>Record Date</th>
-                    <th>Income Generated</th>
-                    <th>Situation</th>
-                    <!-- <th>Person In Charge</th> -->
-                </tr>
-            </thead>
-            <tbody>
-                <?php if (!empty($records)): ?>
-                    <?php foreach ($records as $record): ?>
+        <?php if (!empty($records)) : ?>
+            <table class="table table-bordered table-striped">
+                <thead class="table-primary text-center">
+                    <tr>
+                        <th>Date</th>
+                        <th>Quantity</th>
+                        <th>Income</th>
+                        <th>Situation</th>
+                        <?php if ($this->session->userdata('userID') == $project->userID): ?>
+                            <th>User</th>
+                        <?php endif; ?>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($records as $record) : ?>
                         <tr>
-                            <td><?= $record['recordID']; ?></td>
-                            <td><?= $record['quantity']; ?></td>
                             <td><?= $record['recordDate']; ?></td>
+                            <td><?= $record['quantity']; ?></td>
                             <td><?= $record['incomeGenerated']; ?></td>
                             <td><?= $record['situation']; ?></td>
-                            <!-- <td><?= $record['userName']; ?></td> -->
+                            <?php if ($this->session->userdata('userID') == $project->userID): ?>
+                                <td><?= $record['userName']; ?></td>
+                            <?php endif; ?>
                         </tr>
                     <?php endforeach; ?>
-                <?php else: ?>
-                    <tr>
-                        <td colspan="5" class="text-center">No records found.</td>
-                    </tr>
-                <?php endif; ?>
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        <?php else : ?>
+            <p>No records found for this project.</p>
+        <?php endif; ?>
     </div>
 </div>
 

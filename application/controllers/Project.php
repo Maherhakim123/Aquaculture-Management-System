@@ -6,6 +6,9 @@ class Project extends CI_Controller
         parent::__construct();
         $this->load->database(); // Load the database
         $this->load->model('Project_model');  // Load the Project model
+        $this->load->model('User_model'); // ✅ this line is important
+        $this->load->model('Record_model');
+        $this->load->library('session');
     }
 
     public function dashboard()
@@ -88,6 +91,9 @@ class Project extends CI_Controller
         $this->load->view('view_project', $data);
         $this->load->view('templates/footer');
     }
+
+
+
 
     // Edit a project
     public function edit($projectID)
@@ -209,12 +215,6 @@ class Project extends CI_Controller
 
     // Get project by ID
     $data['project'] = $this->Project_model->get_project_by_id($projectID);
-
-    // Optional: Check if logged-in user is part of this project
-    // $userID = $this->session->userdata('userID');
-    // if (!$this->Project_model->is_user_part_of_project($userID, $projectID)) {
-    //     show_error('You are not authorized to view this project.');
-    // }
 
     // Load the view
     $this->load->view('templates/header');
