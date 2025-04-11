@@ -50,6 +50,13 @@
                             </div>
                         </div>
 
+                        <div class="text-end mt-3">
+                            <a href="<?= site_url('record/create/' . $project->projectID) ?>" class="btn btn-success">
+                                + Add Progress Record
+                            </a>
+                        </div>
+
+
 
    
 

@@ -23,6 +23,7 @@
                     </div>
                     <div class="card-body">
                         <form action="<?= site_url('record/store') ?>" method="post">
+                        <input type="hidden" name="projectID" value="<?= isset($projectID) ? $projectID : '' ?>">
                             <div class="mb-2">
                                 <label for="quantity" class="form-label">Quantity:</label>
                                 <input type="number" id="quantity" name="quantity" class="form-control" required>

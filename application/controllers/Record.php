@@ -23,30 +23,39 @@ class Record extends CI_Controller {
     
     //show the record by specific user
     public function userList() {
-        // Get userID from session
         $userID = $this->session->userdata('userID');
-
-        // Fetch specific user records
-        $data['records'] = $this->Record_model->get_record_by_user_id($userID); 
-
-        // Load the view and pass the data
+    
+        // Fetch user records
+        $data['records'] = $this->Record_model->get_record_by_user_id($userID);
+    
+        // Get the project info (assumes all records belong to one project)
+        if (!empty($data['records'])) {
+            $projectID = $data['records'][0]['projectID'];
+            $this->load->model('Project_model');
+            $data['project'] = $this->Project_model->get_project_by_id($projectID);
+        } else {
+            $data['project'] = null;
+        }
+    
+        // Load the view
         $this->load->view('templates/header');
-		$this->load->view('templates/community_sidebar');
+        $this->load->view('templates/community_sidebar');
         $this->load->view('list_record', $data);
-        //$this->load->view('templates/footer');
-
+        $this->load->view('templates/footer');
     }
+    
 
 
 
     // Load create record form
-    public function create() {
+    public function create($projectID = null) {
+        $data['projectID'] = $projectID; // Pass projectID to the form
         $this->load->view('templates/header');
-		$this->load->view('templates/community_sidebar');
-        $this->load->view('create_record');
+        $this->load->view('templates/community_sidebar');
+        $this->load->view('create_record', $data);
         $this->load->view('templates/footer');
-
     }
+    
 
     // Handle form submission
     public function store() {
@@ -55,13 +64,14 @@ class Record extends CI_Controller {
             'recordDate' => $this->input->post('recordDate'),
             'incomeGenerated' => $this->input->post('incomeGenerated'),
             'situation' => $this->input->post('situation'),
-            //'projectID' => $this->input->post('projectID'),
-            'userID' => $this->session->userdata('userID') // assuming session contains userID
+            'projectID' => $this->input->post('projectID'),
+            'userID' => $this->session->userdata('userID')
         );
-
+    
         $this->Record_model->insert_record($data);
         redirect('record/userList');
     }
+    
 
     // Load edit form
     public function edit($id) {

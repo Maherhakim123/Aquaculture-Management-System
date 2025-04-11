@@ -18,17 +18,29 @@
 </head>
 <body>
 
-<div class="container">
-    <h2>Project Records</h2>
-    <table class="table table-bordered">
-        <thead>
+<!-- <div class="content-wrapper"> -->
+    <div class="container p-5">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-white text-center">
+                        <h2>Record List</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3 text-end">
+                        <a href="<?= site_url('record/create/' . $project->projectID) ?>" class="btn btn-success">
+    + Add Progress Record
+</a>
+                        </div>
+                        <table class="table table-bordered table-striped">
+                            <thead class="table-primary text-center">
+                               
             <tr>
                 <th>Record ID</th>
                 <th>Quantity</th>
                 <th>Record Date</th>
                 <th>Income Generated</th>
                 <th>Situation</th>
-                <th>User Name</th>
             </tr>
         </thead>
         <tbody>
@@ -39,13 +51,16 @@
                     <td><?php echo $record['recordDate']; ?></td>
                     <td><?php echo $record['incomeGenerated']; ?></td>
                     <td><?php echo $record['situation']; ?></td>
-                    <td><?php echo $record['userName']; ?></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
-    </table>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
 
 <!-- Bootstrap Bundle -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
