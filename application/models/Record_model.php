@@ -49,14 +49,16 @@ public function get_record_by_project_id($projectID) {
     return $query->result_array(); // Return the result as an array
 }
 
-// public function get_record_by_project_id_with_user($projectID) {
-//     $this->db->select('record.*, users.userName');  // Corrected table name here
-//     $this->db->from('record');  // Corrected table name here
-//     $this->db->join('users', 'users.userID = record.userID'); // Corrected table name here
-//     $this->db->where('record.projectID', $projectID);  // Corrected table name here
-//     $query = $this->db->get();
-//     return $query->result_array();
-// }
+public function get_records_by_user_and_project($userID, $projectID)
+{
+    $this->db->select('record.*, users.userName');
+    $this->db->from('record');
+    $this->db->join('users', 'users.userID = record.userID');
+    $this->db->where('record.userID', $userID);
+    $this->db->where('record.projectID', $projectID);
+    return $this->db->get()->result_array();
+}
+
 
 
 public function get_records_by_project($projectID)

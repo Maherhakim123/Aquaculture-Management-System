@@ -57,6 +57,13 @@
                         </div>
 
 
+                        
+                        <div class="text-end mt-3">
+                        <a href="<?= site_url('record/userList') ?>" class="btn btn-info">Record History</a>
+                        </div>
+
+
+
 
    
 

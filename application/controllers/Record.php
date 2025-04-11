@@ -10,7 +10,7 @@ class Record extends CI_Controller {
         $this->load->library('session');
     }
 
-    // Show all record
+    // Show all record by specific project
     public function index($projectID = null)
 {
     if ($projectID === null) {
@@ -22,7 +22,9 @@ class Record extends CI_Controller {
     // Load views
     $this->load->view('templates/header');
     $this->load->view('templates/sidebar');
-    $this->load->view('list_project_records', $data); // Use a specific view for this
+    $this->load->view('list_project_records', $data);
+    $this->load->view('templates/footer');
+
 }
 
 
@@ -30,62 +32,62 @@ class Record extends CI_Controller {
 
     
     //show the record by specific user
-    // public function userList() {
-    //     $userID = $this->session->userdata('userID');
-    
-    //     // Fetch user records
-    //     $data['records'] = $this->Record_model->get_record_by_user_id($userID);
-    
-    //     // Get the project info (assumes all records belong to one project)
-    //     if (!empty($data['records'])) {
-    //         $projectID = $data['records'][0]['projectID'];
-    //         $this->load->model('Project_model');
-    //         $data['project'] = $this->Project_model->get_project_by_id($projectID);
-    //     } else {
-    //         $data['project'] = null;
-    //     }
-    
-    //     // Load the view
-    //     $this->load->view('templates/header');
-    //     $this->load->view('templates/community_sidebar');
-    //     $this->load->view('list_record', $data);
-    //     $this->load->view('templates/footer');
-    // }
-
     public function userList() {
         $userID = $this->session->userdata('userID');
-        $role = $this->session->userdata('userRole'); // assuming this is set at login
     
-        $this->load->model('Project_model');
+        // Fetch user records
+        $data['records'] = $this->Record_model->get_record_by_user_id($userID);
     
-        // If the user is a project leader
-        if ($role === 'project_leader') {
-            // You might want to retrieve all projects the leader is in charge of
-            $projects = $this->Project_model->get_projects_by_leader($userID); // You need to implement this method
-            $data['projects'] = $projects;
-    
-            $this->load->view('templates/header');
-            $this->load->view('templates/sidebar');
-            $this->load->view('leader_project_list', $data); // you can show all projects and link to view records per project
-            $this->load->view('templates/footer');
-    
+        // Get the project info (assumes all records belong to one project)
+        if (!empty($data['records'])) {
+            $projectID = $data['records'][0]['projectID'];
+            $this->load->model('Project_model');
+            $data['project'] = $this->Project_model->get_project_by_id($projectID);
         } else {
-            // Community member - show only their own records
-            $data['records'] = $this->Record_model->get_record_by_user_id($userID);
-    
-            if (!empty($data['records'])) {
-                $projectID = $data['records'][0]['projectID'];
-                $data['project'] = $this->Project_model->get_project_by_id($projectID);
-            } else {
-                $data['project'] = null;
-            }
-    
-            $this->load->view('templates/header');
-            $this->load->view('templates/community_sidebar');
-            $this->load->view('list_record', $data);
-            $this->load->view('templates/footer');
+            $data['project'] = null;
         }
+    
+        // Load the view
+        $this->load->view('templates/header');
+        $this->load->view('templates/community_sidebar');
+        $this->load->view('list_user_records', $data);
+        $this->load->view('templates/footer');
     }
+
+    // public function userList() {
+    //     $userID = $this->session->userdata('userID');
+    //     $role = $this->session->userdata('userRole'); // assuming this is set at login
+    
+    //     $this->load->model('Project_model');
+    
+    //     // If the user is a project leader
+    //     if ($role === 'project_leader') {
+    //         // You might want to retrieve all projects the leader is in charge of
+    //         $projects = $this->Project_model->get_projects_by_leader($userID); // You need to implement this method
+    //         $data['projects'] = $projects;
+    
+    //         $this->load->view('templates/header');
+    //         $this->load->view('templates/sidebar');
+    //         $this->load->view('leader_project_list', $data); // you can show all projects and link to view records per project
+    //         $this->load->view('templates/footer');
+    
+    //     } else {
+    //         // Community member - show only their own records
+    //         $data['records'] = $this->Record_model->get_record_by_user_id($userID);
+    
+    //         if (!empty($data['records'])) {
+    //             $projectID = $data['records'][0]['projectID'];
+    //             $data['project'] = $this->Project_model->get_project_by_id($projectID);
+    //         } else {
+    //             $data['project'] = null;
+    //         }
+    
+    //         $this->load->view('templates/header');
+    //         $this->load->view('templates/community_sidebar');
+    //         $this->load->view('list_record', $data);
+    //         $this->load->view('templates/footer');
+    //     }
+    // }
     
     
 
@@ -145,6 +147,22 @@ class Record extends CI_Controller {
         redirect('record');
     }
 
+
+    public function userProjectRecord($userID, $projectID)
+{
+    $this->load->model('Project_model');
+
+    $data['records'] = $this->Record_model->get_records_by_user_and_project($userID, $projectID);
+    $data['project'] = $this->Project_model->get_project_by_id($projectID);
+    $data['user'] = $this->User_model->get_user_by_id($userID); // Optional if you want to display user info
+
+    $this->load->view('templates/header');
+    $this->load->view('templates/sidebar'); // or community_sidebar depending on role
+    $this->load->view('list_user_project_record', $data);
+    $this->load->view('templates/footer');
+}
+
+
     // Controller method to view all records in a specific project (for project leaders)
     public function projectRecords($projectID) {
         // Load required models if not already loaded
@@ -163,6 +181,7 @@ class Record extends CI_Controller {
         $this->load->view('list_project_records', $data); // you'll need to create this view
         $this->load->view('templates/footer');
     }
+
     
 
 
