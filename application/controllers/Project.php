@@ -153,15 +153,7 @@ class Project extends CI_Controller
         }
     }
 
-    // Project Leader Remove/Cancel Invitations
-    public function cancel_invitation($memberID, $projectID)
-    {
-        $this->db->where('id', $memberID); // assuming 'id' is the primary key in projectMembers table
-        $this->db->delete('projectMembers');
 
-        $this->session->set_flashdata('message', 'Invitation cancelled successfully.');
-        redirect('project/view/' . $projectID);
-    }
 
     // View invitations for the current local community user
     public function invitations()
@@ -223,5 +215,17 @@ class Project extends CI_Controller
     $this->load->view('community_view_project', $data);
     $this->load->view('templates/footer');
 }
+
+public function remove_member($projectID, $userID)
+{
+    // Make sure user is logged in and is a project leader (add your own check here if needed)
+
+    $this->load->model('Project_model');
+    $this->Project_model->remove_project_member($projectID, $userID);
+
+    // Redirect back to the project view
+    redirect('project/view/' . $projectID);
+}
+
 
 }

@@ -101,7 +101,7 @@
                 <th>Name</th>
                 <th>Email</th>
                 <th>Status</th>
-                <th>Action</th>
+                <th>Action</th> <!-- Add this for the remove button -->
             </tr>
         </thead>
         <tbody>
@@ -118,6 +118,14 @@
                             <span class="badge badge-warning">Pending</span>
                         <?php endif; ?>
                     </td>
+                    <td>
+                    <a href="<?= base_url('project/remove_member/' . $project->projectID . '/' . $member->userID) ?>"
+                        class="btn btn-sm btn-danger"
+                        onclick="return confirm('Are you sure you want to remove this member from the project?');">
+                        Remove
+                    </a>
+
+                    </td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
@@ -125,7 +133,6 @@
 <?php else: ?>
     <p>No members have been invited yet.</p>
 <?php endif; ?>
-
 
         
         </div>

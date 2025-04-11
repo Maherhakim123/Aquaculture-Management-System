@@ -73,13 +73,16 @@ class Project_model extends CI_Model {
     }
 
     public function get_project_members($projectID) {
-        $this->db->select('u.userName, u.userEmail, pm.status');
+        // Include userID in the select statement
+        $this->db->select('u.userID, u.userName, u.userEmail, pm.status');
         $this->db->from('projectMembers pm');
         $this->db->join('users u', 'pm.userID = u.userID');
         $this->db->where('pm.projectID', $projectID);
         $query = $this->db->get();
-        return $query->result(); // Return list of invited users
+        return $query->result(); // Return list of invited users with userID
     }
+    
+
 
     
 
@@ -99,6 +102,14 @@ class Project_model extends CI_Model {
         $query = $this->db->get();
         return $query->result();
     }
+
+    public function remove_project_member($projectID, $userID)
+{
+    $this->db->where('projectID', $projectID);
+    $this->db->where('userID', $userID);
+    $this->db->delete('projectmembers');
+}
+
 
 
 
