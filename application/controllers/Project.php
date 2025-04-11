@@ -78,6 +78,11 @@ class Project extends CI_Controller
 
         $data['projectID'] = $projectID;
 
+        // Get logged-in user's ID and their records for this project
+    $this->load->model('Record_model');
+    $userID = $this->session->userdata('userID');
+    $data['records'] = $this->Record_model->get_record_by_user_and_project($userID, $projectID);
+
         $this->load->view('templates/header');
         $this->load->view('templates/sidebar');
         $this->load->view('view_project', $data);
