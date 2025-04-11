@@ -11,14 +11,20 @@ class Record extends CI_Controller {
     }
 
     // Show all record
-    public function index() {
-        $data['records'] = $this->Record_model->get_all_records_userID(); // Fetch all records
-
-        // Load the view and pass the data
-        $this->load->view('templates/header');
-        $this->load->view('templates/sidebar');
-        $this->load->view('list_ALLrecord', $data);
+    public function index($projectID = null)
+{
+    if ($projectID === null) {
+        show_404(); // Handle case where no project ID is provided
     }
+
+    $data['records'] = $this->Record_model->get_records_by_project($projectID); // Get records for specific project
+
+    // Load views
+    $this->load->view('templates/header');
+    $this->load->view('templates/sidebar');
+    $this->load->view('list_project_records', $data); // Use a specific view for this
+}
+
 
     
 

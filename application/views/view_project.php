@@ -51,6 +51,10 @@
 
             <a href="<?php echo site_url('phase/index/'.$project->projectID); ?>" class="btn btn-primary btn-sm">View Phases</a>
 
+            <a href="<?php echo site_url('record/index/'.$project->projectID); ?>" class="btn btn-primary btn-sm">View Record</a>
+            
+
+
 
 
         
@@ -141,7 +145,7 @@
     <p>No members have been invited yet.</p>
 <?php endif; ?>
 
-
+<!-- 
 <div class="card mt-4">
     <div class="card-header bg-primary text-white">
         <h4>
@@ -180,7 +184,7 @@
             <p>No records found for this project.</p>
         <?php endif; ?>
     </div>
-</div>
+</div> -->
 
 
 
