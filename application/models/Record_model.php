@@ -26,16 +26,6 @@ class Record_model extends CI_Model {
         return $query->result_array(); // Return the result as an array
     }
 
-    // isi balik
-    public function get_record_by_user_and_project($userID, $projectID)
-{
-    $this->db->where('userID', $userID);
-    $this->db->where('projectID', $projectID);
-    $query = $this->db->get('record');
-    return $query->result_array();
-}
-
-
 
     // Update a record
     public function update_record($recordID, $data) {

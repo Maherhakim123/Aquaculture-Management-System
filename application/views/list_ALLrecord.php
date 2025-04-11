@@ -43,43 +43,27 @@
 </thead>
 
 <tbody>
-    <div class="card mt-4">
-    <div class="card-header bg-primary text-white">
-        <h4>Your Progress Records</h4>
-    </div>
-    <div class="card-body">
-        <table class="table table-bordered table-striped">
-            <thead class="table-primary text-center">
-                <tr>
-                    <th>Record ID</th>
-                    <th>Quantity</th>
-                    <th>Record Date</th>
-                    <th>Income Generated</th>
-                    <th>Situation</th>
-                    <!-- <th>Person In Charge</th> -->
-                </tr>
-            </thead>
-            <tbody>
-                <?php if (!empty($records)): ?>
-                    <?php foreach ($records as $record): ?>
-                        <tr>
-                            <td><?= $record['recordID']; ?></td>
-                            <td><?= $record['quantity']; ?></td>
-                            <td><?= $record['recordDate']; ?></td>
-                            <td><?= $record['incomeGenerated']; ?></td>
-                            <td><?= $record['situation']; ?></td>
-                            <!-- <td><?= $record['userName']; ?></td> -->
-                        </tr>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <tr>
-                        <td colspan="5" class="text-center">No records found.</td>
-                    </tr>
-                <?php endif; ?>
-            </tbody>
-        </table>
-    </div>
-</div>
+    <?php if (!empty($records)): ?>
+        <?php foreach ($records as $index => $record): ?>
+            <tr>
+                <td><?= $index + 1; ?></td>
+                <td><?= $record['quantity']; ?></td>
+                <td><?= $record['recordDate']; ?></td>
+                <td>RM<?= $record['incomeGenerated']; ?></td>
+                <td><?= $record['situation']; ?></td>
+                <td><?= $record['userName']; ?></td> <!-- Display user name -->
+                <td class="text-center">
+                    <a href="<?= site_url('record/view/' . $record['recordID']) ?>" class="btn btn-success btn-sm">View</a>
+                    <a href="<?= site_url('record/edit/' . $record['recordID']) ?>" class="btn btn-warning btn-sm">Edit</a>
+                    <a href="<?= site_url('record/delete/' . $record['recordID']) ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this record?');">Delete</a>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <tr>
+            <td colspan="7" class="text-center">No records found.</td>
+        </tr>
+    <?php endif; ?>
 </tbody>
 
                         </table>
