@@ -76,6 +76,8 @@ class Project extends CI_Controller
         // Get invited members of the project
         $data['members'] = $this->Project_model->get_project_members($projectID);
 
+        $data['projectID'] = $projectID;
+
         $this->load->view('templates/header');
         $this->load->view('templates/sidebar');
         $this->load->view('view_project', $data);
@@ -216,12 +218,23 @@ class Project extends CI_Controller
     $this->load->view('templates/footer');
 }
 
+
+// Project leader remove member project has been invited
 public function remove_member($projectID, $userID)
 {
-    // Make sure user is logged in and is a project leader (add your own check here if needed)
-
     $this->load->model('Project_model');
     $this->Project_model->remove_project_member($projectID, $userID);
+
+    // Redirect back to the project view
+    redirect('project/view/' . $projectID);
+}
+
+
+// Project leader cancels a pending invitation
+public function cancel_invitation($projectID, $userID)
+{
+    $this->load->model('Project_model');
+    $this->Project_model->remove_project_member($projectID, $userID); // Same model method reused
 
     // Redirect back to the project view
     redirect('project/view/' . $projectID);

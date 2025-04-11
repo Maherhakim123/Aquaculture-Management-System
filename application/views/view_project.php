@@ -101,7 +101,7 @@
                 <th>Name</th>
                 <th>Email</th>
                 <th>Status</th>
-                <th>Action</th> <!-- Add this for the remove button -->
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -119,12 +119,19 @@
                         <?php endif; ?>
                     </td>
                     <td>
-                    <a href="<?= base_url('project/remove_member/' . $project->projectID . '/' . $member->userID) ?>"
-                        class="btn btn-sm btn-danger"
-                        onclick="return confirm('Are you sure you want to remove this member from the project?');">
-                        Remove
-                    </a>
-
+                        <?php if ($member->status == 'accepted'): ?>
+                            <a href="<?= base_url('project/remove_member/' . $projectID . '/' . $member->userID) ?>"
+                               class="btn btn-sm btn-danger w-30"
+                               onclick="return confirm('Are you sure you want to remove this member from the project?');">
+                               Remove
+                            </a>
+                        <?php elseif ($member->status == 'pending'): ?>
+                            <a href="<?= base_url('project/cancel_invitation/' . $projectID . '/' . $member->userID) ?>"
+                               class="btn btn-sm btn-info w-30"
+                               onclick="return confirm('Are you sure you want to cancel the invitation?');">
+                               Cancel
+                            </a>
+                        <?php endif; ?>
                     </td>
                 </tr>
             <?php endforeach; ?>
@@ -133,6 +140,7 @@
 <?php else: ?>
     <p>No members have been invited yet.</p>
 <?php endif; ?>
+
 
         
         </div>

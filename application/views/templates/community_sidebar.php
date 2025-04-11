@@ -78,10 +78,12 @@
           </li>
 
           <li class="nav-item">
-    <a class="nav-link" href="<?= site_url('project/invitations') ?>">
+          <a class="nav-link" href="<?= site_url('project/invitations') ?>">
         <i class="nav-icon fas fa-envelope-open-text"></i>
-        <span>Project Invitations</span>
-    </a>
+              <p>
+                Project Invitations
+            </p>
+        </a>
 </li>
 
 
