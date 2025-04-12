@@ -7,6 +7,13 @@ class Project_model extends CI_Model {
         return $status;
     }
 
+    public function get_projects_by_leader($userID) {
+        return $this->db->get_where('project', ['userID' => $userID])->result();
+    }
+    
+    
+    
+
     public function get_all_projects() {
         $query = $this->db->get('project'); // Fetch data from the 'project' table
         return $query->result(); // Return results as an array of objects

@@ -61,12 +61,16 @@ class Project extends CI_Controller
     // Fetch all projects and display them
     public function list()
     {
+        $userID = $this->session->userdata('userID');
+        $data['projects'] = $this->Project_model->get_projects_by_leader($userID); // Fetch projects from the model
         $this->load->view('templates/header');
         $this->load->view('templates/sidebar');
-        $data['projects'] = $this->Project_model->get_all_projects(); // Fetch projects from the model
         $this->load->view('list_project', $data); // Load the view and pass the data
         $this->load->view('templates/footer');
     }
+
+
+
 
     public function view($projectID)
     {
