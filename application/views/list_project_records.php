@@ -22,7 +22,7 @@
                             <thead>
                                 <tr>
                                     <th>Record ID</th>
-                                    <th>User Name</th>
+                                    <th>Person In Charge</th>
                                     <th>Quantity</th>
                                     <th>Record Date</th>
                                     <th>Income Generated</th>
@@ -30,25 +30,26 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($records as $record) : ?>
-                                    <tr>
-                                        <td><?= $record['recordID']; ?></td>
-                                        <td><?= $record['userName']; ?></td>
-                                        <td><?= $record['quantity']; ?></td>
-                                        <td><?= date("d M Y", strtotime($record['recordDate'])); ?></td>
-                                        <td>RM <?= number_format($record['incomeGenerated'], 2); ?></td>
-                                        <td>
-                                            <?php if ($record['situation'] == 'Good') : ?>
-                                                <span class="badge badge-success"><?= $record['situation']; ?></span>
-                                            <?php elseif ($record['situation'] == 'Moderate') : ?>
-                                                <span class="badge badge-warning"><?= $record['situation']; ?></span>
-                                            <?php else : ?>
-                                                <span class="badge badge-danger"><?= $record['situation']; ?></span>
-                                            <?php endif; ?>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            </tbody>
+    <?php $i = 1; foreach ($records as $record) : ?>
+        <tr>
+            <td><?= $i++; ?></td> <!-- Row number starts from 1 -->
+            <td><?= $record['userName']; ?></td>
+            <td><?= $record['quantity']; ?></td>
+            <td><?= date("d M Y", strtotime($record['recordDate'])); ?></td>
+            <td>RM <?= number_format($record['incomeGenerated'], 2); ?></td>
+            <td>
+                <?php if ($record['situation'] == 'Good') : ?>
+                    <span class="badge badge-success"><?= $record['situation']; ?></span>
+                <?php elseif ($record['situation'] == 'Moderate') : ?>
+                    <span class="badge badge-warning"><?= $record['situation']; ?></span>
+                <?php else : ?>
+                    <span class="badge badge-danger"><?= $record['situation']; ?></span>
+                <?php endif; ?>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+</tbody>
+
                         </table>
                     </div>
                 <?php else : ?>

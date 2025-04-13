@@ -31,7 +31,7 @@
                     <table class="table table-bordered table-striped">
                         <thead class="table-primary text-center">
                             <tr>
-                                <th>#</th>
+                                <th>Project</th>
                                 <th>Project Name</th>
                                 <th>Location</th>
                                 <th style="width: 100px;">Start Date</th>
