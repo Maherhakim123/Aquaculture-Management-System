@@ -5,6 +5,7 @@ class Phase extends CI_Controller {
         parent::__construct();
         $this->load->database();
         $this->load->model('Phase_model');
+        $this->load->model('Activity_model');
     }
 
     // Show phase for a specific project
@@ -22,6 +23,7 @@ class Phase extends CI_Controller {
     // View details of a specific phase
 public function view($phaseID) {
     $data['phase'] = $this->Phase_model->get_phase_by_id($phaseID);
+    $data['activities'] = $this->Activity_model->get_activities_by_phase($phaseID);
 
     if (!$data['phase']) {
         show_404();

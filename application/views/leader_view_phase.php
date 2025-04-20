@@ -28,20 +28,90 @@
             <h3>Phase Details</h3>
           </div>
           <div class="card-body">
-            <table class="table table-bordered">
+
+            <!-- Phase Info -->
+            <table class="table table-bordered mb-4">
               <tbody>
                 <tr>
                   <th style="width: 30%;">Phase Name</th>
                   <td><?= $phase->phaseName ?></td>
                 </tr>
-
+                <tr>
+                  <th>Start Date</th>
+                  <td><?= $phase->startDate ?></td>
+                </tr>
+                <tr>
+                  <th>Deadline</th>
+                  <td><?= $phase->deadline ?></td>
+                </tr>
+              </tbody>
             </table>
 
+           <!-- Form to add activity -->
+<h5>Add New Activity</h5>
+<form method="post" action="<?= site_url('activity/add/' . $phase->phaseID) ?>">
+  <div class="form-group">
+    <label>Activity Type</label>
+    <input type="text" name="activityType" class="form-control" required>
+  </div>
+  <div class="form-group">
+    <label>Activity Name</label>
+    <input type="text" name="activityName" class="form-control" required>
+  </div>
+  <div class="form-group">
+    <label>Comment</label>
+    <textarea name="comment" class="form-control" rows="3" required></textarea>
+  </div>
+  <div class="form-group">
+    <label>Date</label>
+    <input type="datetime-local" name="recordDate" class="form-control" required>
+  </div>
+  <button type="submit" class="btn btn-success mt-2">
+    <i class="fas fa-plus"></i> Add Activity
+  </button>
+</form>
+
+
+            <hr>
+
+            <!-- Display existing activities -->
+            <h5 class="mt-4">Activity History</h5>
+            <table class="table table-striped table-bordered">
+              <thead class="thead-dark">
+                <tr>
+                  <th>#</th>
+                  <th>Type</th>
+                  <th>Name</th>
+                  <th>Comment</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php if (!empty($activities)): ?>
+                  <?php foreach ($activities as $index => $activity): ?>
+                    <tr>
+                      <td><?= $index + 1 ?></td>
+                      <td><?= $activity->activityType ?></td>
+                      <td><?= $activity->activityName ?></td>
+                      <td><?= $activity->comment ?></td>
+                      <td><?= date('d M Y, h:i A', strtotime($activity->recordDate)) ?></td>
+                    </tr>
+                  <?php endforeach; ?>
+                <?php else: ?>
+                  <tr>
+                    <td colspan="5" class="text-center">No activities recorded yet.</td>
+                  </tr>
+                <?php endif; ?>
+              </tbody>
+            </table>
+
+            <!-- Back button -->
             <div class="text-center mt-4">
               <a href="<?= site_url('phase/index/' . $phase->projectID) ?>" class="btn btn-secondary">
                 <i class="fas fa-arrow-left"></i> Back to Phases
               </a>
             </div>
+
           </div>
         </div>
       </div>
