@@ -17,6 +17,22 @@ class Phase extends CI_Controller {
         $this->load->view('phase_list', $data);
         $this->load->view('templates/footer');
     }
+
+
+    // View details of a specific phase
+public function view($phaseID) {
+    $data['phase'] = $this->Phase_model->get_phase_by_id($phaseID);
+
+    if (!$data['phase']) {
+        show_404();
+    }
+
+    $this->load->view('templates/header');
+    $this->load->view('templates/sidebar');
+    $this->load->view('leader_view_phase', $data);
+    $this->load->view('templates/footer');
+}
+
     
 
     // Show form to create a new phase

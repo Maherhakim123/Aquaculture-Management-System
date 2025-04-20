@@ -24,16 +24,20 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($phases as $phase): ?>
-                    <tr>
-                        <td><?= $phase->phaseName; ?></td>
-                        <td><?= $phase->startDate; ?></td>
-                        <td><?= $phase->deadline; ?></td>
-                        <td><?= $phase->status; ?></td>
-                        <td><?= $phase->progress; ?>%</td>
-                    </tr>
-                <?php endforeach; ?>
-            </tbody>
+    <?php foreach ($phases as $phase): ?>
+        <tr>
+            <td><?= $phase->phaseName; ?></td>
+            <td><?= $phase->startDate; ?></td>
+            <td><?= $phase->deadline; ?></td>
+            <td><?= $phase->status; ?></td>
+            <td><?= $phase->progress; ?>%</td>
+            <td>
+                <a href="<?= site_url('phase/view/' . $phase->phaseID); ?>" class="btn btn-info btn-sm">View</a>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+</tbody>
+
         </table>
     </div>
 </div>
