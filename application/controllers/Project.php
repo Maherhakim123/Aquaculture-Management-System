@@ -244,5 +244,16 @@ public function cancel_invitation($projectID, $userID)
     redirect('project/view/' . $projectID);
 }
 
+// Beneficiary reject a pending invitation
+public function reject_invitation($projectID, $userID)
+{
+    $this->load->model('Project_model');
+    $this->Project_model->remove_project_member($projectID, $userID); // Same model method reused
+
+    // Redirect back to the project view
+    redirect('project/invitations');
+
+}
+
 
 }

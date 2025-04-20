@@ -76,7 +76,7 @@
             <select id="role" name="userRole" class="form-control">
                 <option value="" disabled selected>Choose your role</option>
                 <option value="Project Leader">Project Leader</option>
-                <option value="Local Community">Local Community</option>
+                <option value="Local Community">Beneficiary</option>
             </select>
         </div>
         <button type="submit" class="btn btn-primary btn-block">Register</button>

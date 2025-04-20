@@ -44,14 +44,13 @@
                                                 </button>
                                             </form>
                                             <!-- Optional: Add Reject Button -->
-                                            <!--
-                                            <form action="<?= site_url('project/reject_invitation') ?>" method="POST" class="d-inline">
-                                                <input type="hidden" name="projectID" value="<?= $invitation->projectID ?>">
-                                                <button type="submit" class="btn btn-danger btn-sm">
-                                                    <i class="fas fa-times"></i> Reject
-                                                </button>
-                                            </form>
-                                            -->
+                                            <a href="<?= site_url('project/reject_invitation/' . $invitation->projectID . '/' . $invitation->userID) ?>>" 
+                                                class="btn btn-danger btn-sm" 
+                                                onclick="return confirm('Are you sure you want to reject this invitation?');">
+                                                Reject
+                                            </a>
+
+                                           
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
