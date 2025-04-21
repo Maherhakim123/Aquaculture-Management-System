@@ -83,7 +83,7 @@
         <div class="form-group">
             <label for="userID">Select User</label>
             <select name="userID" class="form-control" required>
-                <option value="">Select Local Community Member</option>
+                <option value="">Select Member</option>
                 <?php foreach ($users as $user): ?>
                     <option value="<?= $user->userID ?>"><?= $user->userName ?> (<?= $user->userEmail ?>)</option>
                 <?php endforeach; ?>
@@ -93,7 +93,7 @@
         <button type="submit" class="btn btn-primary mt-2">Invite</button>
     </form>
 <?php else: ?>
-    <p>No local community members available.</p>
+    <p>No Project Member.</p>
 <?php endif; ?>
 
 
