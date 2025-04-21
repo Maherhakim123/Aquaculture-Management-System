@@ -50,7 +50,7 @@
                         <select id="role" class="form-control" name="userRole" required>
                             <option value="">Select Role</option>
                             <option value="Project Leader">Project Leader</option>
-                            <option value="Community Member">Community Member</option>
+                            <option value="Community Member">Beneficiary</option>
                         </select>
                     </div>
                     <div class="mb-3 form-check">

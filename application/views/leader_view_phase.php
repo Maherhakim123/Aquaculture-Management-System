@@ -25,7 +25,7 @@
       <div class="col-md-10">
         <div class="card shadow">
           <div class="card-header bg-primary text-white text-center">
-            <h3>Phase Details</h3>
+            <h3>Phase Activity Details</h3>
           </div>
           <div class="card-body">
 
@@ -46,30 +46,6 @@
                 </tr>
               </tbody>
             </table>
-
-           <!-- Form to add activity -->
-<h5>Add New Activity</h5>
-<form method="post" action="<?= site_url('activity/add/' . $phase->phaseID) ?>">
-  <div class="form-group">
-    <label>Activity Type</label>
-    <input type="text" name="activityType" class="form-control" required>
-  </div>
-  <div class="form-group">
-    <label>Activity Name</label>
-    <input type="text" name="activityName" class="form-control" required>
-  </div>
-  <div class="form-group">
-    <label>Comment</label>
-    <textarea name="comment" class="form-control" rows="3" required></textarea>
-  </div>
-  <div class="form-group">
-    <label>Date</label>
-    <input type="datetime-local" name="recordDate" class="form-control" required>
-  </div>
-  <button type="submit" class="btn btn-success mt-2">
-    <i class="fas fa-plus"></i> Add Activity
-  </button>
-</form>
 
 
             <hr>
@@ -105,12 +81,71 @@
               </tbody>
             </table>
 
-            <!-- Back button -->
-            <div class="text-center mt-4">
-              <a href="<?= site_url('phase/index/' . $phase->projectID) ?>" class="btn btn-secondary">
-                <i class="fas fa-arrow-left"></i> Back to Phases
-              </a>
-            </div>
+            <hr>
+
+            
+  <!-- Toggle Button -->
+<div class="text-center mb-3">
+    <button class="btn btn-primary" onclick="toggleForm()">
+        <i class="fas fa-plus"></i> Add Activity
+    </button>
+</div>
+
+<!-- Hidden Form -->
+<div id="activityForm" style="display: none;">
+    <form method="post" action="<?= site_url('activity/add/' . $phase->phaseID) ?>">
+   <!-- Activity Type -->
+<div class="form-group">
+  <label>
+    Activity Type
+    <span
+      class="badge badge-info rounded-circle"
+      role="button"
+      onclick="revealActivityName()"
+      style="cursor: pointer; margin-left: 5px;"
+      title="Click to enter activity name"
+    >
+      i
+    </span>
+  </label>
+  <select name="activityType" class="form-control" required>
+    <option value="">-- Select Activity Type --</option>
+    <option value="Spending">Spending</option>
+    <option value="Income Generation">Income Generation</option>
+    <option value="Assets">Assets</option>
+    <option value="Water Quality">Water Quality</option>
+  </select>
+</div>
+
+<!-- Activity Name (hidden initially) -->
+<div class="form-group" id="activityNameGroup" style="display: none;">
+  <label>Activity Name</label>
+  <input type="text" name="activityName" class="form-control">
+</div>
+
+
+
+        <div class="form-group">
+            <label>Comment(Optional)</label>
+            <textarea name="comment" class="form-control" rows="3" required></textarea>
+        </div>
+        <div class="form-group">
+            <label>Date</label>
+            <input type="datetime-local" name="recordDate" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-success mt-2">
+            <i class="fas fa-plus"></i> Submit Activity
+        </button>
+    </form>
+</div>
+
+<!-- Back Button -->
+<div class="text-center mt-4">
+    <a href="<?= site_url('phase/index/' . $phase->projectID) ?>" class="btn btn-secondary">
+        <i class="fas fa-arrow-left"></i> Back to Phases
+    </a>
+</div>
+
 
           </div>
         </div>
@@ -118,6 +153,31 @@
     </div>
   </div>
 </div>
+
+
+
+
+<!-- JavaScript to toggle form -->
+<script>
+    function toggleForm() {
+        const formDiv = document.getElementById("activityForm");
+        if (formDiv.style.display === "none") {
+            formDiv.style.display = "block";
+        } else {
+            formDiv.style.display = "none";
+        }
+    }
+
+    function revealActivityName() {
+    document.getElementById('activityNameGroup').style.display = 'block';
+  }
+</script>
+
+</script>
+
+
+
+
 
 <!-- Optional: Bootstrap JS Bundle -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>

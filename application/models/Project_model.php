@@ -11,6 +11,10 @@ class Project_model extends CI_Model {
         return $this->db->get_where('project', ['userID' => $userID])->result();
     }
     
+    public function count_projects_by_leader($userID){
+    return $this->db->where('userID', $userID)->count_all_results('project');
+    }
+
     
     
 

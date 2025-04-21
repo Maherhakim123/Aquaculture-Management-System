@@ -11,13 +11,26 @@ class Project extends CI_Controller
         $this->load->library('session');
     }
 
+    // public function dashboard()
+    // {
+    //     $this->load->view('templates/header');
+    //     $this->load->view('templates/sidebar');
+    //     $this->load->view('dashboard');
+    //     $this->load->view('templates/footer');
+    // }
+
+
     public function dashboard()
-    {
-        $this->load->view('templates/header');
-        $this->load->view('templates/sidebar');
-        $this->load->view('dashboard');
-        $this->load->view('templates/footer');
-    }
+{
+    $userID = $this->session->userdata('userID'); // Get logged in user's ID
+    $data['project_count'] = $this->Project_model->count_projects_by_leader($userID); // Fetch project count
+
+    $this->load->view('templates/header');
+    $this->load->view('templates/sidebar');
+    $this->load->view('dashboard', $data); 
+    $this->load->view('templates/footer');
+}
+
 
     // Display the form to create a new project
     public function create()

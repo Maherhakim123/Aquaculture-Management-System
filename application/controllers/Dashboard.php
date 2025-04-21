@@ -6,16 +6,39 @@ class Dashboard extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('Register_model'); // Load the user model
+		$this->load->model('Project_model');
         $this->load->library('session'); // Load session library
     }
 
-    // public function dashboard() {
-    //     $this->load->view('templates/header');
-    //     $this->load->view('templates/sidebar');
-    //     $this->load->view('dashboard');
-    //     $this->load->view('templates/footer');
-    // }
 
+	// public function dashboard() {
+	// 	// Check if the user is logged in
+	// 	if (!$this->session->userdata('logged_in')) {
+	// 		redirect('auth/login');
+	// 	}
+	
+	// 	// Get user role from session
+	// 	$userRole = $this->session->userdata('userRole');
+	
+	// 	// Load header
+	// 	$this->load->view('templates/header');
+	
+	// 	// Load sidebar based on user role
+	// 	if ($userRole == 'Project Leader') {
+	// 		$this->load->view('templates/sidebar');  // Sidebar for Project Leader
+	// 	} else {
+	// 		$this->load->view('templates/community_sidebar');  // Sidebar for Community Member
+	// 	}
+	
+	// 	// Load main dashboard content
+	// 	$this->load->view('dashboard');
+	
+	// 	// Load footer
+	// 	$this->load->view('templates/footer');
+	// }
+
+
+	
 	public function dashboard() {
 		// Check if the user is logged in
 		if (!$this->session->userdata('logged_in')) {
@@ -24,6 +47,9 @@ class Dashboard extends CI_Controller {
 	
 		// Get user role from session
 		$userRole = $this->session->userdata('userRole');
+		$userID = $this->session->userdata('userID');
+		$data['project_count'] = $this->Project_model->count_projects_by_leader($userID);
+
 	
 		// Load header
 		$this->load->view('templates/header');
@@ -36,8 +62,7 @@ class Dashboard extends CI_Controller {
 		}
 	
 		// Load main dashboard content
-		$this->load->view('dashboard');
-	
+		$this->load->view('dashboard', $data);	
 		// Load footer
 		$this->load->view('templates/footer');
 	}
