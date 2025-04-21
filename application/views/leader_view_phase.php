@@ -51,37 +51,49 @@
             <hr>
 
             <!-- Display existing activities -->
-            <h5 class="mt-4">Activity History</h5>
-            <table class="table table-striped table-bordered">
-              <thead class="thead-dark">
-                <tr>
-                  <th>#</th>
-                  <th>Type</th>
-                  <th>Name</th>
-                  <th>Comment</th>
-                  <th>Date</th>
-                </tr>
-              </thead>
-              <tbody>
-                <?php if (!empty($activities)): ?>
-                  <?php foreach ($activities as $index => $activity): ?>
-                    <tr>
-                      <td><?= $index + 1 ?></td>
-                      <td><?= $activity->activityType ?></td>
-                      <td><?= $activity->activityName ?></td>
-                      <td><?= $activity->comment ?></td>
-                      <td><?= date('d M Y, h:i A', strtotime($activity->recordDate)) ?></td>
-                    </tr>
-                  <?php endforeach; ?>
-                <?php else: ?>
-                  <tr>
-                    <td colspan="5" class="text-center">No activities recorded yet.</td>
-                  </tr>
-                <?php endif; ?>
-              </tbody>
-            </table>
+            <!-- Display existing activities -->
+<h5 class="mt-4">Activity History</h5>
+<table class="table table-striped table-bordered">
+  <thead class="thead-dark">
+    <tr>
+      <th>#</th>
+      <th>Type</th>
+      <th>Name</th>
+      <th>Comment</th>
+      <th>Date</th>
+      <th>Actions</th> <!-- New column for Edit/Delete -->
+    </tr>
+  </thead>
+  <tbody>
+    <?php if (!empty($activities)): ?>
+      <?php foreach ($activities as $index => $activity): ?>
+        <tr>
+          <td><?= $index + 1 ?></td>
+          <td><?= $activity->activityType ?></td>
+          <td><?= $activity->activityName ?></td>
+          <td><?= $activity->comment ?></td>
+          <td><?= date('d M Y, h:i A', strtotime($activity->recordDate)) ?></td>
+          <td class="text-center">
+            <a href="<?= site_url('activity/edit/' . $activity->activityID) ?>" class="btn btn-warning btn-sm">
+                Edit
+            </a>
+            <a href="<?= site_url('activity/delete/' . $activity->activityID . '/' . $phase->phaseID) ?>" 
+                class="btn btn-danger btn-sm" 
+                onclick="return confirm('Are you sure you want to delete this activity?')">
+                Delete
+            </a>
+            </td>
+        </tr>
+      <?php endforeach; ?>
+    <?php else: ?>
+      <tr>
+        <td colspan="6" class="text-center">No activities recorded yet.</td>
+      </tr>
+    <?php endif; ?>
+  </tbody>
+</table>
 
-            <hr>
+    <hr>
 
             
   <!-- Toggle Button -->
@@ -127,7 +139,7 @@
 
         <div class="form-group">
             <label>Comment(Optional)</label>
-            <textarea name="comment" class="form-control" rows="3" required></textarea>
+            <textarea name="comment" class="form-control" rows="3" ></textarea>
         </div>
         <div class="form-group">
             <label>Date</label>
