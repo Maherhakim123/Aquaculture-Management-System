@@ -27,7 +27,7 @@
             <div class="col-md-6">
                 <div class="card shadow">
                     <div class="card-header bg-primary text-white text-center">
-                        <h2>EDIT NEW PROJECT</h2>
+                        <h2>EDIT PROJECT</h2>
                     </div>
                     <div class="card-body">
                         <form action="<?php echo base_url('project/update') ?>" method="POST">

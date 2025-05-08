@@ -105,12 +105,12 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="role">Role</label>
+                        <!-- <label for="role">Role</label>
                         <select id="role" class="form-control" name="userRole" required>
                             <option value="">Select Role</option>
                             <option value="Project Leader">Project Leader</option>
                             <option value="Community Member">Beneficiary</option>
-                        </select>
+                        </select> -->
                     </div>
                     <div class="form-check">
                         <input type="checkbox" class="form-check-input" id="remember">
@@ -131,7 +131,7 @@
 
         <div class="welcome-content">
             <h1>Welcome Back!</h1>
-            <p>Please enter your credentials to access your dashboard.</p>
+            <p>Please enter your credentials to access dashboard.</p>
         </div>
     </div>
 
