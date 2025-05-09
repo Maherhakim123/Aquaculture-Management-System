@@ -28,10 +28,13 @@
 <!-- Main content -->
 <section class="content">
       <div class="container-fluid">
+
+
+
         <!-- Small boxes (Stat box) -->
         <div class="row">
           <div class="col-lg-6 col-12">
-            <!-- small box -->
+            <!-- small box 1 -->
             <div class="small-box bg-info">
               <div class="inner">
               <h3><?php echo $project_count; ?></h3>
@@ -45,27 +48,44 @@
             </div>
           </div>
           <!-- ./col -->
+
+
+
           <div class="col-lg-6 col-12">
+             <!-- small box 2-->
+             <div class="small-box bg-danger">
+              <div class="inner">
+              <h3><?php echo $project_count; ?></h3>
 
-
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                <p>Projects In-Progress</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-clipboard"></i>
+              </div>
+              <a href="<?php echo base_url('project/list'); ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
           </div>
+
+
+          <div class="col-lg-6 col-12">
+             <!-- small box 3-->
+             <div class="small-box bg-success">
+              <div class="inner">
+              <h3><?php echo $project_count; ?></h3>
+
+                <p>Projects Completed</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-clipboard"></i>
+              </div>
+              <a href="<?php echo base_url('project/list'); ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+
+
+
+
+
         </div>
 
 

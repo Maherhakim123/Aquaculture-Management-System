@@ -15,8 +15,13 @@ class Project_model extends CI_Model {
     return $this->db->where('userID', $userID)->count_all_results('project');
     }
 
+    public function count_projects_by_member($userID) {
+        $this->db->where('userID', $userID);
+        $query = $this->db->get('project');
+        return $query->num_rows();
+    }
     
-    
+
 
     public function get_all_projects() {
         $query = $this->db->get('project'); // Fetch data from the 'project' table

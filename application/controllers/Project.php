@@ -6,18 +6,11 @@ class Project extends CI_Controller
         parent::__construct();
         $this->load->database(); // Load the database
         $this->load->model('Project_model');  // Load the Project model
-        $this->load->model('User_model'); // ✅ this line is important
+        $this->load->model('User_model');
         $this->load->model('Record_model');
         $this->load->library('session');
     }
 
-    // public function dashboard()
-    // {
-    //     $this->load->view('templates/header');
-    //     $this->load->view('templates/sidebar');
-    //     $this->load->view('dashboard');
-    //     $this->load->view('templates/footer');
-    // }
 
 
     public function dashboard()
@@ -28,6 +21,17 @@ class Project extends CI_Controller
     $this->load->view('templates/header');
     $this->load->view('templates/sidebar');
     $this->load->view('dashboard', $data); 
+    $this->load->view('templates/footer');
+}
+
+
+public function beneficiary_dashboard()
+{
+    $userID = $this->session->userdata('userID'); // Get logged in user's ID
+
+    $this->load->view('templates/header');
+    $this->load->view('templates/community_sidebar');
+    $this->load->view('beneficiary_dashboard'); 
     $this->load->view('templates/footer');
 }
 
@@ -218,6 +222,7 @@ class Project extends CI_Controller
         $this->load->view('templates/community_sidebar');
         $this->load->view('my_projects', $data);
         $this->load->view('templates/footer');
+        
     }
 
     public function community_view($projectID)
@@ -251,7 +256,7 @@ public function remove_member($projectID, $userID)
 public function cancel_invitation($projectID, $userID)
 {
     $this->load->model('Project_model');
-    $this->Project_model->remove_project_member($projectID, $userID); // Same model method reused
+    $this->Project_model->remove_project_member($projectID, $userID);
 
     // Redirect back to the project view
     redirect('project/view/' . $projectID);
@@ -261,7 +266,7 @@ public function cancel_invitation($projectID, $userID)
 public function reject_invitation($projectID, $userID)
 {
     $this->load->model('Project_model');
-    $this->Project_model->remove_project_member($projectID, $userID); // Same model method reused
+    $this->Project_model->remove_project_member($projectID, $userID);
 
     // Redirect back to the project view
     redirect('project/invitations');

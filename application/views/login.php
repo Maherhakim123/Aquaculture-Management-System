@@ -104,14 +104,7 @@
                             <span class="input-group-text password-toggle"><i class="fas fa-eye" id="togglePassword"></i></span>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <!-- <label for="role">Role</label>
-                        <select id="role" class="form-control" name="userRole" required>
-                            <option value="">Select Role</option>
-                            <option value="Project Leader">Project Leader</option>
-                            <option value="Community Member">Beneficiary</option>
-                        </select> -->
-                    </div>
+             
                     <div class="form-check">
                         <input type="checkbox" class="form-check-input" id="remember">
                         <label class="form-check-label" for="remember">Remember Me</label>
