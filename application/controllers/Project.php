@@ -100,6 +100,8 @@ public function beneficiary_dashboard()
         // Get invited members of the project
         $data['members'] = $this->Project_model->get_project_members($projectID);
 
+        
+
         $data['projectID'] = $projectID;
 
         $this->load->view('templates/header');

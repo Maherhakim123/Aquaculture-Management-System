@@ -28,5 +28,14 @@ class Phase_model extends CI_Model {
     public function delete_phase($phaseID) {
         return $this->db->where('phaseID', $phaseID)->delete('phase');
     }
+
+    public function get_phases_by_project($projectID)
+    {
+    $this->db->where('projectID', $projectID);
+    return $this->db->get('phase')->result();
+    }
+
+
+
 }
 ?>

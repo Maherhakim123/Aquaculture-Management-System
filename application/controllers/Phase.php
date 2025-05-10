@@ -10,7 +10,7 @@ class Phase extends CI_Controller {
 
     // Show phase for a specific project
     public function index($projectID) {
-        $data['phases'] = $this->Phase_model->get_phase($projectID); // Ensure the key matches the view
+        $data['phases'] = $this->Phase_model->get_phase($projectID);
         $data['projectID'] = $projectID;
     
         $this->load->view('templates/header');
@@ -52,13 +52,17 @@ public function view($phaseID) {
 
     // Save the new phase
     public function add() {
+       
+        $status = "not started";
+        $progress = 0;
+
         $data = [
             'projectID' => $this->input->post('projectID'),
             'phaseName' => $this->input->post('phaseName'),
             'startDate' => $this->input->post('startDate'),
             'deadline' => $this->input->post('deadline'),
-            'status' => $this->input->post('status'),
-            'progress' => $this->input->post('progress')
+            'status' => $status,
+            'progress' => $progress
         ];
 
         if ($this->Phase_model->add_phase($data)) {
@@ -68,10 +72,90 @@ public function view($phaseID) {
         }
     }
 
+    // Update a Phase
+    public function update($phaseID) {
+        $progress = $this->input->post('progress');
+        
+        if ($progress == 0) {
+            $status = 'Not Started';
+        } elseif ($progress > 0 && $progress < 100) {
+            $status = 'In Progress';
+        } elseif ($progress == 100) {
+            $status = 'Completed';
+        } else {
+            show_error("Invalid progress value.", 400);
+        }
+    
+        $data = [
+            'phaseName' => $this->input->post('phaseName'),
+            'startDate' => $this->input->post('startDate'),
+            'deadline' => $this->input->post('deadline'),
+            'progress' => $progress,
+            'status' => $status
+        ];
+    
+        if ($this->Phase_model->update($phaseID, $data)) {
+            redirect('phase/view/' . $phaseID);
+        } else {
+            show_error("Failed to update phase.", 500);
+        }
+    }
+    
+
     // Delete a phase
     public function delete($phaseID, $projectID) {
         $this->Phase_model->delete_phase($phaseID);
         redirect('phase/index/' . $projectID);
     }
+
+
+    // show progress
+    public function progress($phaseID) {
+    $data['activities'] = $this->Activity_model->get_activities_with_phase_name($phaseID);
+    //S$data['projectID'] = $projectID;
+
+
+    if (empty($data['activities'])) {
+        show_404(); // or set a message saying no activity found
+    }
+
+    $this->load->view('templates/header');
+    $this->load->view('templates/sidebar');
+    $this->load->view('leader_view_progress', $data);
+    $this->load->view('templates/footer');
+}
+
+
+// Leader view the progress
+public function progress_by_project($projectID) {
+    $this->load->model('Phase_model');
+    $this->load->model('Activity_model'); 
+
+    // Get all phases under this project
+    $phases = $this->Phase_model->get_phases_by_project($projectID);
+
+    $progressData = [];
+
+    foreach ($phases as $phase) {
+        // Get progress/activities by phaseID
+        $activities = $this->Activity_model->get_activities_by_phase($phase->phaseID);
+
+        $progressData[] = [
+            'phase' => $phase,
+            'activities' => $activities
+        ];
+    }
+
+    $data['progressData'] = $progressData;
+    $data['projectID'] = $projectID;
+
+    $this->load->view('templates/header');
+    $this->load->view('templates/sidebar');
+    $this->load->view('leader_view_progress', $data);
+    $this->load->view('templates/footer');
+}
+
+
+
 }
 ?>

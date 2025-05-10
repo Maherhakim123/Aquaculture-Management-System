@@ -28,6 +28,18 @@ class Activity_model extends CI_Model {
         $this->db->where('activityID', $activityID);
         $this->db->delete('activity');
     }
+
+
+    // retrieve phase name and all activity data in one page
+    public function get_activities_with_phase_name($phaseID) {
+    $this->db->select('p.phaseName, a.activityType, a.activityName, a.recordDate, a.comment');
+    $this->db->from('activity a');
+    $this->db->join('phase p', 'a.phaseID = p.phaseID');
+    $this->db->where('a.phaseID', $phaseID);
+    $query = $this->db->get();
+    return $query->result();
+}
+
     
 
 

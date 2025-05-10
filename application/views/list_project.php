@@ -34,8 +34,8 @@
                                 <th>Project</th>
                                 <th>Project Name</th>
                                 <th>Location</th>
-                                <th style="width: 100px;">Start Date</th>
-                                <th style="width: 100px;">End Date</th>
+                                <th style="width: 105px;">Start Date</th>
+                                <th style="width: 105px;">End Date</th>
                                 <th>Budget</th>
                                 <th>Budget Source</th>
                                 <th style="width: 200px;">Actions</th>
@@ -48,8 +48,8 @@
                                         <td><?php echo $index + 1; ?></td>
                                         <td><?php echo ($project->projectName); ?></td>
                                         <td><?php echo ($project->projectLocation); ?></td>
-                                        <td><?php echo ($project->startDate); ?></td>
-                                        <td><?php echo ($project->endDate); ?></td>
+                                        <td><?= date('d M Y', strtotime($project->startDate)); ?></td>
+                                        <td><?= date('d M Y', strtotime($project->endDate)); ?></td>                         
                                         <td>RM<?php echo ($project->budget); ?></td>
                                         <td><?php echo ($project->budgetSource); ?></td>
                                         <td class="text-center">

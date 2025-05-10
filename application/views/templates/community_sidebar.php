@@ -15,6 +15,9 @@
 
                                         
     <div class="dropdown ml-auto">
+    <span class="text-muted mr-3">
+      <strong><?= ucfirst($this->session->userdata('userRole')); ?></strong>
+    </span>
   <button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown" style="border: none; padding: 0;">
     <i class="fas fa-user-circle" style="font-size: 40px; color: grey;"></i>
   </button>

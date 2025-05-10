@@ -9,12 +9,15 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="index3.html" class="nav-link">AQUACULTURE MANAGEMENT SYSTEM</a>
+        <a href="#" class="nav-link">AQUACULTURE MANAGEMENT SYSTEM</a>
       </li>
     </ul>
 
                                         
-    <div class="dropdown ml-auto">
+  <div class="dropdown ml-auto">
+    <span class="text-muted mr-3">
+      <strong><?= ucfirst($this->session->userdata('userRole')); ?></strong>
+    </span>
   <button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown" style="border: none; padding: 0;">
     <i class="fas fa-user-circle" style="font-size: 40px; color: grey;"></i>
   </button>

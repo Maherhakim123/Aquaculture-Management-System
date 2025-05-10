@@ -38,11 +38,11 @@
                 </tr>
                 <tr>
                   <th>Start Date</th>
-                  <td><?= $phase->startDate ?></td>
-                </tr>
+                  <td><?= date('d M Y', strtotime($phase->startDate)); ?></td>
+                  </tr>
                 <tr>
                   <th>Deadline</th>
-                  <td><?= $phase->deadline ?></td>
+                  <td><?= date('d M Y', strtotime($phase->deadline )); ?></td>
                 </tr>
               </tbody>
             </table>
@@ -50,8 +50,7 @@
 
             <hr>
 
-            <!-- Display existing activities -->
-            <!-- Display existing activities -->
+
 <h5 class="mt-4">Activity History</h5>
 <table class="table table-striped table-bordered">
   <thead class="thead-dark">
@@ -61,7 +60,7 @@
       <th>Name</th>
       <th>Comment</th>
       <th>Date</th>
-      <th>Actions</th> <!-- New column for Edit/Delete -->
+      <th>Actions</th> 
     </tr>
   </thead>
   <tbody>
@@ -185,7 +184,6 @@
   }
 </script>
 
-</script>
 
 
 
