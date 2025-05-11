@@ -8,11 +8,30 @@ class Activity extends CI_Controller {
         $this->load->library('session');
     }
 
+    public function create($phaseID) {
+        $this->load->model('Phase_Model');
+        $data['phase'] = $this->Phase_Model->get_phase_by_id($phaseID);
+
+        $this->load->view('create_activity_record', $data);
+    }
+
+//     public function create() {
+//     $this->load->model('Phase_Model');
+//     $projectID = $this->session->userdata('currentProjectID'); // Adjust this as needed
+
+//     $data['phases'] = $this->Phase_Model->get_phase($projectID);
+//     $this->load->view('create_activity_record', $data);
+// }
+
+
+  
+
 
 
     public function add($phaseID) {
         $user_role = $this->session->userdata('role'); // 'leader' or 'beneficiary'
         $user_id = $this->session->userdata('userID');
+
     
         $data = array(
             'activityType' => $this->input->post('activityType'),

@@ -51,7 +51,7 @@
 
             <a href="<?php echo site_url('phase/index/'.$project->projectID); ?>" class="btn btn-primary btn-sm">View Phases</a>
 
-            <a href="<?php echo site_url('record/index/'.$project->projectID); ?>" class="btn btn-primary btn-sm">View Record</a>
+            <!-- <a href="<?php echo site_url('record/index/'.$project->projectID); ?>" class="btn btn-primary btn-sm">View Record</a> -->
 
             <a href="<?php echo site_url('phase/progress_by_project/'.$project->projectID); ?>" class="btn btn-primary btn-sm">View Progress</a>
 

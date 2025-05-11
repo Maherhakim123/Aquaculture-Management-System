@@ -51,26 +51,57 @@ public function view($phaseID) {
     }
 
     // Save the new phase
-    public function add() {
+    // public function add() {
        
-        $status = "not started";
-        $progress = 0;
+    //     $status = "not started";
+    //     $progress = 0;
 
-        $data = [
-            'projectID' => $this->input->post('projectID'),
-            'phaseName' => $this->input->post('phaseName'),
-            'startDate' => $this->input->post('startDate'),
-            'deadline' => $this->input->post('deadline'),
-            'status' => $status,
-            'progress' => $progress
-        ];
+    //     $data = [
+    //         'projectID' => $this->input->post('projectID'),
+    //         'phaseName' => $this->input->post('phaseName'),
+    //         'startDate' => $this->input->post('startDate'),
+    //         'deadline' => $this->input->post('deadline'),
+    //         'status' => $status,
+    //         'progress' => $progress
+    //     ];
 
-        if ($this->Phase_model->add_phase($data)) {
-            redirect('phase/index/' . $data['projectID']);
-        } else {
-            show_error("Failed to create phase.", 500);
-        }
+    //     if ($this->Phase_model->add_phase($data)) {
+    //         redirect('phase/index/' . $data['projectID']);
+    //     } else {
+    //         show_error("Failed to create phase.", 500);
+    //     }
+    // }
+
+
+    public function add() {
+    $projectID = $this->input->post('projectID');
+    $phaseName = $this->input->post('phaseName');
+    $startDate = $this->input->post('startDate');
+    $deadline = $this->input->post('deadline');
+
+    // Get current phase count for this project
+    $phaseCount = $this->Phase_model->get_phase_count_by_project($projectID);
+    $nextNumber = $phaseCount + 1;
+
+    // Auto-generate phase name
+    $fullPhaseName = 'PHASE ' . $nextNumber . ' - ' . strtoupper($phaseName);
+
+    $data = [
+        'projectID' => $projectID,
+        'phaseName' => $fullPhaseName,
+        'startDate' => $startDate,
+        'deadline' => $deadline,
+        'status' => 'Not Started',
+        'progress' => 0
+    ];
+
+    if ($this->Phase_model->add_phase($data)) {
+        redirect('phase/index/' . $projectID);
+    } else {
+        show_error("Failed to create phase.", 500);
     }
+}
+
 
     // Update a Phase
     public function update($phaseID) {

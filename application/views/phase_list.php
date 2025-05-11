@@ -75,6 +75,9 @@
                                                 <i class="fas fa-trash"></i> Delete
                                             </a>
 
+                                          
+
+
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
@@ -86,9 +89,11 @@
                         </tbody>
                     </table>
 
-                    <a href="<?= site_url('phase/create/'.$projectID); ?>" class="btn btn-success btn-sm">
-                        <i class="fas fa-plus"></i> Add Phase
-                    </a>
+                    <div class="card-footer">
+                        <a href="<?= site_url('phase/create/'.$projectID); ?>" class="btn btn-success"> Add Phase</a>
+                        <a href="<?= site_url('project/view/'.$projectID) ?>" class="btn btn-secondary"> Back to Project</a>
+                        
+                    </div>
 
                 </div>
                  <!-- /.card-body -->

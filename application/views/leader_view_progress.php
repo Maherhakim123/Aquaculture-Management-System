@@ -24,7 +24,7 @@
       <div class="container">
         <div class="card">
           <div class="card-header bg-primary text-white">
-            <h3 class="card-title">Phase Activities Progress</h3>
+            <h3 class="card-title">Activities Progress</h3>
           </div>
           <div class="card-body">
             <table class="table table-bordered table-striped">
@@ -37,17 +37,25 @@
               </thead>
               <tbody>
                 <?php foreach ($progressData as $entry): ?>
-                  <?php foreach ($entry['activities'] as $activity): ?>
+                    <?php $activityCount = count($entry['activities']); ?>
+                    <?php foreach ($entry['activities'] as $index => $activity): ?>
                     <tr>
-                      <td><?= $entry['phase']->phaseName ?></td>
-                      <td><?= $activity->activityType ?> - <?= $activity->activityName ?></td>
-                      <td><?= $activity->comment ?></td>
+                        <?php if ($index === 0): ?>
+                        <td rowspan="<?= $activityCount ?>"><?= $entry['phase']->phaseName ?></td>
+                        <?php endif; ?>
+                        <td><?= $activity->activityType ?> - <?= $activity->activityName ?></td>
+                        <td><?= $activity->comment ?></td>
                     </tr>
-                  <?php endforeach; ?>
+                    <?php endforeach; ?>
                 <?php endforeach; ?>
-              </tbody>
+                </tbody>
             </table>
           </div>
+
+            <div class="card-footer">
+                <a href="<?= site_url('project/view/'.$projectID) ?>" class="btn btn-secondary">Back to Project</a>
+            </div>
+            
         </div>
       </div>
     </div>

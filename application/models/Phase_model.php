@@ -35,6 +35,13 @@ class Phase_model extends CI_Model {
     return $this->db->get('phase')->result();
     }
 
+    //phase automatically prefixed and auto-increment
+    public function get_phase_count_by_project($projectID) {
+    $this->db->where('projectID', $projectID);
+    return $this->db->count_all_results('phase');
+}
+
+
 
 
 }
