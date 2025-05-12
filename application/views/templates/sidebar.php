@@ -96,13 +96,14 @@
 
 
           <li class="nav-item">
-          <a href="<?php echo base_url('activity/create'); ?>" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
-              <p>
-                Record
-              </p>
-            </a>
-          </li>
+  <a href="<?= base_url('activity/recordActivity'); ?>" class="nav-link">
+    <i class="nav-icon fas fa-edit"></i>
+    <p>
+      Record Activity
+    </p>
+  </a>
+</li>
+
 
    
 

@@ -76,7 +76,7 @@
             <select id="role" name="userRole" class="form-control">
                 <option value="" disabled selected>Choose your role</option>
                 <option value="Project Leader">Project Leader</option>
-                <option value="Local Community">Beneficiary</option>
+                <option value="Beneficiary">Beneficiary</option>
             </select>
         </div>
         <button type="submit" class="btn btn-primary btn-block">Register</button>
@@ -85,6 +85,14 @@
                 </div>
     </form>
 </div>
+
+<!-- Fuction Notification for email existed -->
+ <?php if (isset($email_exists) && $email_exists): ?>
+    <script>
+        alert('This email is already registered. Please use another one.');
+    </script>
+<?php endif; ?>
+
 
 <!-- Bootstrap JS and dependencies -->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>

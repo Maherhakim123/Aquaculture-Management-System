@@ -71,7 +71,7 @@
           <td><?= $activity->activityType ?></td>
           <td><?= $activity->activityName ?></td>
           <td><?= $activity->comment ?></td>
-          <td><?= date('d M Y, h:i A', strtotime($activity->recordDate)) ?></td>
+          <td><?= date('d M Y', strtotime($activity->recordDate)) ?></td>
           <td class="text-center">
             <a href="<?= site_url('activity/edit/' . $activity->activityID) ?>" class="btn btn-warning btn-sm">
                 Edit
@@ -94,64 +94,13 @@
 
     <hr>
 
-            
-  <!-- Toggle Button -->
-<div class="text-center mb-3">
-    <button class="btn btn-primary" onclick="toggleForm()">
-        <i class="fas fa-plus"></i> Add Activity
-    </button>
-</div>
+      
 
 <!-- Hidden Form -->
-<div id="activityForm" style="display: none;">
-    <form method="post" action="<?= site_url('activity/add/' . $phase->phaseID) ?>">
-   <!-- Activity Type -->
-<div class="form-group">
-  <label>
-    Activity Type
-    <span
-      class="badge badge-info rounded-circle"
-      role="button"
-      onclick="revealActivityName()"
-      style="cursor: pointer; margin-left: 5px;"
-      title="Click to enter activity name"
-    >
-      i
-    </span>
-  </label>
-  <select name="activityType" class="form-control" required>
-    <option value="">-- Select Activity Type --</option>
-    <option value="Spending">Spending</option>
-    <option value="Income Generation">Income Generation</option>
-    <option value="Assets">Assets</option>
-    <option value="Water Quality">Water Quality</option>
-  </select>
-</div>
 
-<!-- Activity Name (hidden initially) -->
-<div class="form-group" id="activityNameGroup" style="display: none;">
-  <label>Activity Name</label>
-  <input type="text" name="activityName" class="form-control">
-</div>
-
-
-
-        <div class="form-group">
-            <label>Comment(Optional)</label>
-            <textarea name="comment" class="form-control" rows="3" ></textarea>
-        </div>
-        <div class="form-group">
-            <label>Date</label>
-            <input type="datetime-local" name="recordDate" class="form-control" required>
-        </div>
-        <button type="submit" class="btn btn-success mt-2">
-            <i class="fas fa-plus"></i> Submit Activity
-        </button>
-    </form>
 </div>
 
 <!-- Back Button -->
-<div class="text-center mt-4">
     <a href="<?= site_url('phase/index/' . $phase->projectID) ?>" class="btn btn-secondary">
         <i class="fas fa-arrow-left"></i> Back to Phases
     </a>

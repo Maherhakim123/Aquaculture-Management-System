@@ -4,6 +4,7 @@ class Activity extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('Activity_model');
+        $this->load->model('Phase_model');
         $this->load->helper(['form', 'url']);
         $this->load->library('session');
     }
@@ -15,29 +16,48 @@ class Activity extends CI_Controller {
         $this->load->view('create_activity_record', $data);
     }
 
-//     public function create() {
-//     $this->load->model('Phase_Model');
-//     $projectID = $this->session->userdata('currentProjectID'); // Adjust this as needed
+    // Create record in sidebar
+    public function recordActivity()
+    {
 
-//     $data['phases'] = $this->Phase_Model->get_phase($projectID);
-//     $this->load->view('create_activity_record', $data);
-// }
+    $userID = $this->session->userdata('userID'); 
+
+    $this->load->model('Project_model');
+    $this->load->model('Phase_model');
+
+    $data['projects'] = $this->Project_model->get_projects_by_leader($userID);
+
+    $this->load->view('create_activity_record', $data); 
+    }
 
 
-  
 
 
 
-    public function add($phaseID) {
+
+    public function getPhasesByProject($projectID)
+    {
+    $this->load->model('Phase_model');
+    $phases = $this->Phase_model->get_phases_by_project($projectID);
+    echo json_encode($phases);
+    }
+
+
+
+
+
+    public function add() {
         $user_role = $this->session->userdata('role'); // 'leader' or 'beneficiary'
         $user_id = $this->session->userdata('userID');
 
-    
+        $recordDate = $this->input->post('recordDate');
+        $phaseID = $this->input->post('phaseID');
+
         $data = array(
             'activityType' => $this->input->post('activityType'),
             'activityName' => $this->input->post('activityName'),
             'comment' => $this->input->post('comment'),
-            'recordDate' => date('Y-m-d H:i:s'),
+            'recordDate' => $recordDate,
             'phaseID' => $phaseID,
             //'userID' => $userID
         );

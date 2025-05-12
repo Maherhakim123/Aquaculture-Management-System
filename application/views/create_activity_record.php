@@ -18,25 +18,31 @@
       <h4 class="mb-0">Add Activity</h4>
     </div>
     <div class="card-body">
-      <form method="post" action="<?= site_url('activity/add') ?>">
 
-        <!-- Select Phase -->
-        <div class="form-group mb-3">
-          <label>Select Phase</label>
-          <select name="phaseID" class="form-control" required>
-            <option value="">-- Select Phase --</option>
-            <?php foreach ($phases as $phase): ?>
-              <option value="<?= $phase->phaseID ?>"><?= $phase->phaseName ?></option>
+    <form method="POST" action="<?= base_url('activity/add') ?>">
+    <div class="form-group">
+        <label for="projectID">Project:</label>
+        <select name="projectID" id="projectID" class="form-control" required>
+            <option value="">-- Select Project --</option>
+            <?php foreach ($projects as $project): ?>
+                <option value="<?= $project->projectID ?>"><?= $project->projectName ?></option>
             <?php endforeach; ?>
-          </select>
-        </div>
+        </select>
+    </div>
 
-        <!-- Activity Type -->
-        <div class="form-group mb-3">
-          <label>
+    <div class="form-group">
+        <label for="phaseID">Phase:</label>
+        <select name="phaseID" id="phaseID" class="form-control" required>
+            <option value="">-- Select Phase --</option>
+        </select>
+    </div>
+
+    <!-- Activity Type -->
+    <div class="form-group">
+        <label>
             Activity Type
             <span
-              class="badge bg-info rounded-circle"
+              class="badge badge-info rounded-circle"
               role="button"
               onclick="revealActivityName()"
               style="cursor: pointer; margin-left: 5px;"
@@ -44,44 +50,88 @@
             >
               i
             </span>
-          </label>
-          <select name="activityType" class="form-control" required>
+        </label>
+        <select name="activityType" class="form-control" required>
             <option value="">-- Select Activity Type --</option>
             <option value="Spending">Spending</option>
             <option value="Income Generation">Income Generation</option>
             <option value="Assets">Assets</option>
             <option value="Water Quality">Water Quality</option>
-          </select>
-        </div>
+        </select>
+    </div>
 
-        <!-- Activity Name (initially hidden) -->
-        <div class="form-group mb-3" id="activityNameGroup" style="display: none;">
-          <label>Activity Name</label>
-          <input type="text" name="activityName" class="form-control">
-        </div>
+    <!-- Activity Name (hidden initially) -->
+    <div class="form-group" id="activityNameGroup" style="display: none;">
+        <label>Activity Name</label>
+        <input type="text" name="activityName" class="form-control">
+    </div>
 
-        <!-- Comment -->
-        <div class="form-group mb-3">
-          <label>Comment (Optional)</label>
-          <textarea name="comment" class="form-control" rows="3"></textarea>
-        </div>
+    <!-- Comment -->
+    <div class="form-group">
+        <label>Comment (Optional)</label>
+        <textarea name="comment" class="form-control" rows="3"></textarea>
+    </div>
 
-        <!-- Record Date -->
-        <div class="form-group mb-3">
-          <label>Date</label>
-          <input type="datetime-local" name="recordDate" class="form-control" required>
-        </div>
+    <!-- Date -->
+    <div class="form-group">
+        <label>Date</label>
+        <input type="date" name="recordDate" class="form-control" required>
+    </div>
 
-        <!-- Submit Button -->
-        <button type="submit" class="btn btn-success">
-          <i class="fas fa-plus"></i> Submit Activity
-        </button>
+    <button type="submit" class="btn btn-primary">
+        <i class="fas fa-plus"></i> Submit Activity
+    </button>
+</form>
 
-        <!-- Cancel Button -->
-        <a href="<?= site_url('phase/index') ?>" class="btn btn-secondary">
-          <i class="fas fa-arrow-left"></i> Cancel
-        </a>
-      </form>
+<!-- Reveal Activity Name Script -->
+<script>
+    function revealActivityName() {
+        document.getElementById('activityNameGroup').style.display = 'block';
+    }
+
+    // AJAX to populate phases by project
+    document.getElementById('projectID').addEventListener('change', function () {
+        const projectID = this.value;
+        fetch("<?= base_url('activity/getPhasesByProject/') ?>" + projectID)
+            .then(response => response.json())
+            .then(data => {
+                const phaseDropdown = document.getElementById('phaseID');
+                phaseDropdown.innerHTML = '<option value="">-- Select Phase --</option>';
+                data.forEach(phase => {
+                    const option = document.createElement('option');
+                    option.value = phase.phaseID;
+                    option.textContent = phase.phaseName;
+                    phaseDropdown.appendChild(option);
+                });
+            });
+    });
+</script>
+
+
+<script>
+    document.getElementById('projectID').addEventListener('change', function () {
+        const projectID = this.value;
+
+        fetch("<?= base_url('activity/getPhasesByProject/') ?>" + projectID)
+            .then(response => response.json())
+            .then(data => {
+                const phaseDropdown = document.getElementById('phaseID');
+                phaseDropdown.innerHTML = '<option value="">-- Select Phase --</option>';
+                data.forEach(phase => {
+                    const option = document.createElement('option');
+                    option.value = phase.phaseID;
+                    option.textContent = phase.phaseName;
+                    phaseDropdown.appendChild(option);
+                });
+            });
+    });
+</script>
+
+      
+
+
+
+
     </div>
   </div>
 </div>

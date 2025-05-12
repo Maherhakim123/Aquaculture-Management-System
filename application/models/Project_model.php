@@ -7,6 +7,8 @@ class Project_model extends CI_Model {
         return $status;
     }
 
+
+    //Projects where the user is the leader
     public function get_projects_by_leader($userID) {
         return $this->db->get_where('project', ['userID' => $userID])->result();
     }
@@ -108,7 +110,7 @@ class Project_model extends CI_Model {
         return $this->db->update('projectMembers', ['status' => $status]);
     }
     
-
+    //Projects where the user is a member
     public function get_projects_by_user($userID) {
         $this->db->select('p.*');
         $this->db->from('projectMembers pm');

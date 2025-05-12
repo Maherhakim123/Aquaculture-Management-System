@@ -23,6 +23,13 @@ class Auth extends CI_Controller {
 		$userPhoneNo = $this->input->post('userPhoneNo');
 		$userRole = $this->input->post('userRole');
 
+		//Check for duplicate email
+		if ($this->Register_model->email_exists($userEmail)) {
+			$data['email_exists'] = true;
+			$this->load->view('register', $data);
+			return;
+		}
+
 		$data = [
 			'userName' => $userName,
 			'userEmail' => $userEmail,

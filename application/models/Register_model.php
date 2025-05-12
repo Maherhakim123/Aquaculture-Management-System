@@ -9,6 +9,13 @@ class Register_model extends CI_Model {
         return $this->db->insert('users', $data);
     }
 
+    // Check email exist
+    public function email_exists($userEmail){
+        $this->db->where('userEmail', $userEmail);
+        $query = $this->db->get('users');
+        return $query->num_rows() > 0;
+    }
+
     public function get_user_by_email($userEmail) {
         $query = $this->db->get_where('users', ['userEmail' => $userEmail]);
         return $query->row(); // Returns the user object or null
