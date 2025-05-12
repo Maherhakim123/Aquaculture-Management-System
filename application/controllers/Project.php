@@ -93,9 +93,9 @@ public function beneficiary_dashboard()
     {
         $data['project'] = $this->Project_model->get_project_by_id($projectID);
 
-        // Get only local community users
+        // Get only Beneficiaries users
         $this->load->model('User_model');
-        $data['users'] = $this->User_model->get_local_community_users();
+        $data['users'] = $this->User_model->get_beneficiary_users();
 
         // Get invited members of the project
         $data['members'] = $this->Project_model->get_project_members($projectID);
@@ -158,17 +158,45 @@ public function beneficiary_dashboard()
         }
     }
 
-    // Project Leader Invite User
+    //Project Leader Invite User
+    // public function invite_user()
+    // {
+    //     $projectID = $this->input->post('projectID');
+    //     $userID = $this->input->post('userID');
+
+    //     // Assuming project leader is the logged-in user
+    //     $leaderID = $this->session->userdata('userID'); // Get the logged-in user ID
+
+    //     if ($userID && $projectID) {
+    //         // Prepare data to store in the invitations table
+    //         $data = [
+    //             'projectID' => $projectID,
+    //             'userID' => $userID,
+    //             'invited_by' => $leaderID,
+    //             'status' => 'pending'
+    //         ];
+
+    //         $this->Project_model->invite_user_to_project($data);
+    //         redirect('project/view/' . $projectID);
+    //     } else {
+    //         $this->session->set_flashdata('error', 'Failed to invite user.');
+    //         redirect('project/view/' . $projectID);
+    //     }
+    // }
+
     public function invite_user()
-    {
-        $projectID = $this->input->post('projectID');
-        $userID = $this->input->post('userID');
+{
+    $projectID = $this->input->post('projectID');
+    $userID = $this->input->post('userID');
+    $leaderID = $this->session->userdata('userID');
 
-        // Assuming project leader is the logged-in user
-        $leaderID = $this->session->userdata('userID'); // Get the logged-in user ID
+    if ($userID && $projectID) {
+        // Check if user already invited to the project
+        $alreadyInvited = $this->Project_model->is_user_already_invited($projectID, $userID);
 
-        if ($userID && $projectID) {
-            // Prepare data to store in the invitations table
+        if ($alreadyInvited) {
+            $this->session->set_flashdata('error', 'User has already been invited to this project.');
+        } else {
             $data = [
                 'projectID' => $projectID,
                 'userID' => $userID,
@@ -177,12 +205,19 @@ public function beneficiary_dashboard()
             ];
 
             $this->Project_model->invite_user_to_project($data);
-            redirect('project/view/' . $projectID);
-        } else {
-            $this->session->set_flashdata('error', 'Failed to invite user.');
-            redirect('project/view/' . $projectID);
+            $this->session->set_flashdata('success', 'User invited successfully.');
         }
+    } else {
+        $this->session->set_flashdata('error', 'Failed to invite user.');
     }
+
+    redirect('project/view/' . $projectID);
+}
+
+
+
+ 
+
 
 
 

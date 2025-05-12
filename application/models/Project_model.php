@@ -129,6 +129,16 @@ class Project_model extends CI_Model {
 }
 
 
+// Check if the user is already invited to the project
+public function is_user_already_invited($projectID, $userID) {
+    $this->db->where('projectID', $projectID);
+    $this->db->where('userID', $userID);
+    $query = $this->db->get('projectMembers');
+
+    return $query->num_rows() > 0;
+}
+
+
 
 
     

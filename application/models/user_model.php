@@ -9,8 +9,8 @@
          return $query->result_array();  // Return all users as an array
      }
 
-     public function get_local_community_users() {
-      $this->db->where('userRole', 'Local Community');
+     public function get_beneficiary_users() {
+      $this->db->where('userRole', 'Beneficiary');
       $query = $this->db->get('users');
       return $query->result();
   }
