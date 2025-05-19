@@ -100,7 +100,14 @@ public function beneficiary_dashboard()
         // Get invited members of the project
         $data['members'] = $this->Project_model->get_project_members($projectID);
 
-        
+        $invitedUserIDs = array_map(function($member) {
+            return $member->userID;
+        }, $data['members']);
+
+        $data['users'] = array_filter(
+            $this->User_model->get_beneficiary_users(),
+            fn($user) => !in_array($user->userID, $invitedUserIDs)
+    );
 
         $data['projectID'] = $projectID;
 

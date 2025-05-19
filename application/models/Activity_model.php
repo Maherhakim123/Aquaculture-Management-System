@@ -40,6 +40,13 @@ class Activity_model extends CI_Model {
     return $query->result();
 }
 
+//Review Balik
+public function add_comment_only($activityID, $comment) {
+    $this->db->where('activityID', $activityID);
+    $this->db->update('activity', ['comment' => $comment]);
+}
+
+
     
 
 

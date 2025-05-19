@@ -105,10 +105,7 @@
                         </div>
                     </div>
              
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="remember">
-                        <label class="form-check-label" for="remember">Remember Me</label>
-                    </div>
+                   
                     <div class="d-grid">
                         <button type="submit" class="btn btn-primary">Log In</button>
                     </div>

@@ -50,9 +50,9 @@
                             </div>
                         </div>
 
-                        <div class="text-end mt-3">
+                        <!-- <div class="text-end mt-3">
                             <a href="<?= site_url('record/create/' . $project->projectID) ?>" class="btn btn-success">
-                                + Add Progress Record
+                                 Add Progress Record
                             </a>
                         </div>
 
@@ -60,7 +60,15 @@
                         
                         <div class="text-end mt-3">
                         <a href="<?= site_url('record/userList/' . $project->projectID) ?>" class="btn btn-info">View My Records</a>
+                        </div> -->
+
+                                    <a href="<?php echo site_url('phase/beneficiary_view_phase/'.$project->projectID); ?>" class="btn btn-primary btn-sm">View Phases</a>
+
+
+                        <div class="text-end mt-3">
+                        <a href="<?= site_url('phase/beneficiary_progress/' . $project->projectID); ?>" class="btn btn-info">View Progress</a>
                         </div>
+
 
 
 

@@ -34,8 +34,8 @@
                                 <th>Project</th>
                                 <th>Project Name</th>
                                 <th>Location</th>
-                                <th style="width: 105px;">Start Date</th>
-                                <th style="width: 105px;">End Date</th>
+                                <th style="width: 110px;">Start Date</th>
+                                <th style="width: 110px;">End Date</th>
                                 <th>Budget</th>
                                 <th>Budget Source</th>
                                 <th style="width: 200px;">Actions</th>

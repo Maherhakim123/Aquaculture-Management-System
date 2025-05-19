@@ -19,6 +19,18 @@ class Phase extends CI_Controller {
         $this->load->view('templates/footer');
     }
 
+    // Show phase for a specific project for beneficiary
+    public function beneficiary_view_phase($projectID) {
+        $data['phases'] = $this->Phase_model->get_phase($projectID);
+        $data['projectID'] = $projectID;
+    
+        $this->load->view('templates/header');
+        $this->load->view('templates/community_sidebar');
+        $this->load->view('beneficiary_view_phase', $data);
+        $this->load->view('templates/footer');
+    }
+
+
 
     // View details of a specific phase
 public function view($phaseID) {
@@ -49,28 +61,6 @@ public function view($phaseID) {
         $this->load->view('create_phase', $data);
         $this->load->view('templates/footer');
     }
-
-    // Save the new phase
-    // public function add() {
-       
-    //     $status = "not started";
-    //     $progress = 0;
-
-    //     $data = [
-    //         'projectID' => $this->input->post('projectID'),
-    //         'phaseName' => $this->input->post('phaseName'),
-    //         'startDate' => $this->input->post('startDate'),
-    //         'deadline' => $this->input->post('deadline'),
-    //         'status' => $status,
-    //         'progress' => $progress
-    //     ];
-
-    //     if ($this->Phase_model->add_phase($data)) {
-    //         redirect('phase/index/' . $data['projectID']);
-    //     } else {
-    //         show_error("Failed to create phase.", 500);
-    //     }
-    // }
 
 
     public function add() {
@@ -185,6 +175,37 @@ public function progress_by_project($projectID) {
     $this->load->view('leader_view_progress', $data);
     $this->load->view('templates/footer');
 }
+
+
+// Beneficiary view the progress
+public function beneficiary_progress($projectID) {
+    $this->load->model('Phase_model');
+    $this->load->model('Activity_model'); 
+
+    // Get all phases under this project
+    $phases = $this->Phase_model->get_phases_by_project($projectID);
+
+    $progressData = [];
+
+    foreach ($phases as $phase) {
+        // Get activities by phaseID
+        $activities = $this->Activity_model->get_activities_by_phase($phase->phaseID);
+
+        $progressData[] = [
+            'phase' => $phase,
+            'activities' => $activities
+        ];
+    }
+
+    $data['progressData'] = $progressData;
+    $data['projectID'] = $projectID;
+
+    $this->load->view('templates/header');
+    $this->load->view('templates/community_sidebar');
+    $this->load->view('beneficiary_view_progress', $data);
+    $this->load->view('templates/footer');
+}
+
 
 
 

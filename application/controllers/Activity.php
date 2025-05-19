@@ -92,6 +92,35 @@ class Activity extends CI_Controller {
         $this->Activity_model->delete_activity($activityID);
         redirect('phase/view/' . $phaseID);
     }
+
+
+    //Review Balik
+    public function beneficiary_add_comment_form() {
+    $userID = $this->session->userdata('userID');
+
+    $this->load->model('Project_model');
+    $data['projects'] = $this->Project_model->get_projects_by_beneficiary($userID); // Make sure this model exists
+
+    $this->load->view('beneficiary_create_record', $data);
+}
+
+public function save_beneficiary_comment() {
+    $activityID = $this->input->post('activityID');
+    $comment = $this->input->post('comment');
+
+    $this->Activity_model->add_comment_only($activityID, $comment);
+
+    // Optionally get the phase to redirect back
+    $activity = $this->Activity_model->get_activity($activityID);
+    redirect('beneficiary/phase/progress/' . $activity->phaseID);
+}
+
+public function getActivitiesByPhase($phaseID) {
+    $activities = $this->Activity_model->get_activities_by_phase($phaseID);
+    echo json_encode($activities);
+}
+
+
     
     
 }

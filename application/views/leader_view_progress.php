@@ -30,7 +30,7 @@
             <table class="table table-bordered table-striped">
               <thead class="thead-dark">
                 <tr>
-                  <th>Phase Name</th>
+                  <th>Phase</th>
                   <th>Activity</th>
                   <th>Comment</th>
                 </tr>

@@ -21,32 +21,46 @@
 <div class="content-wrapper">
     <div class="content-header">
       <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
+    
 
 
 <!-- Main content -->
 <section class="content">
       <div class="container-fluid">
 
+ <!-- Small boxes (Stat box) -->
+        <div class="row">
+          <div class="col-12">
+            <!-- small box 1 -->
+            <div class="small-box bg-info">
+              <div class="inner">
+              <h3><?php echo $project_count; ?></h3>
+
+                <p>My Projects</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-clipboard"></i>
+              </div>
+              <a href="<?php echo base_url('project/my_projects'); ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <!-- ./col -->
 
 
 
 
 
 
-
-        </div>
-
-
-
-      </div>
+      
     </div>
     </div>
 
+</section>
+ </div>
 
- 
 
+ </div>
+  </div>
 
 
 
