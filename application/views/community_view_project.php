@@ -62,12 +62,17 @@
                         <a href="<?= site_url('record/userList/' . $project->projectID) ?>" class="btn btn-info">View My Records</a>
                         </div> -->
 
-                                    <a href="<?php echo site_url('phase/beneficiary_view_phase/'.$project->projectID); ?>" class="btn btn-primary btn-sm">View Phases</a>
+                        <a href="<?php echo site_url('phase/beneficiary_view_phase/'.$project->projectID); ?>" class="btn btn-primary btn-sm">View Phases</a>
 
 
                         <div class="text-end mt-3">
                         <a href="<?= site_url('phase/beneficiary_progress/' . $project->projectID); ?>" class="btn btn-info">View Progress</a>
                         </div>
+
+                   
+
+                        <a href="<?= site_url('activity/beneficiary_add_comment_form/'.$project->projectID) ?>"
+   class="btn btn-info">Add Comment</a>
 
 
 

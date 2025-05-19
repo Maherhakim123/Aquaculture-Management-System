@@ -95,30 +95,70 @@ class Activity extends CI_Controller {
 
 
     //Review Balik
-    public function beneficiary_add_comment_form() {
-    $userID = $this->session->userdata('userID');
+//     public function beneficiary_add_comment_form($phaseID) {
+//     $userID = $this->session->userdata('userID');
+//     //latest
+//         $data['phaseID']   = $phaseID;
 
-    $this->load->model('Project_model');
-    $data['projects'] = $this->Project_model->get_projects_by_beneficiary($userID); // Make sure this model exists
+//     $this->load->model('Project_model');
+//     //$data['projects'] = $this->Project_model->get_projects_by_beneficiary($userID); // Make sure this model exists
+//     //latest
+//     $data['activities'] = $this->Activity_model->get_activities_by_phase($phaseID);
 
-    $this->load->view('beneficiary_create_record', $data);
+
+//     $this->load->view('beneficiary_add_comment', $data);
+// }
+
+public function beneficiary_add_comment_form($projectID)
+{
+    // logged‑in beneficiary
+    $data['projectID'] = $projectID;
+    $data['phases']    = $this->Phase_model->get_phase($projectID);
+    // view needs phases only; activities are fetched on demand
+    $this->load->view('beneficiary_add_comment', $data);
 }
 
-public function save_beneficiary_comment() {
+
+
+// public function save_beneficiary_comment() {
+//     $activityID = $this->input->post('activityID');
+//     $comment = $this->input->post('comment');
+
+//     $this->Activity_model->add_comment_only($activityID, $comment);
+
+//     // Optionally get the phase to redirect back
+//     $activity = $this->Activity_model->get_activity($activityID);
+//     redirect('beneficiary/phase/progress/' . $activity->phaseID);
+// }
+
+public function save_beneficiary_comment()
+{
     $activityID = $this->input->post('activityID');
-    $comment = $this->input->post('comment');
+    $comment    = $this->input->post('comment');
+    $userID     = $this->session->userdata('userID');
 
-    $this->Activity_model->add_comment_only($activityID, $comment);
+    // 1. store the new comment
+    $this->Activity_model->add_activity_comment($activityID, $userID, $comment);
 
-    // Optionally get the phase to redirect back
-    $activity = $this->Activity_model->get_activity($activityID);
-    redirect('beneficiary/phase/progress/' . $activity->phaseID);
+    // 2. find the project this activity is under
+    $activity   = $this->Activity_model->get_activity($activityID);      // gives phaseID
+    $phase      = $this->Phase_model->get_phase_by_id($activity->phaseID); // gives projectID
+    $projectID  = $phase->projectID;
+
+    // 3. send user to the progress page for that project
+    redirect('phase/beneficiary_progress/'.$projectID);
 }
+
 
 public function getActivitiesByPhase($phaseID) {
     $activities = $this->Activity_model->get_activities_by_phase($phaseID);
     echo json_encode($activities);
 }
+
+
+
+
+
 
 
     

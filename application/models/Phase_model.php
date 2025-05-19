@@ -48,6 +48,20 @@ class Phase_model extends CI_Model {
     }
 
 
+    /**  Return the first phaseID for a project, or NULL if none [FOR COMMENT BENEFICIARY] */
+public function get_first_phase_id($projectID)
+{
+    return $this->db->select('phaseID')
+                    ->from('phase')
+                    ->where('projectID', $projectID)
+                    ->order_by('phaseID', 'ASC')   // or order_by('startDate','ASC')
+                    ->limit(1)
+                    ->get()
+                    ->row('phaseID');              // returns null if no row
+}
+
+
+
 
 
 

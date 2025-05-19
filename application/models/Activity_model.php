@@ -46,7 +46,40 @@ public function add_comment_only($activityID, $comment) {
     $this->db->update('activity', ['comment' => $comment]);
 }
 
+//For comments
+public function add_activity_comment($activityID, $userID, $comment)
+{
+    return $this->db->insert('comments', [          // <- new table
+        'activityID' => $activityID,
+        'userID'     => $userID,
+        'comment'    => $comment
+    ]);
+}
 
+public function get_comments($activityID)
+{
+    return $this->db->where('activityID', $activityID)
+                    ->order_by('created_at', 'ASC')
+                    ->get('comments')              // <- new table
+                    ->result();
+}
+
+
+//comment that belongs to the specific beneficiary user only
+public function get_activities_with_user_comment($phaseID, $userID)
+{
+    $this->db->select('a.activityID,
+                       a.activityType,
+                       a.activityName,
+                       c.comment');                              // <- may be NULL
+    $this->db->from('activity a');
+    $this->db->join('comments c',
+        'c.activityID = a.activityID AND c.userID = '.$this->db->escape($userID),
+        'left');                                              // keeps activity even w/out comment
+    $this->db->where('a.phaseID', $phaseID);
+    $this->db->order_by('a.recordDate','DESC');
+    return $this->db->get()->result();
+}
     
 
 

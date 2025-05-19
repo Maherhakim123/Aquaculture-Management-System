@@ -178,33 +178,63 @@ public function progress_by_project($projectID) {
 
 
 // Beneficiary view the progress
-public function beneficiary_progress($projectID) {
-    $this->load->model('Phase_model');
-    $this->load->model('Activity_model'); 
+// public function beneficiary_progress($projectID) {
+//     $this->load->model('Phase_model');
+//     $this->load->model('Activity_model'); 
 
-    // Get all phases under this project
+//     // Get all phases under this project
+//     $phases = $this->Phase_model->get_phases_by_project($projectID);
+
+//     $progressData = [];
+
+//     foreach ($phases as $phase) {
+//         // Get activities by phaseID
+//         $activities = $this->Activity_model->get_activities_by_phase($phase->phaseID);
+
+//         $progressData[] = [
+//             'phase' => $phase,
+//             'activities' => $activities
+//         ];
+//     }
+
+//     $data['progressData'] = $progressData;
+//     $data['projectID'] = $projectID;
+
+//     $this->load->view('templates/header');
+//     $this->load->view('templates/community_sidebar');
+//     $this->load->view('beneficiary_view_progress', $data);
+//     $this->load->view('templates/footer');
+// }
+
+
+public function beneficiary_progress($projectID)
+{
+    $userID = $this->session->userdata('userID');
+
     $phases = $this->Phase_model->get_phases_by_project($projectID);
 
     $progressData = [];
 
     foreach ($phases as $phase) {
-        // Get activities by phaseID
-        $activities = $this->Activity_model->get_activities_by_phase($phase->phaseID);
+        // now pulls *only* the beneficiary’s own comments
+        $activities = $this->Activity_model
+                           ->get_activities_with_user_comment($phase->phaseID, $userID);
 
         $progressData[] = [
-            'phase' => $phase,
+            'phase'      => $phase,
             'activities' => $activities
         ];
     }
 
     $data['progressData'] = $progressData;
-    $data['projectID'] = $projectID;
+    $data['projectID']    = $projectID;
 
     $this->load->view('templates/header');
     $this->load->view('templates/community_sidebar');
     $this->load->view('beneficiary_view_progress', $data);
     $this->load->view('templates/footer');
 }
+
 
 
 

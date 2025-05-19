@@ -273,9 +273,11 @@ public function beneficiary_dashboard()
 {
     // Load your model if not already loaded
     $this->load->model('Project_model');
+    $this->load->model('Phase_model');
 
     // Get project by ID
     $data['project'] = $this->Project_model->get_project_by_id($projectID);
+    $data['phaseIDForComment'] = $this->Phase_model->get_first_phase_id($projectID);
 
     // Load the view
     $this->load->view('templates/header');

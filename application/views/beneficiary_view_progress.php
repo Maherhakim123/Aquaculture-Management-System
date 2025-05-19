@@ -32,24 +32,39 @@
               <tr>
                 <th>Phase</th>
                 <th>Activity</th>
-                <th>Record Date</th>
+                <!-- <th>Record Date</th> -->
                 <th>Comment</th>
               </tr>
             </thead>
-            <tbody>
-              <?php foreach ($progressData as $entry): ?>
-                <?php $activityCount = count($entry['activities']); ?>
-                <?php foreach ($entry['activities'] as $index => $activity): ?>
-                  <tr>
-                    <?php if ($index === 0): ?>
-                      <td rowspan="<?= $activityCount ?>"><?= $entry['phase']->phaseName ?></td>
-                    <?php endif; ?>
-                    <td><?= $activity->activityType ?> - <?= $activity->activityName ?></td>
-                    <td><em><?= $activity->recordDate ?></em></td>
-                    <td><?= $activity->comment ?></td>
-                  </tr>
+           <tbody>
+            <?php foreach ($progressData as $entry): ?>
+                <?php
+                    // Keep only activities that have a non‑empty comment
+                    $commentActivities = array_filter(
+                        $entry['activities'],
+                        fn ($a) => !empty($a->comment)
+                    );
+
+                    // Skip whole phase if no comments at all
+                    if (empty($commentActivities)) {
+                        continue;
+                    }
+
+                    $activityCount = count($commentActivities);
+                    $rowPrinted    = false;   // to know when to print the phase cell
+                ?>
+                <?php foreach ($commentActivities as $activity): ?>
+                    <tr>
+                        <?php if (!$rowPrinted): ?>
+                            <td rowspan="<?= $activityCount ?>"><?= $entry['phase']->phaseName ?></td>
+                            <?php $rowPrinted = true; ?>
+                        <?php endif; ?>
+
+                        <td><?= $activity->activityType ?> – <?= $activity->activityName ?></td>
+                        <td><?= $activity->comment ?></td>
+                    </tr>
                 <?php endforeach; ?>
-              <?php endforeach; ?>
+            <?php endforeach; ?>
             </tbody>
           </table>
         </div>
