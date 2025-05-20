@@ -36,36 +36,35 @@
                 <th>Comment</th>
               </tr>
             </thead>
-           <tbody>
-            <?php foreach ($progressData as $entry): ?>
-                <?php
-                    // Keep only activities that have a non‑empty comment
-                    $commentActivities = array_filter(
-                        $entry['activities'],
-                        fn ($a) => !empty($a->comment)
-                    );
+         <tbody>
+<?php foreach ($progressData as $entry): ?>
+    <?php $activities = $entry['activities']; ?>
+    <?php $activityCount = count($activities); ?>
+    <?php $rowIndex = 0; ?>
+    <?php foreach ($activities as $activity): ?>
+        <tr>
+            <?php if ($rowIndex === 0): ?>
+                <td rowspan="<?= $activityCount ?>"><?= $entry['phase']->phaseName ?></td>
+            <?php endif; ?>
+            <td><?= $activity->activityType ?> - <?= $activity->activityName ?></td>
+            <td>
+                <?php if (!empty($activity->comments)): ?>
+                    <?php foreach ($activity->comments as $comment): ?>
+                        <div>
+                            <?= nl2br(htmlspecialchars($comment['comment'])) ?><br>
+                            <small class="text-muted"><?= date('d M Y, h:i A', strtotime($comment['created_at'])) ?></small>
+                        </div>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <em>No comments</em>
+                <?php endif; ?>
+            </td>
+        </tr>
+        <?php $rowIndex++; ?>
+    <?php endforeach; ?>
+<?php endforeach; ?>
+</tbody>
 
-                    // Skip whole phase if no comments at all
-                    if (empty($commentActivities)) {
-                        continue;
-                    }
-
-                    $activityCount = count($commentActivities);
-                    $rowPrinted    = false;   // to know when to print the phase cell
-                ?>
-                <?php foreach ($commentActivities as $activity): ?>
-                    <tr>
-                        <?php if (!$rowPrinted): ?>
-                            <td rowspan="<?= $activityCount ?>"><?= $entry['phase']->phaseName ?></td>
-                            <?php $rowPrinted = true; ?>
-                        <?php endif; ?>
-
-                        <td><?= $activity->activityType ?> – <?= $activity->activityName ?></td>
-                        <td><?= $activity->comment ?></td>
-                    </tr>
-                <?php endforeach; ?>
-            <?php endforeach; ?>
-            </tbody>
           </table>
         </div>
         <div class="card-footer">

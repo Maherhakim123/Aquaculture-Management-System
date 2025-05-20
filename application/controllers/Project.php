@@ -29,9 +29,17 @@ public function beneficiary_dashboard()
 {
     $userID = $this->session->userdata('userID'); // Get logged in user's ID
 
+    $this->load->model('Project_model');
+
+     // Get the number of projects this beneficiary is involved in
+    $project_count = $this->Project_model->count_projects_by_user($userID);
+
+    $data['project_count'] = $project_count;
+
+
     $this->load->view('templates/header');
     $this->load->view('templates/community_sidebar');
-    $this->load->view('beneficiary_dashboard'); 
+    $this->load->view('beneficiary_dashboard', $data); 
     $this->load->view('templates/footer');
 }
 

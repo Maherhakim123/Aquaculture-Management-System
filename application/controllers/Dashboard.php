@@ -28,6 +28,13 @@ class Dashboard extends CI_Controller {
 		$userID = $this->session->userdata('userID');
         $data['project_count'] = $this->Project_model->count_projects_by_member($userID);
 
+		$this->load->model('Project_model');
+
+     	// Get the number of projects this beneficiary is involved in
+    	$project_count = $this->Project_model->count_projects_by_user($userID);
+
+    	$data['project_count'] = $project_count;
+
 		$this->load->view('templates/header');
 		$this->load->view('templates/community_sidebar'); // Community member sidebar
 		$this->load->view('beneficiary_dashboard' , $data);// Community dashboard view

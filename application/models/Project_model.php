@@ -138,6 +138,15 @@ public function is_user_already_invited($projectID, $userID) {
     return $query->num_rows() > 0;
 }
 
+//return to dashboard
+public function count_projects_by_user($userID)
+{
+    $this->db->from('projectMembers');
+    $this->db->where('userID', $userID);
+    return $this->db->count_all_results();
+}
+
+
 
 
 

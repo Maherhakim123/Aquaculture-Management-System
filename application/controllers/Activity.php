@@ -157,6 +157,23 @@ public function getActivitiesByPhase($phaseID) {
 
 
 
+public function add_comment() {
+    $activityID = $this->input->post('activityID');
+    $comment = $this->input->post('comment');
+    $userID = $this->session->userdata('userID');
+
+    if ($activityID && $comment && $userID) {
+        $this->db->insert('comments', [
+            'activityID' => $activityID,
+            'userID' => $userID,
+            'comment' => $comment,
+            'created_at' => date('Y-m-d H:i:s'),
+        ]);
+    }
+
+    // Redirect back to the project progress view
+    redirect($this->agent->referrer()); // or redirect('project/community_view/' . $projectID)
+}
 
 
 

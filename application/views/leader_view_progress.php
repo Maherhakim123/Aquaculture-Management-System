@@ -37,17 +37,33 @@
               </thead>
               <tbody>
                 <?php foreach ($progressData as $entry): ?>
-                    <?php $activityCount = count($entry['activities']); ?>
-                    <?php foreach ($entry['activities'] as $index => $activity): ?>
-                    <tr>
-                        <?php if ($index === 0): ?>
-                        <td rowspan="<?= $activityCount ?>"><?= $entry['phase']->phaseName ?></td>
-                        <?php endif; ?>
-                        <td><?= $activity->activityType ?> - <?= $activity->activityName ?></td>
-                        <td><?= $activity->comment ?></td>
-                    </tr>
+    <?php $activities = $entry['activities']; ?>
+    <?php $activityCount = count($activities); ?>
+    <?php $rowIndex = 0; ?>
+    <?php foreach ($activities as $activity): ?>
+        <tr>
+            <?php if ($rowIndex === 0): ?>
+                <td rowspan="<?= $activityCount ?>"><?= $entry['phase']->phaseName ?></td>
+            <?php endif; ?>
+            <td><?= $activity['activityType'] ?> - <?= $activity['activityName'] ?></td>
+            <td>
+                <?php if (!empty($activity['comments'])): ?>
+                    <?php foreach ($activity['comments'] as $comment): ?>
+                        <div>
+                            <strong><?= htmlspecialchars($comment['username']) ?>:</strong>
+                              <?= nl2br(htmlspecialchars($comment['comment'])) ?><br>
+                            <small class="text-muted"><?= date('d M Y, h:i A', strtotime($comment['created_at'])) ?></small>
+                        </div>
                     <?php endforeach; ?>
-                <?php endforeach; ?>
+                <?php else: ?>
+                    <em>No comments</em>
+                <?php endif; ?>
+            </td>
+        </tr>
+        <?php $rowIndex++; ?>
+    <?php endforeach; ?>
+<?php endforeach; ?>
+
                 </tbody>
             </table>
           </div>
