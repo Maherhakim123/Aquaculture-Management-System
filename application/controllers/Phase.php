@@ -146,36 +146,7 @@ public function view($phaseID) {
     $this->load->view('templates/footer');
 }
 
-
-// Leader view the progress
-// public function progress_by_project($projectID) {
-//     $this->load->model('Phase_model');
-//     $this->load->model('Activity_model'); 
-
-//     // Get all phases under this project
-//     $phases = $this->Phase_model->get_phases_by_project($projectID);
-
-//     $progressData = [];
-
-//     foreach ($phases as $phase) {
-//         // Get progress/activities by phaseID
-//         $activities = $this->Activity_model->get_activities_by_phase($phase->phaseID);
-
-//         $progressData[] = [
-//             'phase' => $phase,
-//             'activities' => $activities
-//         ];
-//     }
-
-//     $data['progressData'] = $progressData;
-//     $data['projectID'] = $projectID;
-
-//     $this->load->view('templates/header');
-//     $this->load->view('templates/sidebar');
-//     $this->load->view('leader_view_progress', $data);
-//     $this->load->view('templates/footer');
-// }
-
+// Project Leader view progress table
 public function progress_by_project($projectID) {
     $this->load->model('Phase_model');
     $this->load->model('Activity_model'); 
@@ -254,53 +225,10 @@ public function beneficiary_progress($projectID) {
     $data['projectID'] = $projectID;
 
     $this->load->view('templates/header');
-    $this->load->view('templates/sidebar');
+    $this->load->view('templates/community_sidebar');
     $this->load->view('beneficiary_view_progress', $data);  // View for beneficiaries
     $this->load->view('templates/footer');
 }
-
-//TAK THU
-public function view_progress($projectID)
-{
-    // Get session data
-    $userRole = $this->session->userdata('role'); // e.g., 'leader' or 'beneficiary'
-    $userID = $this->session->userdata('userID');
-
-    // Load phases by project
-    $phases = $this->Phase_model->get_phase($projectID);
-    $progressData = [];
-
-    foreach ($phases as $phase) {
-        $activities = $this->Activity_model->get_activities_by_phase($phase->phaseID);
-
-        foreach ($activities as $activity) {
-            if ($userRole == 'leader') {
-                $activity->comments = $this->Activity_model->get_comments_by_activity($activity->activityID);
-            } else {
-                $activity->comments = $this->Activity_model->get_comments_for_beneficiary($activity->activityID, $userID);
-            }
-        }
-
-        $progressData[] = [
-            'phase' => $phase,
-            'activities' => $activities
-        ];
-    }
-
-    // Send data to the view
-    $data['progressData'] = $progressData;
-    $data['projectID'] = $projectID;
-
-    // Load the appropriate view
-    if ($userRole == 'leader') {
-        $this->load->view('leader_view_progress', $data);
-    } else {
-        $this->load->view('beneficiary_view_progress', $data);
-    }
-}
-
-
-
 
 
 }

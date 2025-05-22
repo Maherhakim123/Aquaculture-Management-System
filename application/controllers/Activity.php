@@ -12,7 +12,7 @@ class Activity extends CI_Controller {
     public function create($phaseID) {
         $this->load->model('Phase_Model');
         $data['phase'] = $this->Phase_Model->get_phase_by_id($phaseID);
-
+        
         $this->load->view('create_activity_record', $data);
     }
 
@@ -27,7 +27,10 @@ class Activity extends CI_Controller {
 
     $data['projects'] = $this->Project_model->get_projects_by_leader($userID);
 
+    $this->load->view('templates/header');
+    $this->load->view('templates/sidebar');
     $this->load->view('create_activity_record', $data); 
+    $this->load->view('templates/footer');
     }
 
 
@@ -94,21 +97,6 @@ class Activity extends CI_Controller {
     }
 
 
-    //Review Balik
-//     public function beneficiary_add_comment_form($phaseID) {
-//     $userID = $this->session->userdata('userID');
-//     //latest
-//         $data['phaseID']   = $phaseID;
-
-//     $this->load->model('Project_model');
-//     //$data['projects'] = $this->Project_model->get_projects_by_beneficiary($userID); // Make sure this model exists
-//     //latest
-//     $data['activities'] = $this->Activity_model->get_activities_by_phase($phaseID);
-
-
-//     $this->load->view('beneficiary_add_comment', $data);
-// }
-
 public function beneficiary_add_comment_form($projectID)
 {
     // logged‑in beneficiary
@@ -119,17 +107,6 @@ public function beneficiary_add_comment_form($projectID)
 }
 
 
-
-// public function save_beneficiary_comment() {
-//     $activityID = $this->input->post('activityID');
-//     $comment = $this->input->post('comment');
-
-//     $this->Activity_model->add_comment_only($activityID, $comment);
-
-//     // Optionally get the phase to redirect back
-//     $activity = $this->Activity_model->get_activity($activityID);
-//     redirect('beneficiary/phase/progress/' . $activity->phaseID);
-// }
 
 public function save_beneficiary_comment()
 {
@@ -157,23 +134,23 @@ public function getActivitiesByPhase($phaseID) {
 
 
 
-public function add_comment() {
-    $activityID = $this->input->post('activityID');
-    $comment = $this->input->post('comment');
-    $userID = $this->session->userdata('userID');
+// public function add_comment() {
+//     $activityID = $this->input->post('activityID');
+//     $comment = $this->input->post('comment');
+//     $userID = $this->session->userdata('userID');
 
-    if ($activityID && $comment && $userID) {
-        $this->db->insert('comments', [
-            'activityID' => $activityID,
-            'userID' => $userID,
-            'comment' => $comment,
-            'created_at' => date('Y-m-d H:i:s'),
-        ]);
-    }
+//     if ($activityID && $comment && $userID) {
+//         $this->db->insert('comments', [
+//             'activityID' => $activityID,
+//             'userID' => $userID,
+//             'comment' => $comment,
+//             'created_at' => date('Y-m-d H:i:s'),
+//         ]);
+//     }
 
-    // Redirect back to the project progress view
-    redirect($this->agent->referrer()); // or redirect('project/community_view/' . $projectID)
-}
+//     // Redirect back to the project progress view
+//     redirect($this->agent->referrer()); // or redirect('project/community_view/' . $projectID)
+// }
 
 
 

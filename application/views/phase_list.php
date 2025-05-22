@@ -71,9 +71,12 @@
                                                 <i class="fas fa-eye"></i> Edit
                                             </a>
 
-                                            <a href="<?= site_url('phase/delete/' . $phase->phaseID . '/' . $projectID); ?>" class="btn btn-danger btn-sm">
+                                            <a href="<?= site_url('phase/delete/' . $phase->phaseID . '/' . $projectID); ?>" class="btn btn-danger btn-sm"
+                                            onclick="return confirm('Are you sure you want to delete this activity?')">
                                                 <i class="fas fa-trash"></i> Delete
                                             </a>
+
+                                            
 
                                           
 

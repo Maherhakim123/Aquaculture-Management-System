@@ -7,7 +7,6 @@ class Project extends CI_Controller
         $this->load->database(); // Load the database
         $this->load->model('Project_model');  // Load the Project model
         $this->load->model('User_model');
-        $this->load->model('Record_model');
         $this->load->library('session');
     }
 
@@ -173,34 +172,10 @@ public function beneficiary_dashboard()
         }
     }
 
-    //Project Leader Invite User
-    // public function invite_user()
-    // {
-    //     $projectID = $this->input->post('projectID');
-    //     $userID = $this->input->post('userID');
-
-    //     // Assuming project leader is the logged-in user
-    //     $leaderID = $this->session->userdata('userID'); // Get the logged-in user ID
-
-    //     if ($userID && $projectID) {
-    //         // Prepare data to store in the invitations table
-    //         $data = [
-    //             'projectID' => $projectID,
-    //             'userID' => $userID,
-    //             'invited_by' => $leaderID,
-    //             'status' => 'pending'
-    //         ];
-
-    //         $this->Project_model->invite_user_to_project($data);
-    //         redirect('project/view/' . $projectID);
-    //     } else {
-    //         $this->session->set_flashdata('error', 'Failed to invite user.');
-    //         redirect('project/view/' . $projectID);
-    //     }
-    // }
+ 
 
     public function invite_user()
-{
+    {
     $projectID = $this->input->post('projectID');
     $userID = $this->input->post('userID');
     $leaderID = $this->session->userdata('userID');
@@ -228,13 +203,6 @@ public function beneficiary_dashboard()
 
     redirect('project/view/' . $projectID);
 }
-
-
-
- 
-
-
-
 
     // View invitations for the current local community user
     public function invitations()

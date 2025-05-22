@@ -53,11 +53,11 @@
                 </div>
 
                 <!-- 5. record date -->
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label>Date</label>
                     <input type="date" name="recordDate"
                            class="form-control" required>
-                </div>
+                </div> -->
 
                 <button type="submit" class="btn btn-primary">
                     <i class="fas fa-plus"></i> Submit Comment
