@@ -48,37 +48,22 @@
                                                 <?= ($phase->status == 'Completed') ? 'badge-success' : (($phase->status == 'Not Started') ? 'badge-secondary' : 'badge-warning'); ?>">
                                                 <?= $phase->status; ?>
                                             </span>
-                                        </td>
-                                        <!-- <td>
+                                        </td>                               
+                                        <td>
                                             <div class="progress">
-                                                <div class="progress-bar 
-                                                    <?= ($phase->progress == 100) ? 'bg-success' : 'bg-info'; ?>" 
-                                                    role="progressbar" 
-                                                    style="width: <?= $phase->progress; ?>%" 
-                                                    aria-valuenow="<?= $phase->progress; ?>" 
-                                                    aria-valuemin="0" 
+                                                <div class="progress-bar <?= ($phase->progress == 100) ? 'bg-success' : 'bg-info' ?>"
+                                                    role="progressbar"
+                                                    style="width: <?= $phase->progress ?>%;"
+                                                    aria-valuenow="<?= $phase->progress ?>"
+                                                    aria-valuemin="0"
                                                     aria-valuemax="100">
-                                                    <?= $phase->progress; ?>%
+                                                    <?= $phase->progress ?>%
                                                 </div>
                                             </div>
-                                        </td> -->
-
-
-                                       
-<td>
-    <div class="progress">
-        <div class="progress-bar <?= ($phase->progress == 100) ? 'bg-success' : 'bg-info' ?>"
-             role="progressbar"
-             style="width: <?= $phase->progress ?>%;"
-             aria-valuenow="<?= $phase->progress ?>"
-             aria-valuemin="0"
-             aria-valuemax="100">
-            <?= $phase->progress ?>%
-        </div>
-    </div>
-</td>
-
-
+                                              <small class="text-muted d-block mt-1">
+                                                <?= $phase->completedActivities ?> of <?= $phase->totalActivities ?> activities completed
+                                              </small>
+                                        </td>
                                         <td>
                                             <a href="<?= site_url('phase/view/' . $phase->phaseID); ?>" class="btn btn-info btn-sm">
                                                 <i class="fas fa-eye"></i> View
@@ -92,12 +77,6 @@
                                             onclick="return confirm('Are you sure you want to delete this activity?')">
                                                 <i class="fas fa-trash"></i> Delete
                                             </a>
-
-                                            
-
-                                          
-
-
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
@@ -116,11 +95,10 @@
                     </div>
 
                 </div>
-                 <!-- /.card-body -->
-            </div> <!-- /.card -->
-        </div> <!-- /.container-fluid -->
-    </div> <!-- /.content -->
-</div> <!-- /.content-wrapper -->
+            </div>
+        </div> 
+    </div> 
+</div> 
 
 </body>
 </html>

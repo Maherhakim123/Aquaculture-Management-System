@@ -8,31 +8,26 @@ class Phase extends CI_Controller {
         $this->load->model('Activity_model');
     }
 
-    // Show phase for a specific project
-    // public function index($projectID) {
-    //     $data['phases'] = $this->Phase_model->get_phase($projectID);
-    //     $data['projectID'] = $projectID;
-    
-    //     $this->load->view('templates/header');
-    //     $this->load->view('templates/sidebar');
-    //     $this->load->view('phase_list', $data);
-    //     $this->load->view('templates/footer');
-    // }
 
-    public function index($projectID) {
+
+  // Project leader view the list of phase
+  public function index($projectID) {
     $phases = $this->Phase_model->get_phase($projectID);
 
     // Calculate progress for each phase based on activities
-    foreach ($phases as &$phase) {
-        $totalActivities = $this->Activity_model->countActivitiesByPhase($phase->phaseID);
-        $completedActivities = $this->Activity_model->countCompletedActivitiesByPhase($phase->phaseID);
+   foreach ($phases as &$phase) {
+    $totalActivities = $this->Activity_model->countActivitiesByPhase($phase->phaseID);
+    $completedActivities = $this->Activity_model->countCompletedActivitiesByPhase($phase->phaseID);
 
-        if ($totalActivities > 0) {
-            $phase->progress = round(($completedActivities / $totalActivities) * 100);
-        } else {
-            $phase->progress = 0;
-        }
+    if ($totalActivities > 0) {
+        $phase->progress = round(($completedActivities / $totalActivities) * 100);
+    } else {
+        $phase->progress = 0;
     }
+
+    $phase->totalActivities = $totalActivities;
+    $phase->completedActivities = $completedActivities;
+}
 
     $data['phases'] = $phases;
     $data['projectID'] = $projectID;
