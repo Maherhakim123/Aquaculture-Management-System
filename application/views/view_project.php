@@ -51,20 +51,52 @@
 
             <a href="<?php echo site_url('phase/index/'.$project->projectID); ?>" class="btn btn-primary btn-sm">View Phases</a>
 
-            <!-- <a href="<?php echo site_url('record/index/'.$project->projectID); ?>" class="btn btn-primary btn-sm">View Record</a> -->
-
             <a href="<?php echo site_url('phase/progress_by_project/'.$project->projectID); ?>" class="btn btn-primary btn-sm">View Progress</a>
 
+        <div class="card mt-4">
+    <div class="card-header bg-info text-white">
+        <h4>Phases in This Project</h4>
+    </div>
+    <div class="card-body">
+        <?php if (!empty($phases)) : ?>
+            <table class="table table-bordered table-striped">
+                <thead class="table-info text-center">
+                    <tr>
+                        <th>Phase Name</th>
+                        <th>Progress</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($phases as $phase) : 
+                        $progress = ($phase->totalActivities > 0) 
+                            ? round(($phase->completedActivities / $phase->totalActivities) * 100) 
+                            : 0;
+                    ?>
+                        <tr>
+                            <td><?= $phase->phaseName ?></td>
+                            <td>
+                                
+                               <div class="progress">
+                                                <div class="progress-bar <?= ($phase->progress == 100) ? 'bg-success' : 'bg-info' ?>"
+                                                    role="progressbar"
+                                                    style="width: <?= $phase->progress ?>%;"
+                                                    aria-valuenow="<?= $phase->progress ?>"
+                                                    aria-valuemin="0"
+                                                    aria-valuemax="100">
+                                                    <?= $phase->progress ?>%
+                                                </div>
+                                            </div>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        <?php else : ?>
+            <p>No phases have been added to this project.</p>
+        <?php endif; ?>
+    </div>
+</div>
 
-
-
-
-            
-
-
-
-
-        
 
         </div>
     </div>
@@ -151,51 +183,6 @@
 <?php else: ?>
     <p>No members have been invited yet.</p>
 <?php endif; ?>
-
-<!-- 
-<div class="card mt-4">
-    <div class="card-header bg-primary text-white">
-        <h4>
-            <?= ($this->session->userdata('userID') == $project->userID) ? 'All Progress Records in This Project' : 'Your Progress Records' ?>
-        </h4>
-    </div>
-    <div class="card-body">
-        <?php if (!empty($records)) : ?>
-            <table class="table table-bordered table-striped">
-                <thead class="table-primary text-center">
-                    <tr>
-                        <th>Date</th>
-                        <th>Quantity</th>
-                        <th>Income</th>
-                        <th>Situation</th>
-                        <?php if ($this->session->userdata('userID') == $project->userID): ?>
-                            <th>User</th>
-                        <?php endif; ?>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($records as $record) : ?>
-                        <tr>
-                            <td><?= $record['recordDate']; ?></td>
-                            <td><?= $record['quantity']; ?></td>
-                            <td><?= $record['incomeGenerated']; ?></td>
-                            <td><?= $record['situation']; ?></td>
-                            <?php if ($this->session->userdata('userID') == $project->userID): ?>
-                                <td><?= $record['userName']; ?></td>
-                            <?php endif; ?>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-        <?php else : ?>
-            <p>No records found for this project.</p>
-        <?php endif; ?>
-    </div>
-</div> -->
-
-
-
-
         
         </div>
     </div>
@@ -203,10 +190,6 @@
 </div>
 </div>
 </div>
-
-
-
-   
 
 </body>
 </html>

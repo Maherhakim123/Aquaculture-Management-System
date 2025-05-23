@@ -6,6 +6,8 @@ class Project extends CI_Controller
         parent::__construct();
         $this->load->database(); // Load the database
         $this->load->model('Project_model');  // Load the Project model
+        $this->load->model('Phase_model');
+        $this->load->model('Activity_model');
         $this->load->model('User_model');
         $this->load->library('session');
     }
@@ -117,6 +119,9 @@ public function beneficiary_dashboard()
     );
 
         $data['projectID'] = $projectID;
+
+        //data phase in view project
+        $data['phases'] = $this->Phase_model->get_phases_with_progress($projectID);
 
         $this->load->view('templates/header');
         $this->load->view('templates/sidebar');

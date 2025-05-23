@@ -68,6 +68,45 @@ public function update_completion_status($phaseID, $is_completed) {
 }
 
 
+// public function get_phases_with_progress($projectID) {
+//     $sql = "SELECT p.phaseID, p.phaseName,
+//             (SELECT COUNT(*) FROM activity a WHERE a.phaseID = p.phaseID) AS totalActivities,
+//             (SELECT COUNT(*) FROM activity a WHERE a.phaseID = p.phaseID AND a.progress = 'completed') AS completedActivities
+//             FROM phase p
+//             WHERE p.projectID = ?";
+    
+//     $query = $this->db->query($sql, array($projectID));
+//     $phases = $query->result();
+
+//     foreach ($phases as $phase) {
+//         if ($phase->totalActivities > 0) {
+//             $phase->progressPercent = round(($phase->completedActivities / $phase->totalActivities) * 100);
+//         } else {
+//             $phase->progressPercent = 0;
+//         }
+//     }
+
+//     return $phases;
+// }
+
+public function get_phases_with_progress($projectID) {
+    $phases = $this->get_phase($projectID);
+
+    foreach ($phases as &$phase) {
+        $total = $this->Activity_model->countActivitiesByPhase($phase->phaseID);
+        $completed = $this->Activity_model->countCompletedActivitiesByPhase($phase->phaseID);
+
+        $phase->progress = $total > 0 ? round(($completed / $total) * 100) : 0;
+        $phase->totalActivities = $total;
+        $phase->completedActivities = $completed;
+    }
+
+    return $phases;
+}
+
+
+
+
 
 
 

@@ -8,8 +8,6 @@ class Phase extends CI_Controller {
         $this->load->model('Activity_model');
     }
 
-
-
   // Project leader view the list of phase
   public function index($projectID) {
     $phases = $this->Phase_model->get_phase($projectID);
@@ -250,24 +248,6 @@ public function beneficiary_progress($projectID) {
     $this->load->view('beneficiary_view_progress', $data);  // View for beneficiaries
     $this->load->view('templates/footer');
 }
-
-
-//project leader update progress of completion
-// public function update_phase_completion()
-// {
-//     if ($this->input->method() === 'post') {
-//         $input = json_decode($this->input->raw_input_stream, true);
-//         $phaseID = $input['phaseID'];
-//         $completed = $input['completed'];
-
-//         $this->load->model('Phase_model');
-//         $this->Phase_model->updateCompletion($phaseID, $completed);
-
-//         echo json_encode(['status' => 'success', 'message' => 'Phase status updated.']);
-//     } else {
-//         show_error('Invalid request method', 405);
-//     }
-// }
 
 public function update_completion_status() {
     $phaseID = $this->input->post('phaseID');
