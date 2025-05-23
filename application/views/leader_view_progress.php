@@ -42,38 +42,62 @@
                   <th>Phase</th>
                   <th>Activity</th>
                   <th>Comment</th>
+                  <th>Tick</th>
                 </tr>
               </thead>
-              <tbody>
-                <?php foreach ($progressData as $entry): ?>
-                  <?php $activities = $entry['activities']; ?>
-                  <?php $activityCount = count($activities); ?>
-                  <?php $rowIndex = 0; ?>
-                  <?php foreach ($activities as $activity): ?>
-                 <tr>
-            <?php if ($rowIndex === 0): ?>
-                <td rowspan="<?= $activityCount ?>"><?= $entry['phase']->phaseName ?></td>
-            <?php endif; ?>
-            <td><?= $activity['activityType'] ?> - <?= $activity['activityName'] ?></td>
-            <td>
-                <?php if (!empty($activity['comments'])): ?>
-                    <?php foreach ($activity['comments'] as $comment): ?>
-                        <div>
-                            <strong><?= htmlspecialchars($comment['username']) ?>:</strong>
-                              <?= nl2br(htmlspecialchars($comment['comment'])) ?><br>
-                            <small class="text-muted"><?= date('d M Y, h:i A', strtotime($comment['created_at'])) ?></small>
-                        </div>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <em>No comments</em>
-                <?php endif; ?>
-            </td>
-                  </tr>
-                  <?php $rowIndex++; ?>
-              <?php endforeach; ?>
-          <?php endforeach; ?>
 
-                </tbody>
+               <tbody>
+    <?php foreach ($progressData as $entry): ?>
+      <?php 
+        $activities = $entry['activities']; 
+        $activityCount = count($activities);
+        $rowIndex = 0;
+      ?>
+      <?php foreach ($activities as $activity): ?>
+        <tr>
+          <?php if ($rowIndex === 0): ?>
+            <td rowspan="<?= $activityCount ?>">
+              <?= htmlspecialchars($entry['phase']->phaseName) ?>
+            </td>
+          <?php endif; ?>
+
+          <td>
+            <?= htmlspecialchars($activity['activityType'] . ' - ' . $activity['activityName']) ?>
+          </td>
+
+          <td>
+            <?php if (!empty($activity['comments'])): ?>
+              <?php foreach ($activity['comments'] as $comment): ?>
+                <div>
+                  <strong><?= htmlspecialchars($comment['username']) ?>:</strong> 
+                  <?= htmlspecialchars($comment['comment']) ?><br>
+                  <small class="text-muted">(<?= $comment['created_at'] ?>)</small>
+                </div>
+              <?php endforeach; ?>
+            <?php else: ?>
+              <em>No comments</em>
+            <?php endif; ?>
+          </td>
+
+         <td>
+  <input 
+    type="checkbox" 
+    class="activity-checkbox" 
+    data-activity-id="<?= $activity['activityID'] ?>"
+    <?= !empty($activity['progress']) && $activity['progress'] ? 'checked' : '' ?>
+  >
+</td>
+
+        </tr>
+        <?php $rowIndex++; ?>
+      <?php endforeach; ?>
+    <?php endforeach; ?>
+  </tbody>
+       
+
+
+
+
             </table>
        </div>
 
@@ -129,6 +153,64 @@ async function exportTableToPDF() {
     document.body.removeChild(container); // Clean up
 }
 </script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('.phase-complete-checkbox').change(function() {
+        const checkbox = $(this);
+        const phaseID = checkbox.data('phase-id');
+        const isChecked = checkbox.is(':checked') ? 1 : 0;
+
+        $.ajax({
+            url: '<?= site_url("phase/update_completion_status") ?>',
+            method: 'POST',
+            data: {
+                phaseID: phaseID,
+                is_completed: isChecked
+            },
+            success: function(response) {
+                console.log("Updated successfully");
+            },
+            error: function() {
+                alert("Failed to update phase status.");
+            }
+        });
+    });
+});
+</script>
+
+<script>
+  document.querySelectorAll('.activity-checkbox').forEach(checkbox => {
+    checkbox.addEventListener('change', function() {
+      const activityId = this.dataset.activityId;
+      const isChecked = this.checked ? 1 : 0;
+
+      fetch("<?= site_url('activity/update_progress') ?>", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: `activityID=${encodeURIComponent(activityId)}&progress=${isChecked}`
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.status !== 'success') {
+          alert('Failed to update progress.');
+          // Optionally revert checkbox state
+          this.checked = !isChecked;
+        }
+      })
+      .catch(() => {
+        alert('Error updating progress.');
+        this.checked = !isChecked;
+      });
+    });
+  });
+</script>
+
+
+
 
 
 </body>

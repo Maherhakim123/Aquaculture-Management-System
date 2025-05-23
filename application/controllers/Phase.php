@@ -9,15 +9,40 @@ class Phase extends CI_Controller {
     }
 
     // Show phase for a specific project
-    public function index($projectID) {
-        $data['phases'] = $this->Phase_model->get_phase($projectID);
-        $data['projectID'] = $projectID;
+    // public function index($projectID) {
+    //     $data['phases'] = $this->Phase_model->get_phase($projectID);
+    //     $data['projectID'] = $projectID;
     
-        $this->load->view('templates/header');
-        $this->load->view('templates/sidebar');
-        $this->load->view('phase_list', $data);
-        $this->load->view('templates/footer');
+    //     $this->load->view('templates/header');
+    //     $this->load->view('templates/sidebar');
+    //     $this->load->view('phase_list', $data);
+    //     $this->load->view('templates/footer');
+    // }
+
+    public function index($projectID) {
+    $phases = $this->Phase_model->get_phase($projectID);
+
+    // Calculate progress for each phase based on activities
+    foreach ($phases as &$phase) {
+        $totalActivities = $this->Activity_model->countActivitiesByPhase($phase->phaseID);
+        $completedActivities = $this->Activity_model->countCompletedActivitiesByPhase($phase->phaseID);
+
+        if ($totalActivities > 0) {
+            $phase->progress = round(($completedActivities / $totalActivities) * 100);
+        } else {
+            $phase->progress = 0;
+        }
     }
+
+    $data['phases'] = $phases;
+    $data['projectID'] = $projectID;
+
+    $this->load->view('templates/header');
+    $this->load->view('templates/sidebar');
+    $this->load->view('phase_list', $data);
+    $this->load->view('templates/footer');
+}
+
 
     // Show phase for a specific project for beneficiary
     public function beneficiary_view_phase($projectID) {
@@ -167,6 +192,7 @@ public function progress_by_project($projectID) {
                 'activityID' => $activityID,
                 'activityType' => $row->activityType,
                 'activityName' => $row->activityName,
+                'progress' => $row->progress,
                 'comments' => []
             ];
         }
@@ -229,6 +255,34 @@ public function beneficiary_progress($projectID) {
     $this->load->view('beneficiary_view_progress', $data);  // View for beneficiaries
     $this->load->view('templates/footer');
 }
+
+
+//project leader update progress of completion
+// public function update_phase_completion()
+// {
+//     if ($this->input->method() === 'post') {
+//         $input = json_decode($this->input->raw_input_stream, true);
+//         $phaseID = $input['phaseID'];
+//         $completed = $input['completed'];
+
+//         $this->load->model('Phase_model');
+//         $this->Phase_model->updateCompletion($phaseID, $completed);
+
+//         echo json_encode(['status' => 'success', 'message' => 'Phase status updated.']);
+//     } else {
+//         show_error('Invalid request method', 405);
+//     }
+// }
+
+public function update_completion_status() {
+    $phaseID = $this->input->post('phaseID');
+    $is_completed = $this->input->post('is_completed');
+
+    if ($phaseID !== null) {
+        $this->Phase_model->update_completion_status($phaseID, $is_completed);
+    }
+}
+
 
 
 }

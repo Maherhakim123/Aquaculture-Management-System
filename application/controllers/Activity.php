@@ -34,10 +34,6 @@ class Activity extends CI_Controller {
     }
 
 
-
-
-
-
     public function getPhasesByProject($projectID)
     {
     $this->load->model('Phase_model');
@@ -53,14 +49,14 @@ class Activity extends CI_Controller {
         $user_role = $this->session->userdata('role'); // 'leader' or 'beneficiary'
         $user_id = $this->session->userdata('userID');
 
-        $recordDate = $this->input->post('recordDate');
+        //$recordDate = $this->input->post('recordDate');
         $phaseID = $this->input->post('phaseID');
 
         $data = array(
             'activityType' => $this->input->post('activityType'),
             'activityName' => $this->input->post('activityName'),
             'comment' => $this->input->post('comment'),
-            'recordDate' => $recordDate,
+            //'recordDate' => $recordDate,
             'phaseID' => $phaseID,
             //'userID' => $userID
         );
@@ -84,7 +80,7 @@ class Activity extends CI_Controller {
             'activityType' => $this->input->post('activityType'),
             'activityName' => $this->input->post('activityName'),
             'comment' => $this->input->post('comment'),
-            'recordDate' => $this->input->post('recordDate'),
+            //'recordDate' => $this->input->post('recordDate'),
         );
     
         $phaseID = $this->Activity_model->update_activity($activityID, $data);
@@ -132,25 +128,23 @@ public function getActivitiesByPhase($phaseID) {
     echo json_encode($activities);
 }
 
+//Project leader tick to make the progress in phase_list (progress bar)
+public function update_progress() {
+    $activityID = $this->input->post('activityID');
+    $progress = $this->input->post('progress');
+
+    $this->load->model('Activity_model');
+    $updated = $this->Activity_model->update_progress($activityID, $progress);
+
+    if ($updated) {
+        echo json_encode(['status' => 'success']);
+    } else {
+        echo json_encode(['status' => 'error']);
+    }
+}
 
 
-// public function add_comment() {
-//     $activityID = $this->input->post('activityID');
-//     $comment = $this->input->post('comment');
-//     $userID = $this->session->userdata('userID');
 
-//     if ($activityID && $comment && $userID) {
-//         $this->db->insert('comments', [
-//             'activityID' => $activityID,
-//             'userID' => $userID,
-//             'comment' => $comment,
-//             'created_at' => date('Y-m-d H:i:s'),
-//         ]);
-//     }
-
-//     // Redirect back to the project progress view
-//     redirect($this->agent->referrer()); // or redirect('project/community_view/' . $projectID)
-// }
 
 
 

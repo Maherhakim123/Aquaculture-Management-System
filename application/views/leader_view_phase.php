@@ -59,7 +59,7 @@
       <th>Type</th>
       <th>Name</th>
       <!-- <th>Comment</th> -->
-      <th>Date</th>
+      <!-- <th>Date</th> -->
       <th>Actions</th> 
     </tr>
   </thead>
@@ -71,7 +71,7 @@
           <td><?= $activity->activityType ?></td>
           <td><?= $activity->activityName ?></td>
           <!-- <td><?= $activity->comment ?></td> -->
-          <td><?= date('d M Y', strtotime($activity->recordDate)) ?></td>
+          <!-- <td><?= date('d M Y', strtotime($activity->recordDate)) ?></td> -->
           <td class="text-center">
             <a href="<?= site_url('activity/edit/' . $activity->activityID) ?>" class="btn btn-warning btn-sm">
                 Edit

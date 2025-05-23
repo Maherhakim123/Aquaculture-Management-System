@@ -55,7 +55,7 @@ public function add_activity_comment($activityID, $userID, $comment)
 
 // To show activity comments by progress
 public function get_activities_with_comments_by_phase($phaseID) {
-    $this->db->select('a.activityID, a.activityType, a.activityName, c.comment, c.created_at, u.username');
+    $this->db->select('a.activityID, a.activityType, a.activityName, a.progress, c.comment, c.created_at, u.username');
     $this->db->from('activity a');
     $this->db->join('comments c', 'a.activityID = c.activityID', 'left');
     $this->db->join('users u', 'c.userID = u.userID', 'left');
@@ -76,6 +76,65 @@ public function get_comments_by_activity_and_user($activityID, $userID) {
     $this->db->order_by('comments.created_at', 'ASC');
     return $this->db->get()->result_array();
 }
+
+//update progress by tick the activity
+public function updateProgress($activityID, $progress)
+{
+    $this->db->where('activityID', $activityID);
+    $this->db->update('activity', ['progress' => $progress]);
+}
+
+public function updatePhaseProgressFromActivities($activityID)
+{
+    $activity = $this->db->get_where('activity', ['activityID' => $activityID])->row();
+    if (!$activity) return;
+
+    $phaseID = $activity->phaseID;
+
+    $this->db->where('phaseID', $phaseID);
+    $total = $this->db->count_all_results('activity');
+
+    $this->db->where(['phaseID' => $phaseID, 'progress' => 1]);
+    $completed = $this->db->count_all_results('activity');
+
+    $progress = ($total > 0) ? round(($completed / $total) * 100) : 0;
+
+    $this->db->where('phaseID', $phaseID);
+    $this->db->update('phase', ['progress' => $progress]);
+}
+
+
+//latest
+
+public function getActivitiesByPhase($phaseID)
+{
+    $this->db->select('activityID, activityType, activityName, recordDate, comment, progress');
+    $this->db->from('activity');
+    $this->db->where('phaseID', $phaseID);
+    $query = $this->db->get();
+    return $query->result_array();  // MUST return as array, not object
+}
+
+public function update_progress($activityID, $progress) {
+    $this->db->where('activityID', $activityID);
+    return $this->db->update('activity', ['progress' => $progress]);
+}
+
+//Progress bar for activity retrieved in phase list for each phase
+public function countActivitiesByPhase($phaseID)
+{
+    $this->db->where('phaseID', $phaseID);
+    return $this->db->count_all_results('activity');
+}
+
+public function countCompletedActivitiesByPhase($phaseID)
+{
+    $this->db->where('phaseID', $phaseID);
+    $this->db->where('progress', 1); // Assuming progress=1 means completed activity
+    return $this->db->count_all_results('activity');
+}
+
+
 
 
 

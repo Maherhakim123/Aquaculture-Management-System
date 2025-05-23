@@ -68,10 +68,10 @@
               <textarea name="comment" class="form-control" rows="3"></textarea>
             </div>
 
-            <div class="form-group">
+            <!-- <div class="form-group">
               <label for="recordDate">Date</label>
               <input type="date" name="recordDate" class="form-control" required>
-            </div>
+            </div> -->
 
           </div>
 

@@ -61,6 +61,14 @@ public function get_first_phase_id($projectID)
 }
 
 
+//update phase progress
+public function update_completion_status($phaseID, $is_completed) {
+    $this->db->where('phaseID', $phaseID);
+    $this->db->update('phase', ['is_completed' => $is_completed]);
+}
+
+
+
 
 
 

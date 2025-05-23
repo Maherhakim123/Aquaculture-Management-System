@@ -33,7 +33,7 @@
                                 <th>Deadline</th>
                                 <th>Status</th>
                                 <th>Progress</th>
-                                <th>Actions</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -49,7 +49,7 @@
                                                 <?= $phase->status; ?>
                                             </span>
                                         </td>
-                                        <td>
+                                        <!-- <td>
                                             <div class="progress">
                                                 <div class="progress-bar 
                                                     <?= ($phase->progress == 100) ? 'bg-success' : 'bg-info'; ?>" 
@@ -61,7 +61,24 @@
                                                     <?= $phase->progress; ?>%
                                                 </div>
                                             </div>
-                                        </td>
+                                        </td> -->
+
+
+                                       
+<td>
+    <div class="progress">
+        <div class="progress-bar <?= ($phase->progress == 100) ? 'bg-success' : 'bg-info' ?>"
+             role="progressbar"
+             style="width: <?= $phase->progress ?>%;"
+             aria-valuenow="<?= $phase->progress ?>"
+             aria-valuemin="0"
+             aria-valuemax="100">
+            <?= $phase->progress ?>%
+        </div>
+    </div>
+</td>
+
+
                                         <td>
                                             <a href="<?= site_url('phase/view/' . $phase->phaseID); ?>" class="btn btn-info btn-sm">
                                                 <i class="fas fa-eye"></i> View

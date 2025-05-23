@@ -26,14 +26,14 @@
           <label>Activity Name</label>
           <input type="text" name="activityName" value="<?= $activity->activityName ?>" class="form-control" required>
         </div>
-        <div class="form-group">
+        <!-- <div class="form-group">
           <label>Comment</label>
           <textarea name="comment" class="form-control"><?= $activity->comment ?></textarea>
-        </div>
-        <div class="form-group">
+        </div> -->
+        <!-- <div class="form-group">
           <label>Date</label>
           <input type="datetime-local" name="recordDate" value="<?= date('Y-m-d\TH:i', strtotime($activity->recordDate)) ?>" class="form-control" required>
-        </div>
+        </div> -->
         <button type="submit" class="btn btn-success">Update</button>
         <a href="<?= site_url('phase/view/' . $activity->phaseID) ?>" class="btn btn-secondary">Cancel</a>
       </form>
