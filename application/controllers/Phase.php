@@ -65,20 +65,31 @@ public function view($phaseID) {
     $this->load->view('templates/footer');
 }
 
-    
-
     // Show form to create a new phase
     public function create($projectID = null) {
-        if ($projectID === null) {
-            show_error("Invalid Project ID", 400);
-        }
-        $data['projectID'] = $projectID;
-
-        $this->load->view('templates/header');
-        $this->load->view('templates/sidebar');
-        $this->load->view('create_phase', $data);
-        $this->load->view('templates/footer');
+    if ($projectID === null) {
+        show_error("Invalid Project ID", 400);
     }
+
+    // Load the project model and fetch project data
+    $this->load->model('Project_model');
+    $project = $this->Project_model->get_project_by_id($projectID);
+
+    if (!$project) {
+        show_error("Project not found", 404);
+    }
+
+    // Pass the min/max date to view
+    $data['projectID'] = $projectID;
+    $data['minDate'] = $project->startDate;
+    $data['maxDate'] = $project->endDate;
+
+    $this->load->view('templates/header');
+    $this->load->view('templates/sidebar');
+    $this->load->view('create_phase', $data);
+    $this->load->view('templates/footer');
+}
+
 
 
     public function add() {
@@ -245,7 +256,7 @@ public function beneficiary_progress($projectID) {
 
     $this->load->view('templates/header');
     $this->load->view('templates/community_sidebar');
-    $this->load->view('beneficiary_view_progress', $data);  // View for beneficiaries
+    $this->load->view('beneficiary_view_progress', $data);
     $this->load->view('templates/footer');
 }
 

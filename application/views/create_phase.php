@@ -37,15 +37,18 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="startDate">Start Date</label>
-                            <input type="date" class="form-control" id="startDate" name="startDate" required>
+                            <label for="phaseName">Start Date</label>
+                        <!-- Start Date -->
+                        <input type="date" 
+                            class="form-control" id="startDate"  name="startDate"   required  min="<?= $minDate ?>" max="<?= $maxDate ?>"  onchange="validateDates()">
                         </div>
-
-                        <div class="form-group">
-                            <label for="deadline">Deadline</label>
-                            <input type="date" class="form-control" id="deadline" name="deadline" required>
+                       <div class="form-group">
+                            <label for="phaseName">Deadline</label>
+                            <!-- Deadline -->
+                        <input type="date" 
+                             class="form-control"  id="deadline"  name="deadline" required min="<?= $minDate ?>" max="<?= $maxDate ?>" onchange="validateDates()">
                         </div>
-
+                        
                         <div class="form-group">
                             <label>Status</label>
                             <input type="text" class="form-control" value="Not Started" readonly>
@@ -71,6 +74,44 @@
 <script src="<?= base_url('assets/template/plugins/jquery/jquery.min.js') ?>"></script>
 <script src="<?= base_url('assets/template/plugins/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
 <script src="<?= base_url('assets/template/dist/js/adminlte.min.js') ?>"></script>
+
+<script>
+function validateDates() {
+    const projectStart = new Date("<?= $minDate ?>");
+    const projectEnd = new Date("<?= $maxDate ?>");
+
+    const startDateInput = document.getElementById('startDate');
+    const deadlineInput = document.getElementById('deadline');
+
+    const startDate = new Date(startDateInput.value);
+    const deadline = new Date(deadlineInput.value);
+
+    // Clear any previous error messages
+    startDateInput.setCustomValidity('');
+    deadlineInput.setCustomValidity('');
+
+    // Check if startDate is within project duration
+    if (startDate < projectStart || startDate > projectEnd) {
+        startDateInput.setCustomValidity('Start date must be within project duration.');
+    }
+
+    // Check if deadline is within project duration
+    if (deadline < projectStart || deadline > projectEnd) {
+        deadlineInput.setCustomValidity('Deadline must be within project duration.');
+    }
+
+    // Check if deadline is after or equal to startDate
+    if (deadline < startDate) {
+        deadlineInput.setCustomValidity('Deadline cannot be earlier than start date.');
+    }
+
+    // Report validity to show error messages
+    startDateInput.reportValidity();
+    deadlineInput.reportValidity();
+}
+</script>
+
+
 
 </body>
 </html>
