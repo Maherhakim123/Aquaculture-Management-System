@@ -52,12 +52,11 @@
                               rows="3" required></textarea>
                 </div>
 
-                <!-- 5. record date -->
-                <!-- <div class="form-group">
-                    <label>Date</label>
-                    <input type="date" name="recordDate"
-                           class="form-control" required>
-                </div> -->
+                <!-- 5. spending (optional) -->
+                <div class="form-group">
+                    <label for="spending">Spending Budget (RM) <small>(optional)</small></label>
+                    <input type="number" name="spending" step="0.01" class="form-control" placeholder="Enter amount spent">
+                </div> <br>
 
                 <button type="submit" class="btn btn-primary">
                     <i class="fas fa-plus"></i> Submit Comment

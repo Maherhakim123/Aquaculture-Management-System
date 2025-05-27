@@ -42,12 +42,13 @@ class Activity_model extends CI_Model {
 
 
 //Insert/store data to add comments in table comments
-public function add_activity_comment($activityID, $userID, $comment)
+public function add_activity_comment($activityID, $userID, $comment, $spending = NULL)
 {
-    return $this->db->insert('comments', [          // <- new table
+    return $this->db->insert('comments', [          
         'activityID' => $activityID,
         'userID'     => $userID,
-        'comment'    => $comment
+        'comment'    => $comment,
+        'spending' => $spending ? $spending : NULL,
     ]);
 }
     
@@ -55,7 +56,7 @@ public function add_activity_comment($activityID, $userID, $comment)
 
 // To show activity comments by progress
 public function get_activities_with_comments_by_phase($phaseID) {
-    $this->db->select('a.activityID, a.activityType, a.activityName, a.progress, c.comment, c.created_at, u.username');
+    $this->db->select('a.activityID, a.activityType, a.activityName, a.progress, c.comment, c.spending, c.created_at, u.username'); //latest
     $this->db->from('activity a');
     $this->db->join('comments c', 'a.activityID = c.activityID', 'left');
     $this->db->join('users u', 'c.userID = u.userID', 'left');
@@ -133,6 +134,19 @@ public function countCompletedActivitiesByPhase($phaseID)
     $this->db->where('progress', 1); // Assuming progress=1 means completed activity
     return $this->db->count_all_results('activity');
 }
+
+//retrive the spending data to view progress
+public function get_spending_by_activity($activityID) {
+    $this->db->select('spending');
+    $this->db->from('spending');
+    $this->db->where('activityID', $activityID);
+    $query = $this->db->get();
+    if ($query->num_rows() > 0) {
+        return $query->row()->spending;
+    }
+    return 0; // default if no spending record
+}
+
 
 
 

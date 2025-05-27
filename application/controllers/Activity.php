@@ -108,10 +108,11 @@ public function save_beneficiary_comment()
 {
     $activityID = $this->input->post('activityID');
     $comment    = $this->input->post('comment');
+    $spending   = $this->input->post('spending');
     $userID     = $this->session->userdata('userID');
 
     // 1. store the new comment
-    $this->Activity_model->add_activity_comment($activityID, $userID, $comment);
+    $this->Activity_model->add_activity_comment($activityID, $userID, $comment, $spending);
 
     // 2. find the project this activity is under
     $activity   = $this->Activity_model->get_activity($activityID);      // gives phaseID

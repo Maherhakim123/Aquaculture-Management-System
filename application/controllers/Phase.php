@@ -205,6 +205,7 @@ public function progress_by_project($projectID) {
             $activities[$activityID]['comments'][] = [
                 'username' => $row->username ?? 'Unknown',
                 'comment' => $row->comment,
+                'spending' => $row->spending ?? 0,
                 'created_at' => $row->created_at
             ];
         }
@@ -244,6 +245,8 @@ public function beneficiary_progress($projectID) {
         foreach ($activities as &$activity) {
             $activity->comments = $this->Activity_model->get_comments_by_activity_and_user($activity->activityID, $userID);
         }
+
+        
 
         $progressData[] = [
             'phase' => $phase,

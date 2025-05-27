@@ -42,58 +42,78 @@
                   <th>Phase</th>
                   <th>Activity</th>
                   <th>Comment</th>
-                  <th>Tick</th>
+                  <th>Approved Budget</th>
+
                 </tr>
               </thead>
 
                <tbody>
-    <?php foreach ($progressData as $entry): ?>
-      <?php 
-        $activities = $entry['activities']; 
-        $activityCount = count($activities);
-        $rowIndex = 0;
-      ?>
-      <?php foreach ($activities as $activity): ?>
-        <tr>
-          <?php if ($rowIndex === 0): ?>
-            <td rowspan="<?= $activityCount ?>">
-              <?= htmlspecialchars($entry['phase']->phaseName) ?>
+                <!-- Phase  -->
+                <?php foreach ($progressData as $entry): ?>
+                  <?php 
+                    $activities = $entry['activities']; 
+                    $activityCount = count($activities);
+                    $rowIndex = 0;
+                  ?>
+                  <?php foreach ($activities as $activity): ?>
+                    <tr>
+                      <?php if ($rowIndex === 0): ?>
+                        <td rowspan="<?= $activityCount ?>">
+                          <?= htmlspecialchars($entry['phase']->phaseName) ?>
+                        </td>
+                      <?php endif; ?>
+
+                      <!-- Activity -->
+                    <td>
+              <?= htmlspecialchars($activity['activityType'] . ' - ' . $activity['activityName']) ?><br>
+                  <!-- Checkbox (Mark As Complete) -->
+              <label class="mt-2">
+                <input 
+                  type="checkbox" 
+                  class="activity-checkbox" 
+                  data-activity-id="<?= $activity['activityID'] ?>"
+                  <?= !empty($activity['progress']) && $activity['progress'] ? 'checked' : '' ?>
+                > Mark as Complete
+              </label>
             </td>
-          <?php endif; ?>
 
-          <td>
-            <?= htmlspecialchars($activity['activityType'] . ' - ' . $activity['activityName']) ?>
-          </td>
+                        <!-- <td>
+                          <?php if (!empty($activity['comments'])): ?>
+                            <?php foreach ($activity['comments'] as $comment): ?>
+                              <div>
+                                <strong><?= htmlspecialchars($comment['username']) ?>:</strong> 
+                                <?= htmlspecialchars($comment['comment']) ?><br>
+                                <small class="text-muted">(<?= $comment['created_at'] ?>)</small>
+                              </div>
+                            <?php endforeach; ?>
+                          <?php else: ?>
+                            <em>No comments</em>
+                          <?php endif; ?>
+                        </td> -->
 
-          <td>
-            <?php if (!empty($activity['comments'])): ?>
-              <?php foreach ($activity['comments'] as $comment): ?>
-                <div>
-                  <strong><?= htmlspecialchars($comment['username']) ?>:</strong> 
-                  <?= htmlspecialchars($comment['comment']) ?><br>
-                  <small class="text-muted">(<?= $comment['created_at'] ?>)</small>
-                </div>
-              <?php endforeach; ?>
-            <?php else: ?>
-              <em>No comments</em>
-            <?php endif; ?>
-          </td>
+                      <!-- Comments -->
+                      <td>
+              <?php if (!empty($activity['comments'])): ?>
+                <?php foreach ($activity['comments'] as $comment): ?>
+                  <div>
+                    <strong><?= htmlspecialchars($comment['username']) ?>:</strong> 
+                    <?= htmlspecialchars($comment['comment']) ?><br>
+                    <small class="text-muted">(<?= $comment['created_at'] ?>)</small>
+                    <div><strong>Spending:</strong> RM <?= number_format($comment['spending'], 2) ?></div>
+                    <hr>
+                  </div>
+                <?php endforeach; ?>
+              <?php else: ?>
+                <em>No comments</em>
+              <?php endif; ?>
+            </td>
 
-         <td>
-  <input 
-    type="checkbox" 
-    class="activity-checkbox" 
-    data-activity-id="<?= $activity['activityID'] ?>"
-    <?= !empty($activity['progress']) && $activity['progress'] ? 'checked' : '' ?>
-  >
-</td>
-
-        </tr>
-        <?php $rowIndex++; ?>
-      <?php endforeach; ?>
-    <?php endforeach; ?>
-  </tbody>
-       
+                    </tr>
+                    <?php $rowIndex++; ?>
+                  <?php endforeach; ?>
+                <?php endforeach; ?>
+              </tbody>
+                  
 
 
 
@@ -207,6 +227,34 @@ $(document).ready(function() {
       });
     });
   });
+
+
+
+
+  document.querySelectorAll('.spending-input').forEach(input => {
+  input.addEventListener('change', function() {
+    const activityId = this.dataset.activityId;
+    const spendingValue = this.value;
+
+    fetch("<?= site_url('activity/update_spending') ?>", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: `activityID=${encodeURIComponent(activityId)}&spending=${encodeURIComponent(spendingValue)}`
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.status !== 'success') {
+        alert('Failed to update spending.');
+      }
+    })
+    .catch(() => {
+      alert('Error updating spending.');
+    });
+  });
+});
+
 </script>
 
 
