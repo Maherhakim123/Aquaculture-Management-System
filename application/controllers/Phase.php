@@ -203,10 +203,12 @@ public function progress_by_project($projectID) {
 
         if ($row->comment) {
             $activities[$activityID]['comments'][] = [
+                'commentID' => $row->commentID,
                 'username' => $row->username ?? 'Unknown',
                 'comment' => $row->comment,
                 'spending' => $row->spending ?? 0,
-                'created_at' => $row->created_at
+                'created_at' => $row->created_at,
+                'approvalStatus' => $row->approvalStatus ?? 'not_approved'
             ];
         }
     }

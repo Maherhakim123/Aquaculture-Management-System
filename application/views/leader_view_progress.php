@@ -42,7 +42,7 @@
                   <th>Phase</th>
                   <th>Activity</th>
                   <th>Comment</th>
-                  <th>Approved Budget</th>
+                  <!-- <th>Approved Budget</th> -->
 
                 </tr>
               </thead>
@@ -77,36 +77,44 @@
               </label>
             </td>
 
-                        <!-- <td>
-                          <?php if (!empty($activity['comments'])): ?>
-                            <?php foreach ($activity['comments'] as $comment): ?>
-                              <div>
-                                <strong><?= htmlspecialchars($comment['username']) ?>:</strong> 
-                                <?= htmlspecialchars($comment['comment']) ?><br>
-                                <small class="text-muted">(<?= $comment['created_at'] ?>)</small>
-                              </div>
-                            <?php endforeach; ?>
-                          <?php else: ?>
-                            <em>No comments</em>
-                          <?php endif; ?>
-                        </td> -->
+         <td>
+  <?php if (!empty($activity['comments'])): ?>
+    <?php foreach ($activity['comments'] as $comment): ?>
+      <div style="margin-bottom: 10px;">
+        <strong><?= htmlspecialchars($comment['username']) ?>:</strong> 
+        <?= htmlspecialchars($comment['comment']) ?><br>
+        <small class="text-muted">(<?= $comment['created_at'] ?>)</small>
+        <div><strong>Spending:</strong> RM <?= number_format($comment['spending'], 2) ?></div> <br>
+        <!-- <label>
+          <input 
+            type="checkbox" 
+            class="budget-approved-checkbox"
+            data-comment-id="<?= $comment['commentID'] ?>"
+            <?= $comment['approvalStatus'] === 'approved' ? 'checked' : '' ?>
+          > Approved
+        </label> -->
 
-                      <!-- Comments -->
-                      <td>
-              <?php if (!empty($activity['comments'])): ?>
-                <?php foreach ($activity['comments'] as $comment): ?>
-                  <div>
-                    <strong><?= htmlspecialchars($comment['username']) ?>:</strong> 
-                    <?= htmlspecialchars($comment['comment']) ?><br>
-                    <small class="text-muted">(<?= $comment['created_at'] ?>)</small>
-                    <div><strong>Spending:</strong> RM <?= number_format($comment['spending'], 2) ?></div>
-                    <hr>
-                  </div>
-                <?php endforeach; ?>
-              <?php else: ?>
-                <em>No comments</em>
-              <?php endif; ?>
-            </td>
+        <div>
+  <input 
+    type="checkbox" 
+    class="budget-approved-checkbox" 
+    id="budget-<?= $comment['commentID'] ?>"
+    data-comment-id="<?= $comment['commentID'] ?>"
+    <?= $comment['approvalStatus'] === 'approved' ? 'checked' : '' ?>
+  >
+  <label for="budget-<?= $comment['commentID'] ?>">Approved</label>
+</div>
+
+        <hr>
+      </div>
+    <?php endforeach; ?>
+  <?php else: ?>
+    <em>No comments</em>
+  <?php endif; ?>
+</td>
+
+         
+        </td>
 
                     </tr>
                     <?php $rowIndex++; ?>
@@ -230,6 +238,59 @@ $(document).ready(function() {
 
 
 
+// document.querySelectorAll('.budget-approved-checkbox').forEach(checkbox => {
+//   checkbox.addEventListener('change', function() {
+//     const commentId = this.dataset.commentId;
+//     const isChecked = this.checked ? 1 : 0;
+
+//     fetch("<?= site_url('activity/update_budget_approval') ?>", {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/x-www-form-urlencoded"
+//       },
+//       body: `commentID=${encodeURIComponent(commentId)}&budget_approved=${isChecked}`
+//     })
+//     .then(response => response.json())
+//     .then(data => {
+//       if (data.status !== 'success') {
+//         alert('Failed to update approval.');
+//       }
+//     })
+//     .catch(() => {
+//       alert('Error updating approval.');
+//     });
+//   });
+// });
+
+document.addEventListener('change', function(e) {
+  if (e.target.classList.contains('budget-approved-checkbox')) {
+    const commentId = e.target.dataset.commentId;
+    const isChecked = e.target.checked ? 1 : 0;
+
+    fetch("<?= site_url('activity/update_budget_approval') ?>", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: `commentID=${encodeURIComponent(commentId)}&budget_approved=${isChecked}`
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.status !== 'success') {
+        alert('Failed to update approval.');
+      }
+    })
+    .catch(() => {
+      alert('Error updating approval.');
+    });
+  }
+});
+
+
+
+
+
+
 
   document.querySelectorAll('.spending-input').forEach(input => {
   input.addEventListener('change', function() {
@@ -254,6 +315,41 @@ $(document).ready(function() {
     });
   });
 });
+
+
+
+document.querySelectorAll('.budget-approved-checkbox').forEach(checkbox => {
+  checkbox.addEventListener('change', function() {
+    const commentId = this.dataset.commentId;
+    const isChecked = this.checked ? 1 : 0;
+
+    // Disable checkbox during update to avoid rapid clicks
+    this.disabled = true;
+
+    fetch("<?= site_url('activity/update_budget_approval') ?>", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: `commentID=${encodeURIComponent(commentId)}&budget_approved=${isChecked}`
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.status !== 'success') {
+        alert('Failed to update approval.');
+        // revert checkbox on failure
+        this.checked = !isChecked;
+      }
+      this.disabled = false;
+    })
+    .catch(() => {
+      alert('Error updating approval.');
+      this.checked = !isChecked;
+      this.disabled = false;
+    });
+  });
+});
+
 
 </script>
 

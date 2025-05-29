@@ -56,7 +56,7 @@ public function add_activity_comment($activityID, $userID, $comment, $spending =
 
 // To show activity comments by progress
 public function get_activities_with_comments_by_phase($phaseID) {
-    $this->db->select('a.activityID, a.activityType, a.activityName, a.progress, c.comment, c.spending, c.created_at, u.username'); //latest
+    $this->db->select('a.activityID, a.activityType, a.activityName, a.progress, c.commentID, c.comment, c.spending, c.created_at, c.approvalStatus, u.username'); //latest
     $this->db->from('activity a');
     $this->db->join('comments c', 'a.activityID = c.activityID', 'left');
     $this->db->join('users u', 'c.userID = u.userID', 'left');
@@ -145,6 +145,24 @@ public function get_spending_by_activity($activityID) {
         return $query->row()->spending;
     }
     return 0; // default if no spending record
+}
+
+public function get_total_spending_by_project($projectID) {
+    $this->db->select_sum('spending');
+    $this->db->from('comments');
+    $this->db->join('activity', 'activity.activityID = comments.activityID');
+    $this->db->join('phase', 'phase.phaseID = activity.phaseID');
+    $this->db->where('phase.projectID', $projectID);
+    $this->db->where('comments.approvalStatus', 'approved');
+
+    $query = $this->db->get();
+    return $query->row()->spending ?? 0;
+}
+
+//update status approval budget (tick)
+public function update_approval_status($commentID, $status) {
+    $this->db->where('commentID', $commentID);
+    return $this->db->update('comments', ['approvalStatus' => $status]);
 }
 
 

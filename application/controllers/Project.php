@@ -119,6 +119,9 @@ public function beneficiary_dashboard()
     );
 
         $data['projectID'] = $projectID;
+        
+    // Add this to get total spending from comments
+        $data['totalSpent'] = $this->Activity_model->get_total_spending_by_project($projectID);
 
         //data phase in view project
         $data['phases'] = $this->Phase_model->get_phases_with_progress($projectID);

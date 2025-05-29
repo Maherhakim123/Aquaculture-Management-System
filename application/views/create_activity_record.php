@@ -55,6 +55,7 @@
                 <option value="Income Generation">Income Generation</option>
                 <option value="Assets">Assets</option>
                 <option value="Water Quality">Water Quality</option>
+                <option value="Others">Others</option>
               </select>
             </div>
 
@@ -63,10 +64,10 @@
               <input type="text" name="activityName" class="form-control">
             </div>
 
-            <div class="form-group">
+            <!-- <div class="form-group">
               <label for="comment">Comment (Optional)</label>
               <textarea name="comment" class="form-control" rows="3"></textarea>
-            </div>
+            </div> -->
 
             <!-- <div class="form-group">
               <label for="recordDate">Date</label>

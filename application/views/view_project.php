@@ -97,6 +97,21 @@
     </div>
 </div>
 
+<!-- Modern Pie Chart UI -->
+<div class="row justify-content-center mt-5 mb-4">
+    <div class="col-md-6 text-center">
+        <h5 class="font-weight-bold text-body mb-3"> Budget Usage Overview</h5>
+        <div style="background-color: #f8f9fa; border-radius: 10px; padding: 20px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
+            <canvas id="budgetChart" style="max-height: 250px;"></canvas>
+            <p class="mt-3 mb-0">
+                <span class="text-danger font-weight-bold">Spent:</span> RM<?= number_format($totalSpent, 2) ?> |
+                <span class="text-success font-weight-bold">Remaining:</span> RM<?= number_format($project->budget - $totalSpent, 2) ?>
+            </p>
+        </div>
+    </div>
+</div>
+
+
 
         </div>
     </div>
@@ -190,6 +205,32 @@
 </div>
 </div>
 </div>
+
+<!-- JavaScript pie chart usage spending -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const ctx = document.getElementById('budgetChart').getContext('2d');
+
+  const totalBudget = <?= $project->budget ?>;
+  const totalSpent = <?= $totalSpent ?>; // This should be passed from your controller
+  const remaining = totalBudget - totalSpent;
+
+  const budgetChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels: ['Spent', 'Remaining'],
+      datasets: [{
+        label: 'Budget',
+        data: [totalSpent, remaining],
+        backgroundColor: ['#dc3545', '#28a745']
+      }]
+    },
+    options: {
+      responsive: true
+    }
+  });
+</script>
+
 
 </body>
 </html>

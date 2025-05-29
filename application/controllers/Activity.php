@@ -144,6 +144,20 @@ public function update_progress() {
     }
 }
 
+//Project leader tick to approved budget from beneficiary
+public function update_budget_approval() {
+    $commentID = $this->input->post('commentID');
+    //$approved = $this->input->post('approvalStatus') == 1 ? 'approved' : 'not_approved';
+    $approved = $this->input->post('budget_approved') ? 'approved' : 'not_approved';
+
+
+    $this->load->model('Activity_model');
+    $result = $this->Activity_model->update_approval_status($commentID, $approved);
+
+    echo json_encode(['status' => $result ? 'success' : 'error']);
+}
+
+
 
 
 
