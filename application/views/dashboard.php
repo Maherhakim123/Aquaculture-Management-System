@@ -75,9 +75,9 @@
 
           <div class="col-lg-3 col-6">
              <!-- small box 2-->
-             <div class="small-box bg-danger">
+             <div class="small-box bg-warning">
               <div class="inner">
-              <h3><?php echo $project_count; ?></h3>
+              <h3><?php echo $in_progress_projects ; ?></h3>
 
                 <p>Projects In-Progress</p>
               </div>
@@ -93,7 +93,7 @@
              <!-- small box 3-->
              <div class="small-box bg-success">
               <div class="inner">
-              <h3><?php echo $project_count; ?></h3>
+              <h3><?php echo $completed_projects; ?></h3>
 
                 <p>Projects Completed</p>
               </div>
@@ -103,6 +103,32 @@
               <a href="<?php echo base_url('project/list'); ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
+
+
+          <!-- <div class="col-lg-4 col-6">
+        <div class="small-box bg-warning">
+            <div class="inner">
+                <h3><?= $in_progress_projects ?></h3>
+                <p>Projects In-Progress</p>
+            </div>
+            <div class="icon">
+                <i class="fas fa-spinner"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-6">
+        <div class="small-box bg-success">
+            <div class="inner">
+                <h3><?= $completed_projects ?></h3>
+                <p>Projects Completed</p>
+            </div>
+            <div class="icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+        </div>
+    </div> -->
+</div>
     </div>
     </div>
 

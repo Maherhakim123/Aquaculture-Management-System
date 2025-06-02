@@ -14,7 +14,10 @@ class Dashboard extends CI_Controller {
 	// For Project Leaders count all the projects
 	public function dashboard() {
 		$userID = $this->session->userdata('userID');
+
 		$data['project_count'] = $this->Project_model->count_projects_by_leader($userID);
+		$data['in_progress_projects'] = $this->Project_model->count_in_progress_projects($userID);
+    	$data['completed_projects'] = $this->Project_model->count_completed_projects($userID);
 
 		$this->load->view('templates/header');
 		$this->load->view('templates/sidebar'); // Project leader sidebar
@@ -22,8 +25,10 @@ class Dashboard extends CI_Controller {
 		$this->load->view('templates/footer');
 	}
 
+	
 
-    // For Project Leaders count all the projects
+
+    // For Project Leaders count only projects
 
 
 	// For Beneficiaries

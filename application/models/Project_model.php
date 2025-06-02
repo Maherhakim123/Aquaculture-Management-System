@@ -13,9 +13,65 @@ class Project_model extends CI_Model {
         return $this->db->get_where('project', ['userID' => $userID])->result();
     }
     
+    //Count in-progress projects 
     public function count_projects_by_leader($userID){
     return $this->db->where('userID', $userID)->count_all_results('project');
     }
+
+    // Count in-progress projects (at least one phase < 100%)
+    public function count_in_progress_projects() {
+        $this->db->select('p.projectID');
+        $this->db->from('phase p');
+        $this->db->join('project pr', 'pr.projectID = p.projectID');
+        $this->db->group_start();
+        $this->db->where('p.progress <', 100);
+        $this->db->group_end();
+        $this->db->group_by('p.projectID');
+        $query = $this->db->get();
+        return $query->num_rows();
+    }
+
+
+ 
+
+
+    // Count completed projects (all phases = 100%)
+    // public function count_completed_projects() {
+    //     $this->db->select('pr.projectID');
+    //     $this->db->from('project pr');
+    //     $this->db->join('phase p', 'pr.projectID = p.projectID');
+    //     $this->db->group_by('pr.projectID');
+    //     $this->db->having('SUM(p.progress < 100) =', 0); // All phases must be 100%
+    //     $query = $this->db->get();
+    //     return $query->num_rows();
+    // }
+
+
+    public function count_completed_projects($leaderID) {
+    $this->load->model('Phase_model');
+    $projects = $this->get_projects_by_leader($leaderID);
+    $completed = 0;
+
+    foreach ($projects as $project) {
+        $phases = $this->Phase_model->get_phases_by_project($project->projectID);
+
+        $all_completed = true;
+
+        foreach ($phases as $phase) {
+            if ($phase->progress < 100) {
+                $all_completed = false;
+                break;
+            }
+        }
+
+        if ($all_completed && count($phases) > 0) {
+            $completed++;
+        }
+    }
+
+    return $completed;
+}
+
 
     public function count_projects_by_member($userID) {
         $this->db->where('userID', $userID);
@@ -99,9 +155,6 @@ class Project_model extends CI_Model {
         $query = $this->db->get();
         return $query->result(); // Return list of invited users with userID
     }
-    
-
-
     
 
     public function update_invitation_status($userID, $projectID, $status) {
