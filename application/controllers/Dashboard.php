@@ -10,6 +10,20 @@ class Dashboard extends CI_Controller {
         $this->load->library('session'); // Load session library
     }
 
+	// ADMIN PPJIM Dashboard
+	public function PPJIM_Dashboard() {
+
+    // Ensure only Admin PPJIM can access
+    $this->session->userdata('userRole') !== 'Admin PPJIM';
+
+    // Load the dashboard view for Admin PPJIM
+	$this->load->view('templates/header');
+	$this->load->view('templates/PPJIM_sidebar'); // Project leader sidebar
+    $this->load->view('PPJIM_Dashboard');
+	$this->load->view('templates/footer');
+}
+
+
 
 	// For Project Leaders count all the projects
 	public function dashboard() {
