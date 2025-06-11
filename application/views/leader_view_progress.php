@@ -77,6 +77,7 @@
               </label>
             </td>
 
+          <!-- Comments-->
          <td>
   <?php if (!empty($activity['comments'])): ?>
     <?php foreach ($activity['comments'] as $comment): ?>
@@ -85,23 +86,10 @@
         <?= htmlspecialchars($comment['comment']) ?><br>
         <small class="text-muted">(<?= $comment['created_at'] ?>)</small>
         <div><strong>Spending:</strong> RM <?= number_format($comment['spending'], 2) ?></div> <br>
-        <!-- <label>
-          <input 
-            type="checkbox" 
-            class="budget-approved-checkbox"
-            data-comment-id="<?= $comment['commentID'] ?>"
-            <?= $comment['approvalStatus'] === 'approved' ? 'checked' : '' ?>
-          > Approved
-        </label> -->
-
         <div>
-  <input 
-    type="checkbox" 
-    class="budget-approved-checkbox" 
-    id="budget-<?= $comment['commentID'] ?>"
-    data-comment-id="<?= $comment['commentID'] ?>"
-    <?= $comment['approvalStatus'] === 'approved' ? 'checked' : '' ?>
-  >
+  <input  type="checkbox"  class="budget-approved-checkbox"   id="budget-<?= $comment['commentID'] ?>"  data-comment-id="<?= $comment['commentID'] ?>"
+  
+    <?= $comment['approvalStatus'] === 'approved' ? 'checked' : '' ?>>
   <label for="budget-<?= $comment['commentID'] ?>">Approved</label>
 </div>
 
@@ -111,9 +99,7 @@
   <?php else: ?>
     <em>No comments</em>
   <?php endif; ?>
-</td>
-
-         
+</td> 
         </td>
 
                     </tr>
@@ -121,11 +107,6 @@
                   <?php endforeach; ?>
                 <?php endforeach; ?>
               </tbody>
-                  
-
-
-
-
             </table>
        </div>
 

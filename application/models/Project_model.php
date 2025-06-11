@@ -32,21 +32,6 @@ class Project_model extends CI_Model {
     }
 
 
- 
-
-
-    // Count completed projects (all phases = 100%)
-    // public function count_completed_projects() {
-    //     $this->db->select('pr.projectID');
-    //     $this->db->from('project pr');
-    //     $this->db->join('phase p', 'pr.projectID = p.projectID');
-    //     $this->db->group_by('pr.projectID');
-    //     $this->db->having('SUM(p.progress < 100) =', 0); // All phases must be 100%
-    //     $query = $this->db->get();
-    //     return $query->num_rows();
-    // }
-
-
     public function count_completed_projects($leaderID) {
     $this->load->model('Phase_model');
     $projects = $this->get_projects_by_leader($leaderID);

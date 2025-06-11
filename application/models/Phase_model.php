@@ -24,6 +24,13 @@ class Phase_model extends CI_Model {
         return $this->db->where('phaseID', $phaseID)->update('phase', $data);
     }
 
+    // Update phase data
+    public function update_phase($phaseID, $data)
+    {
+        $this->db->where('phaseID', $phaseID);
+        return $this->db->update('phase', $data);
+    }
+
     // Delete a phase by its ID
     public function delete_phase($phaseID) {
         return $this->db->where('phaseID', $phaseID)->delete('phase');

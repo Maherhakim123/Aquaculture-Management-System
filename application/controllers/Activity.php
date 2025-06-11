@@ -42,9 +42,6 @@ class Activity extends CI_Controller {
     }
 
 
-
-
-
     public function add() {
         $user_role = $this->session->userdata('role'); // 'leader' or 'beneficiary'
         $user_id = $this->session->userdata('userID');

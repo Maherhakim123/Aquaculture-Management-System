@@ -121,35 +121,66 @@ public function view($phaseID) {
     }
 }
 
+ // Display the edit form
+    public function edit($phaseID)
+    {
+        $data['phase'] = $this->Phase_model->get_phase_by_id($phaseID);
+        $this->load->view('templates/header');
+        $this->load->view('templates/sidebar');
+        $this->load->view('edit_phase', $data);
+        $this->load->view('templates/footer');
+    }
 
-    // Update a Phase
-    public function update($phaseID) {
-        $progress = $this->input->post('progress');
-        
-        if ($progress == 0) {
-            $status = 'Not Started';
-        } elseif ($progress > 0 && $progress < 100) {
-            $status = 'In Progress';
-        } elseif ($progress == 100) {
-            $status = 'Completed';
-        } else {
-            show_error("Invalid progress value.", 400);
-        }
-    
+    // Handle the form update submission
+    public function update()
+    {
+        $phaseID = $this->input->post('phaseID');
+        $projectID = $this->input->post('projectID');
+        $phaseName = $this->input->post('phaseName');
+        $startDate = $this->input->post('startDate');
+        $deadline  = $this->input->post('deadline');
+
         $data = [
-            'phaseName' => $this->input->post('phaseName'),
-            'startDate' => $this->input->post('startDate'),
-            'deadline' => $this->input->post('deadline'),
-            'progress' => $progress,
-            'status' => $status
+            'phaseName' => $phaseName,
+            'startDate' => $startDate,
+            'deadline' => $deadline 
         ];
-    
-        if ($this->Phase_model->update($phaseID, $data)) {
-            redirect('phase/view/' . $phaseID);
-        } else {
-            show_error("Failed to update phase.", 500);
+
+        $status = $this->Phase_model->update_phase($phaseID, $data);
+        if ($status) {
+             redirect('phase/index/' . $projectID);
         }
     }
+
+
+    // Update a Phase
+    // public function update($phaseID) {
+    //     $progress = $this->input->post('progress');
+        
+    //     if ($progress == 0) {
+    //         $status = 'Not Started';
+    //     } elseif ($progress > 0 && $progress < 100) {
+    //         $status = 'In Progress';
+    //     } elseif ($progress == 100) {
+    //         $status = 'Completed';
+    //     } else {
+    //         show_error("Invalid progress value.", 400);
+    //     }
+    
+    //     $data = [
+    //         'phaseName' => $this->input->post('phaseName'),
+    //         'startDate' => $this->input->post('startDate'),
+    //         'deadline' => $this->input->post('deadline'),
+    //         'progress' => $progress,
+    //         'status' => $status
+    //     ];
+    
+    //     if ($this->Phase_model->update($phaseID, $data)) {
+    //         redirect('phase/view/' . $phaseID);
+    //     } else {
+    //         show_error("Failed to update phase.", 500);
+    //     }
+    // }
     
 
     // Delete a phase
