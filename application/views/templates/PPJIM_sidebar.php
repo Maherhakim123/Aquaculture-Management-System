@@ -69,7 +69,7 @@
           </li>
 
           <li class="nav-item">
-             <a href="<?php echo base_url('project/admin_list'); ?>"  class="nav-link" >
+             <a href="<?php echo base_url('project/listAll_Project'); ?>"  class="nav-link" >
                   <i class="nav-icon fas fa-file"></i>
                   <p>List Project</p>
                 </a>

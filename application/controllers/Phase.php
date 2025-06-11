@@ -152,37 +152,6 @@ public function view($phaseID) {
         }
     }
 
-
-    // Update a Phase
-    // public function update($phaseID) {
-    //     $progress = $this->input->post('progress');
-        
-    //     if ($progress == 0) {
-    //         $status = 'Not Started';
-    //     } elseif ($progress > 0 && $progress < 100) {
-    //         $status = 'In Progress';
-    //     } elseif ($progress == 100) {
-    //         $status = 'Completed';
-    //     } else {
-    //         show_error("Invalid progress value.", 400);
-    //     }
-    
-    //     $data = [
-    //         'phaseName' => $this->input->post('phaseName'),
-    //         'startDate' => $this->input->post('startDate'),
-    //         'deadline' => $this->input->post('deadline'),
-    //         'progress' => $progress,
-    //         'status' => $status
-    //     ];
-    
-    //     if ($this->Phase_model->update($phaseID, $data)) {
-    //         redirect('phase/view/' . $phaseID);
-    //     } else {
-    //         show_error("Failed to update phase.", 500);
-    //     }
-    // }
-    
-
     // Delete a phase
     public function delete($phaseID, $projectID) {
         $this->Phase_model->delete_phase($phaseID);

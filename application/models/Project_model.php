@@ -7,6 +7,14 @@ class Project_model extends CI_Model {
         return $status;
     }
 
+    // List Project for Admin PPJIM Overview
+   public function get_all_projects() {
+    $this->db->select('project.*, users.userName');
+    $this->db->from('project');
+    $this->db->join('users', 'users.userID = project.userID'); // Assuming project.userID refers to the project leader
+    $query = $this->db->get();
+    return $query->result();
+}
 
     //Projects where the user is the leader
     public function get_projects_by_leader($userID) {
@@ -64,12 +72,6 @@ class Project_model extends CI_Model {
         return $query->num_rows();
     }
     
-
-
-    public function get_all_projects() {
-        $query = $this->db->get('project'); // Fetch data from the 'project' table
-        return $query->result(); // Return results as an array of objects
-    }
 
     // Get a single project by its ID
     public function get_project_by_id($projectID) {

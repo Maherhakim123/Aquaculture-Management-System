@@ -84,7 +84,19 @@ public function beneficiary_dashboard()
         }
     }
 
-    // Fetch all projects and display them
+    // List all project for Admin PPJIM
+    public function listAll_Project() {
+        $userID = $this->session->userdata('userID');
+        $data['projects'] = $this->Project_model->get_all_projects(); // Fetch projects from the model
+        $this->load->view('templates/header');
+        $this->load->view('templates/PPJIM_sidebar');
+        $this->load->view('PPJIM_list_project', $data); // Load the view and pass the data
+        $this->load->view('templates/footer');
+
+    }
+
+
+    // Fetch all projects and display them by specif project leader
     public function list()
     {
         $userID = $this->session->userdata('userID');
@@ -96,8 +108,44 @@ public function beneficiary_dashboard()
     }
 
 
+    // Admin PPJIM View Project
+    public function PPJIM_view_project($projectID)
+    {
+        $data['project'] = $this->Project_model->get_project_by_id($projectID);
+
+        // Get only Beneficiaries users
+        $this->load->model('User_model');
+        $data['users'] = $this->User_model->get_beneficiary_users();
+
+        // Get invited members of the project
+        $data['members'] = $this->Project_model->get_project_members($projectID);
+
+        $invitedUserIDs = array_map(function($member) {
+            return $member->userID;
+        }, $data['members']);
+
+        $data['users'] = array_filter(
+            $this->User_model->get_beneficiary_users(),
+            fn($user) => !in_array($user->userID, $invitedUserIDs)
+    );
+
+        $data['projectID'] = $projectID;
+        
+    // Add this to get total spending from comments
+        $data['totalSpent'] = $this->Activity_model->get_total_spending_by_project($projectID);
+
+        //data phase in view project
+        $data['phases'] = $this->Phase_model->get_phases_with_progress($projectID);
+
+        $this->load->view('templates/header');
+        $this->load->view('templates/sidebar');
+        $this->load->view('PPJIM_view_project', $data);
+        $this->load->view('templates/footer');
+    }
 
 
+
+    // Project Leader View Project
     public function view($projectID)
     {
         $data['project'] = $this->Project_model->get_project_by_id($projectID);
