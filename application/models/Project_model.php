@@ -16,6 +16,11 @@ class Project_model extends CI_Model {
     return $query->result();
 }
 
+    // Count all projects for dashboard (For Admin PPJIM)
+    public function count_all_projects() {
+        return $this->db->count_all('project');
+    }
+
     //Projects where the user is the leader
     public function get_projects_by_leader($userID) {
         return $this->db->get_where('project', ['userID' => $userID])->result();

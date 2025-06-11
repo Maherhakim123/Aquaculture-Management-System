@@ -18,31 +18,6 @@
 </head>
 <body>
 
-<!-- put in <head> after AdminLTE -->
-<style>
-  /* bigger footprint JUST for these stat boxes */
-  .small-box.small-box-lg {
-      min-height: 200px;           /* taller */
-      padding: 1.75rem 1.5rem;     /* more breathing room */
-  }
-  .small-box.small-box-lg .inner h3{
-      font-size: 3rem;             /* larger number */
-      font-weight: 700;
-      margin: 0 0 .25rem;
-  }
-  .small-box.small-box-lg .inner p{
-      font-size: 1.25rem;          /* larger label */
-      margin: 0;
-  }
-  .small-box.small-box-lg .icon{
-      top: 10px;                   /* tweak icon position */
-      right: 10px;
-      font-size: 4rem;
-      opacity: .3;
-  }
-</style>
-
-
 <div class="content-wrapper">
     <div class="content-header">
       <div class="container-fluid">
@@ -55,7 +30,7 @@
 
         <!-- Small boxes (Stat box) -->
         <div class="row">
-          <div class="col-lg-3 col-6">
+          <div class="col-12">
             <!-- small box 1 -->
             <div class="small-box bg-info">
               <div class="inner">
@@ -67,12 +42,10 @@
                 <i class="ion ion-clipboard"></i>
               </div>
             </div>
-          </div>
           <!-- ./col -->
 
 
 
-          <div class="col-lg-3 col-6">
              <!-- small box 2-->
              <div class="small-box bg-warning">
               <div class="inner">
@@ -84,10 +57,8 @@
                 <i class="ion ion-eye"></i>
               </div>
             </div>
-          </div>
 
 
-          <div class="col-lg-3 col-6">
              <!-- small box 3-->
              <div class="small-box bg-success">
               <div class="inner">
@@ -99,32 +70,9 @@
                 <i class="ion ion-checkmark"></i>
               </div>
             </div>
+
+                        </div>
           </div>
-
-
-          <!-- <div class="col-lg-4 col-6">
-        <div class="small-box bg-warning">
-            <div class="inner">
-                <h3><?= $in_progress_projects ?></h3>
-                <p>Projects In-Progress</p>
-            </div>
-            <div class="icon">
-                <i class="fas fa-spinner"></i>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-lg-4 col-6">
-        <div class="small-box bg-success">
-            <div class="inner">
-                <h3><?= $completed_projects ?></h3>
-                <p>Projects Completed</p>
-            </div>
-            <div class="icon">
-                <i class="fas fa-check-circle"></i>
-            </div>
-        </div>
-    </div> -->
 </div>
     </div>
     </div>

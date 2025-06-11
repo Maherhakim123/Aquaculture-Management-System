@@ -5,8 +5,9 @@ class Dashboard extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->load->model('Register_model'); // Load the user model
+        $this->load->model('Register_model');
 		$this->load->model('Project_model');
+		$this->load->model('User_model');
         $this->load->library('session'); // Load session library
     }
 
@@ -16,12 +17,42 @@ class Dashboard extends CI_Controller {
     // Ensure only Admin PPJIM can access
     $this->session->userdata('userRole') !== 'Admin PPJIM';
 
+	$data['project_count'] = $this->Project_model->count_all_projects();
+    $data['user_count'] = $this->User_model->count_all_users(); // Excluding Admin
+
     // Load the dashboard view for Admin PPJIM
 	$this->load->view('templates/header');
-	$this->load->view('templates/PPJIM_sidebar'); // Project leader sidebar
-    $this->load->view('PPJIM_Dashboard');
+	$this->load->view('templates/PPJIM_sidebar'); 
+    $this->load->view('PPJIM_Dashboard', );
 	$this->load->view('templates/footer');
 }
+
+	// ADMIN PPJIM View list all users
+	public function list_users() {
+
+    // Get all users
+    $data['users'] = $this->User_model->get_all_users();
+
+    // Load view
+	$this->load->view('templates/header');
+	$this->load->view('templates/PPJIM_sidebar'); 
+	$this->load->view('PPJIM_list_users', $data);
+	$this->load->view('templates/footer');
+}
+
+	// ADMIN PPJIM View list all users
+	public function delete_user($userID) {
+
+    if ($this->User_model->delete_user($userID)) {
+        $this->session->set_flashdata('success', 'User deleted successfully.');
+    } else {
+        $this->session->set_flashdata('error', 'Failed to delete user.');
+    }
+
+    redirect('dashboard/list_users'); 
+}
+
+
 
 
 

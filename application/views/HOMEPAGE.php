@@ -107,9 +107,9 @@
         <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="100">
             <div class="card h-100 shadow-sm border-0">
                 <div class="card-body">
-                    <i class="fas fa-fish fa-2x mb-3"></i>
-                    <h5 class="card-title font-weight-bold">Species Records</h5>
-                    <p class="card-text">Keep accurate logs for every fish or shrimp batch.</p>
+                    <i class="fas fa-user-alt fa-2x mb-3"></i>
+                    <h5 class="card-title font-weight-bold">Community Project</h5>
+                    <p class="card-text">Interaction real-time progress between project leader and beneficiary.</p>
                 </div>
             </div>
         </div>
@@ -128,7 +128,7 @@
 
 <!-- ===== Footer ===== -->
 <footer class="text-center py-4 bg-light">
-    <small>&copy; <?= date('Y') ?> Aquaculture Management System. All rights reserved.</small>
+    <small>&copy;  Aquaculture Management System. All rights reserved.</small>
 </footer>
 
 <!-- ===== JS ===== -->

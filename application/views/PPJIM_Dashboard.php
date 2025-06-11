@@ -41,7 +41,6 @@
               <div class="icon">
                 <i class="ion ion-clipboard"></i>
               </div>
-              <a href="<?php echo base_url('project/my_projects'); ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
 
              <!-- small box 2 (List User)-->
@@ -52,9 +51,8 @@
                 <p>All Users</p>
               </div>
               <div class="icon">
-                <i class="ion ion-clipboard"></i>
+                <i class="ion ion-person"></i>
               </div>
-              <a href="<?php echo base_url('project/my_projects'); ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
 
 

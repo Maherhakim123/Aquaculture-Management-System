@@ -96,36 +96,14 @@
 
 
           <li class="nav-item">
-  <a href="<?= base_url('activity/recordActivity'); ?>" class="nav-link">
-    <i class="nav-icon fas fa-edit"></i>
-    <p>
-      Record Activity
-    </p>
-  </a>
-</li>
-
-
-   
-
-<!-- 
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-calculator"></i>
+            <a href="<?= base_url('activity/recordActivity'); ?>" class="nav-link">
+              <i class="nav-icon fas fa-edit"></i>
               <p>
-                Financial
-              </p>
-            </a>
-          </li> -->
-
-
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-user"></i>
-              <p>
-                Users
+                Record Activity
               </p>
             </a>
           </li>
+
             </ul>
           </li>
         </ul>
