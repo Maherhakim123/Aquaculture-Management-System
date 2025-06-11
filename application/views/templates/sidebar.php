@@ -62,7 +62,7 @@
                with font-awesome or any other icon font library -->
 
           <li class="nav-item">
-            <a href="Dashboard" class="nav-link">
+              <a href="<?= base_url('dashboard/dashboard'); ?>" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                Dashboard

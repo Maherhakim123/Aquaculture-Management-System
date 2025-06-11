@@ -305,6 +305,36 @@ public function update_completion_status() {
     }
 }
 
+//Project Leader delete comment in progress
+public function delete_comment_progress($commentID, $activityID)
+{
+    $userRole = $this->session->userdata('role');
+    $userID   = $this->session->userdata('userID');
+
+    // Get the comment to check permissions
+    $comment = $this->db->get_where('comments', ['commentID' => $commentID])->row();
+
+   $this->db->delete('comments', ['commentID' => $commentID]);
+
+
+    // 🛠 Get the projectID from the activity's phase
+    $this->db->select('phase.projectID');
+    $this->db->from('activity');
+    $this->db->join('phase', 'phase.phaseID = activity.phaseID');
+    $this->db->where('activity.activityID', $activityID);
+    $query = $this->db->get();
+    $result = $query->row();
+
+    $projectID = $result ? $result->projectID : null;
+
+    if ($projectID) {
+        redirect('phase/progress_by_project/' . $projectID);
+    } else {
+        // fallback just in case
+        redirect('project/index');
+    }
+}
+
 
 
 }

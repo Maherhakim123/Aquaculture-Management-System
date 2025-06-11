@@ -156,6 +156,139 @@ public function update_budget_approval() {
 
 
 
+    // view Converstaion
+    public function view_comment_conversation($activityID)
+{
+    $this->load->model('Activity_model');
+    $userID = $this->session->userdata('userID'); // current user (leader)
+
+    // Get all comments for this activity
+    $data['activity'] = $this->Activity_model->get_activity($activityID);
+    $data['comments'] = $this->Activity_model->get_comments_by_activity($activityID); // new method
+    $data['activityID'] = $activityID;
+
+    $this->load->view('view_comment_conversation', $data);
+}
+
+
+// Project Leader add comment in conversation
+public function leader_add_comment() {
+    $activityID = $this->input->post('activityID');
+    $comment    = $this->input->post('comment');
+    $userID     = $this->session->userdata('userID');
+
+    if ($activityID && $comment && $userID) {
+        $this->db->insert('comments', [
+            'activityID' => $activityID,
+            'userID'     => $userID,
+            'comment'    => $comment,
+            'created_at' => date('Y-m-d H:i:s'),
+            'approvalStatus' => 'approved' // Optional: leader's own messages are auto-approved
+        ]);
+    }
+
+    redirect('activity/view_conversation/' . $activityID);
+}
+
+//Project Leader delete comment in messages
+public function delete_comment_messages($commentID, $activityID)
+{
+    // Optional: check if current user is the owner or a project leader
+    $userRole = $this->session->userdata('role'); // 'leader' or 'beneficiary'
+    $userID   = $this->session->userdata('userID');
+
+    // You could allow only project leaders or comment owners to delete
+    $comment = $this->db->get_where('comments', ['commentID' => $commentID])->row();
+
+    if ($comment && ($userRole === 'leader' || $comment->userID == $userID)) {
+        $this->db->delete('comments', ['commentID' => $commentID]);
+    }
+
+    redirect('activity/view_conversation/' . $activityID);
+}
+
+//Project Leader delete comment in progress
+// public function delete_comment_progress($commentID, $activityID)
+// {
+//     // Optional: check if current user is the owner or a project leader
+//     $userRole = $this->session->userdata('role'); // 'leader' or 'beneficiary'
+//     $userID   = $this->session->userdata('userID');
+
+//     // You could allow only project leaders or comment owners to delete
+//     $comment = $this->db->get_where('comments', ['commentID' => $commentID])->row();
+
+//     if ($comment && ($userRole === 'leader' || $comment->userID == $userID)) {
+//         $this->db->delete('comments', ['commentID' => $commentID]);
+//     }
+
+//     redirect('phase/progress_by_project/' . $activityID);
+// }
+
+public function delete_comment_progress($commentID, $activityID)
+{
+    $userRole = $this->session->userdata('role');
+    $userID   = $this->session->userdata('userID');
+
+    // Get the comment to check permissions
+    $comment = $this->db->get_where('comments', ['commentID' => $commentID])->row();
+
+    if ($comment && ($userRole === 'leader' || $comment->userID == $userID)) {
+        $this->db->delete('comments', ['commentID' => $commentID]);
+    }
+
+    // 🛠 Get the projectID from the activity's phase
+    $this->db->select('phase.projectID');
+    $this->db->from('activity');
+    $this->db->join('phase', 'phase.phaseID = activity.phaseID');
+    $this->db->where('activity.activityID', $activityID);
+    $query = $this->db->get();
+    $result = $query->row();
+
+    $projectID = $result ? $result->projectID : null;
+
+    if ($projectID) {
+        redirect('phase/progress_by_project/' . $projectID);
+    } else {
+        // fallback just in case
+        redirect('project/index');
+    }
+}
+
+
+public function view_conversation($activityID)
+{
+    // Load necessary models
+    $this->load->model('Activity_model');
+
+    // Get activity data
+    $activity = $this->Activity_model->get_activity($activityID);
+    if (!$activity) {
+        show_404();
+    }
+
+    // Get comments
+    $comments = $this->Activity_model->get_comments_by_activity($activityID);
+
+    // Data to pass to views
+    $data = [
+        'activity' => $activity,
+        'comments' => $comments,
+        'activityID' => $activityID
+    ];
+
+    $this->load->view('templates/header');
+    $this->load->view('templates/sidebar');
+    $this->load->view('view_comment_conversation', $data); 
+    $this->load->view('templates/footer');
+}
+
+
+
+
+
+
+
+
 
 
 

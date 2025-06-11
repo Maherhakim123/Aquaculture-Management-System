@@ -75,6 +75,8 @@
                   <?= !empty($activity['progress']) && $activity['progress'] ? 'checked' : '' ?>
                 > Mark as Complete
               </label>
+              <br>
+               <a href="<?= base_url('activity/view_conversation/' . $activity['activityID']) ?>" class="btn btn-sm btn-info">Messages</a>
             </td>
 
           <!-- Comments-->
@@ -91,10 +93,18 @@
   
     <?= $comment['approvalStatus'] === 'approved' ? 'checked' : '' ?>>
   <label for="budget-<?= $comment['commentID'] ?>">Approved</label>
-</div>
 
-        <hr>
-      </div>
+  <!-- Delete Comment -->
+  <form method="post" class="delete-btn" action="<?= site_url('phase/delete_comment_progress/' .  $comment['commentID'] . '/' . $activity['activityID']) ?>"
+                          onsubmit="return confirm('Are you sure you want to delete this comment?');">
+                      <button type="submit" class="btn btn-sm btn-danger" title="Delete">
+                        <i class="fas fa-trash-alt"></i>
+                      </button>
+                    </form>
+
+</div>
+    <hr>
+    </div>
     <?php endforeach; ?>
   <?php else: ?>
     <em>No comments</em>

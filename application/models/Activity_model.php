@@ -166,6 +166,19 @@ public function update_approval_status($commentID, $status) {
 }
 
 
+//View Conversation
+public function get_comments_by_activity($activityID)
+{
+    $this->db->select('comments.*, users.username');
+    $this->db->from('comments');
+    $this->db->join('users', 'users.userID = comments.userID');
+    $this->db->where('comments.activityID', $activityID);
+    $this->db->order_by('comments.created_at', 'ASC');
+    return $this->db->get()->result();
+}
+
+
+
 
 
 
