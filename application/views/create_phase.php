@@ -48,7 +48,7 @@
                         <input type="date" 
                              class="form-control"  id="deadline"  name="deadline" required min="<?= $minDate ?>" max="<?= $maxDate ?>" onchange="validateDates()">
                         </div>
-                        
+<!--                         
                         <div class="form-group">
                             <label>Status</label>
                             <input type="text" class="form-control" value="Not Started" readonly>
@@ -57,7 +57,7 @@
                         <div class="form-group">
                             <label>Progress</label>
                             <input type="text" class="form-control" value="0%" readonly>
-                        </div>
+                        </div> -->
                     </div>
 
                     <div class="card-footer">

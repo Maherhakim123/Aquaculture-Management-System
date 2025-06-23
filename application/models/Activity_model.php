@@ -85,6 +85,7 @@ public function updateProgress($activityID, $progress)
     $this->db->update('activity', ['progress' => $progress]);
 }
 
+
 public function updatePhaseProgressFromActivities($activityID)
 {
     $activity = $this->db->get_where('activity', ['activityID' => $activityID])->row();
@@ -120,6 +121,9 @@ public function update_progress($activityID, $progress) {
     $this->db->where('activityID', $activityID);
     return $this->db->update('activity', ['progress' => $progress]);
 }
+
+
+
 
 //Progress bar for activity retrieved in phase list for each phase
 public function countActivitiesByPhase($phaseID)

@@ -18,55 +18,6 @@
 </head>
 <body>
 
-<div class="content-wrapper">
-    <div class="content-header">
-      <div class="container-fluid">
-    
-
-
-<!-- Main content -->
-<section class="content">
-      <div class="container-fluid">
-
- <!-- Small boxes (Stat box) -->
-        <div class="row">
-          <div class="col-12">
-            <!-- small box 1 (List Project) -->
-            <div class="small-box bg-info">
-              <div class="inner">
-              <h3><?php echo $project_count; ?></h3>
-
-                <p>All Projects</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-clipboard"></i>
-              </div>
-            </div>
-
-             <!-- small box 2 (List User)-->
-            <div class="small-box bg-success">
-              <div class="inner">
-              <h3><?php echo $project_count; ?></h3>
-
-                <p>All Users</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-person"></i>
-              </div>
-            </div>
-
-
-          <!-- ./col -->
-          </div>
-    </div>
-    </div>
-
-</section>
- </div>
-
-
- </div>
-  </div>
 
 
 

@@ -13,7 +13,21 @@ class Phase extends CI_Controller {
     $phases = $this->Phase_model->get_phase($projectID);
 
     // Calculate progress for each phase based on activities
-   foreach ($phases as &$phase) {
+//    foreach ($phases as &$phase) {
+//     $totalActivities = $this->Activity_model->countActivitiesByPhase($phase->phaseID);
+//     $completedActivities = $this->Activity_model->countCompletedActivitiesByPhase($phase->phaseID);
+
+//     if ($totalActivities > 0) {
+//         $phase->progress = round(($completedActivities / $totalActivities) * 100);
+//     } else {
+//         $phase->progress = 0;
+//     }
+
+//     $phase->totalActivities = $totalActivities;
+//     $phase->completedActivities = $completedActivities;
+// }
+
+foreach ($phases as &$phase) {
     $totalActivities = $this->Activity_model->countActivitiesByPhase($phase->phaseID);
     $completedActivities = $this->Activity_model->countCompletedActivitiesByPhase($phase->phaseID);
 
@@ -25,7 +39,17 @@ class Phase extends CI_Controller {
 
     $phase->totalActivities = $totalActivities;
     $phase->completedActivities = $completedActivities;
+
+    // Dynamically assign status based on progress
+    if ($phase->progress == 100) {
+        $phase->status = 'Completed';
+    } elseif ($phase->progress > 0) {
+        $phase->status = 'In Progress';
+    } else {
+        $phase->status = 'Not Started';
+    }
 }
+
 
     $data['phases'] = $phases;
     $data['projectID'] = $projectID;

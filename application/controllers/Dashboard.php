@@ -24,7 +24,7 @@ class Dashboard extends CI_Controller {
 	$this->load->view('templates/header');
 	$this->load->view('templates/PPJIM_sidebar'); 
     $this->load->view('PPJIM_Dashboard', );
-	$this->load->view('templates/footer');
+	//this->load->view('templates/footer');
 }
 
 	// ADMIN PPJIM View list all users
