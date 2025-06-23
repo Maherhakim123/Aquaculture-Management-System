@@ -30,7 +30,7 @@
 
         <!-- Small boxes (Stat box) -->
         <div class="row">
-          <div class="col-12">
+          <div class="col-md-6">
             <!-- small box 1 -->
             <div class="small-box bg-info">
               <div class="inner">
@@ -74,12 +74,6 @@
                         </div>
           </div>
 </div>
-    </div>
-    </div>
-
-    
-
-
 
 </section>
 </div>

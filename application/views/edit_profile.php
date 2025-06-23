@@ -34,10 +34,6 @@
                             <label for="userPhoneNo">Phone Number</label>
                             <input type="text" name="userPhoneNo" id="userPhoneNo" class="form-control" value="<?= $user->userPhoneNo; ?>" required>
                         </div>
-                        <div class="form-group">
-                            <label for="userRole">Role</label>
-                            <input type="text" name="userRole" id="userRole" class="form-control" value="<?= $user->userRole; ?>" required>
-                        </div>
                         <button type="submit" class="btn btn-primary">Update</button>
                         <a href="<?= base_url('dashboard/profile'); ?>" class="btn btn-secondary">Cancel</a>
                     </form>

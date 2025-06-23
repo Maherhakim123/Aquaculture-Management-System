@@ -23,7 +23,7 @@ class Dashboard extends CI_Controller {
     // Load the dashboard view for Admin PPJIM
 	$this->load->view('templates/header');
 	$this->load->view('templates/PPJIM_sidebar'); 
-    $this->load->view('PPJIM_Dashboard', );
+    $this->load->view('PPJIM_Dashboard', $data);
 	//this->load->view('templates/footer');
 }
 
@@ -101,6 +101,7 @@ class Dashboard extends CI_Controller {
 	}
 
 
+	// Project Leader Profile
 	public function profile() {
 		if (!$this->session->userdata('logged_in')) {
 			redirect('auth/login');
@@ -112,13 +113,41 @@ class Dashboard extends CI_Controller {
 		
 	
 		$this->load->view('templates/header');
-	
-		if ($userRole === 'Project Leader') {
-			$this->load->view('templates/sidebar');
-		} else {
-			$this->load->view('templates/community_sidebar');
+		$this->load->view('templates/sidebar');
+		$this->load->view('view_profile', $data);
+		$this->load->view('templates/footer');
+	}
+
+	// Beneficiary Profile
+	public function Beneficiary_profile() {
+		if (!$this->session->userdata('logged_in')) {
+			redirect('auth/login');
 		}
 	
+		$userID = $this->session->userdata('userID');
+		$userRole = $this->session->userdata('userRole');
+		$data['users'] = $this->Register_model->get_user_by_id($userID);
+		
+	
+		$this->load->view('templates/header');
+		$this->load->view('templates/community_sidebar');
+		$this->load->view('view_profile', $data);
+		$this->load->view('templates/footer');
+	}
+
+	// Admin PPJIM Profile
+	public function PPJIM_profile() {
+		if (!$this->session->userdata('logged_in')) {
+			redirect('auth/login');
+		}
+	
+		$userID = $this->session->userdata('userID');
+		$userRole = $this->session->userdata('userRole');
+		$data['users'] = $this->Register_model->get_user_by_id($userID);
+		
+	
+		$this->load->view('templates/header');
+		$this->load->view('templates/PPJIM_sidebar');
 		$this->load->view('view_profile', $data);
 		$this->load->view('templates/footer');
 	}

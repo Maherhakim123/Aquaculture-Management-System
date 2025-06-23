@@ -46,7 +46,6 @@
                                         <td><?php echo ($project->userName); ?></td>
                                         <td class="text-center">
                                             <a href="<?php echo site_url('project/PPJIM_view_project/' . $project->projectID); ?>" class="btn btn-success btn-sm">View</a>
-                                            <a href="<?php echo site_url('project/delete/' . $project->projectID); ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this project?');">Delete</a>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
