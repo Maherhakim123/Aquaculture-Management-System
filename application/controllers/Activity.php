@@ -45,15 +45,12 @@ class Activity extends CI_Controller {
     public function add() {
         $user_role = $this->session->userdata('role'); // 'leader' or 'beneficiary'
         $user_id = $this->session->userdata('userID');
-
-        //$recordDate = $this->input->post('recordDate');
         $phaseID = $this->input->post('phaseID');
 
         $data = array(
             'activityType' => $this->input->post('activityType'),
             'activityName' => $this->input->post('activityName'),
-            'comment' => $this->input->post('comment'),
-            //'recordDate' => $recordDate,
+            //'comment' => $this->input->post('comment'),
             'phaseID' => $phaseID,
             //'userID' => $userID
         );
@@ -76,8 +73,7 @@ class Activity extends CI_Controller {
         $data = array(
             'activityType' => $this->input->post('activityType'),
             'activityName' => $this->input->post('activityName'),
-            'comment' => $this->input->post('comment'),
-            //'recordDate' => $this->input->post('recordDate'),
+            //'comment' => $this->input->post('comment'),
         );
     
         $phaseID = $this->Activity_model->update_activity($activityID, $data);
@@ -206,23 +202,6 @@ public function delete_comment_messages($commentID, $activityID)
 
     redirect('activity/view_conversation/' . $activityID);
 }
-
-//Project Leader delete comment in progress
-// public function delete_comment_progress($commentID, $activityID)
-// {
-//     // Optional: check if current user is the owner or a project leader
-//     $userRole = $this->session->userdata('role'); // 'leader' or 'beneficiary'
-//     $userID   = $this->session->userdata('userID');
-
-//     // You could allow only project leaders or comment owners to delete
-//     $comment = $this->db->get_where('comments', ['commentID' => $commentID])->row();
-
-//     if ($comment && ($userRole === 'leader' || $comment->userID == $userID)) {
-//         $this->db->delete('comments', ['commentID' => $commentID]);
-//     }
-
-//     redirect('phase/progress_by_project/' . $activityID);
-// }
 
 public function delete_comment_progress($commentID, $activityID)
 {

@@ -28,22 +28,23 @@
 
         .card {
             width: 100%;
-            max-width: 500px;
+            max-width: 600px;
             border-radius: 10px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
 
         .card-body {
-            padding: 2rem;
+            padding: 1.5rem;
         }
 
         .form-header {
             background: #007bff;
             color: white;
-            padding: 1rem;
+            padding: 0.5rem;
             border-radius: 10px;
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 5px;
+            
         }
 
         .form-group {
@@ -97,7 +98,7 @@
         <!-- Left Side: Welcome Message -->
         <div class="welcome-content">
             <h1>Welcome !</h1>
-            <p>Create your account and start managing your aquaculture projects efficiently.</p>
+            <p>Create your account and start the journey.</p>
         </div>
 
         <!-- Right Side: Registration Form -->

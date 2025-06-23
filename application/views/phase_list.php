@@ -44,9 +44,9 @@
                                         <td><?= date('d M Y', strtotime($phase->startDate)); ?></td>
                                         <td><?= date('d M Y', strtotime($phase->deadline)); ?></td>
                                         <td>
-                                            <span class="badge 
-                                                <?= ($phase->status == 'Completed') ? 'badge-success' : (($phase->status == 'Not Started') ? 'badge-secondary' : 'badge-warning'); ?>">
-                                                <?= $phase->status; ?>
+                                           <span class="badge
+                                                <?= ($phase->status == 'completed') ? 'badge-success' : (($phase->status == 'not_started') ? 'badge-secondary' : 'badge-warning'); ?>">
+                                                <?= ucwords(str_replace('_', ' ', $phase->status)); ?>
                                             </span>
                                         </td>                               
                                         <td>

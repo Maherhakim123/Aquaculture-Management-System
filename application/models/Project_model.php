@@ -11,7 +11,7 @@ class Project_model extends CI_Model {
    public function get_all_projects() {
     $this->db->select('project.*, users.userName');
     $this->db->from('project');
-    $this->db->join('users', 'users.userID = project.userID'); // Assuming project.userID refers to the project leader
+    $this->db->join('users', 'users.userID = project.userID'); 
     $query = $this->db->get();
     return $query->result();
 }
@@ -32,31 +32,42 @@ class Project_model extends CI_Model {
     }
 
     // Count in-progress projects (at least one phase < 100%)
-    public function count_in_progress_projects() {
-        $this->db->select('p.projectID');
-        $this->db->from('phase p');
-        $this->db->join('project pr', 'pr.projectID = p.projectID');
-        $this->db->group_start();
-        $this->db->where('p.progress <', 100);
-        $this->db->group_end();
-        $this->db->group_by('p.projectID');
-        $query = $this->db->get();
-        return $query->num_rows();
+    public function count_in_progress_projects($leaderID) {
+    $this->load->model('Phase_model');
+    $projects = $this->get_projects_by_leader($leaderID);
+    $inProgressCount = 0;
+
+    foreach ($projects as $project) {
+        $phases = $this->Phase_model->get_phases_by_project($project->projectID);
+
+        foreach ($phases as $phase) {
+            if ($phase->progress < 100) {
+                $inProgressCount++;
+                break; // Count project only once
+            }
+        }
     }
 
+    return $inProgressCount;
+}
 
-    public function count_completed_projects($leaderID) {
+public function count_completed_projects($leaderID) {
     $this->load->model('Phase_model');
+    $this->load->model('Activity_model');
+
     $projects = $this->get_projects_by_leader($leaderID);
     $completed = 0;
 
     foreach ($projects as $project) {
         $phases = $this->Phase_model->get_phases_by_project($project->projectID);
-
         $all_completed = true;
 
         foreach ($phases as $phase) {
-            if ($phase->progress < 100) {
+            $totalActivities = $this->Activity_model->countActivitiesByPhase($phase->phaseID);
+            $completedActivities = $this->Activity_model->countCompletedActivitiesByPhase($phase->phaseID);
+            $progress = ($totalActivities > 0) ? round(($completedActivities / $totalActivities) * 100) : 0;
+
+            if ($progress < 100) {
                 $all_completed = false;
                 break;
             }
@@ -69,6 +80,7 @@ class Project_model extends CI_Model {
 
     return $completed;
 }
+
 
 
     public function count_projects_by_member($userID) {
@@ -190,10 +202,6 @@ public function count_projects_by_user($userID)
     $this->db->where('userID', $userID);
     return $this->db->count_all_results();
 }
-
-
-
-
 
     
 }

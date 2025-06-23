@@ -7,7 +7,6 @@ class Activity_model extends CI_Model {
 
     public function get_activities_by_phase($phaseID) {
         $this->db->where('phaseID', $phaseID);
-        $this->db->order_by('recordDate', 'DESC');
         return $this->db->get('activity')->result();
     }
 

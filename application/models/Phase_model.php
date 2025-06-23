@@ -67,35 +67,6 @@ public function get_first_phase_id($projectID)
                     ->row('phaseID');              // returns null if no row
 }
 
-
-//update phase progress
-public function update_completion_status($phaseID, $is_completed) {
-    $this->db->where('phaseID', $phaseID);
-    $this->db->update('phase', ['is_completed' => $is_completed]);
-}
-
-
-// public function get_phases_with_progress($projectID) {
-//     $sql = "SELECT p.phaseID, p.phaseName,
-//             (SELECT COUNT(*) FROM activity a WHERE a.phaseID = p.phaseID) AS totalActivities,
-//             (SELECT COUNT(*) FROM activity a WHERE a.phaseID = p.phaseID AND a.progress = 'completed') AS completedActivities
-//             FROM phase p
-//             WHERE p.projectID = ?";
-    
-//     $query = $this->db->query($sql, array($projectID));
-//     $phases = $query->result();
-
-//     foreach ($phases as $phase) {
-//         if ($phase->totalActivities > 0) {
-//             $phase->progressPercent = round(($phase->completedActivities / $phase->totalActivities) * 100);
-//         } else {
-//             $phase->progressPercent = 0;
-//         }
-//     }
-
-//     return $phases;
-// }
-
 public function get_phases_with_progress($projectID) {
     $phases = $this->get_phase($projectID);
 
@@ -111,12 +82,22 @@ public function get_phases_with_progress($projectID) {
     return $phases;
 }
 
+public function update_progress_and_status($phaseID, $progress) {
+    $status = 'not_started';
+    if ($progress == 100) {
+        $status = 'completed';
+    } elseif ($progress > 0) {
+        $status = 'in_progress';
+    }
 
+    $data = [
+        'progress' => $progress,
+        'status' => $status
+    ];
 
-
-
-
-
+    $this->db->where('phaseID', $phaseID);
+    return $this->db->update('phase', $data);
+}
 
 
 }
