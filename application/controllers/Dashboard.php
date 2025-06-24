@@ -8,24 +8,81 @@ class Dashboard extends CI_Controller {
         $this->load->model('Register_model');
 		$this->load->model('Project_model');
 		$this->load->model('User_model');
+		$this->load->model('Phase_model');
+   		$this->load->model('Activity_model');
         $this->load->library('session'); // Load session library
     }
 
 	// ADMIN PPJIM Dashboard
-	public function PPJIM_Dashboard() {
+// 	public function PPJIM_Dashboard($userID) {
 
+//     // Ensure only Admin PPJIM can access
+//     $this->session->userdata('userRole') !== 'Admin PPJIM';
+
+// 	$data['project_count'] = $this->Project_model->count_all_projects();
+//     $data['user_count'] = $this->User_model->count_all_users(); // Excluding Admin
+
+//     // Load the dashboard view for Admin PPJIM
+// 	$this->load->view('templates/header');
+// 	//$this->load->view('templates/PPJIM_sidebar'); 
+//     $this->load->view('PPJIM_Dashboard', $data);
+// 	$this->load->view('templates/footer');
+// }
+
+public function PPJIM_Dashboard() {
     // Ensure only Admin PPJIM can access
-    $this->session->userdata('userRole') !== 'Admin PPJIM';
+    if ($this->session->userdata('userRole') !== 'Admin PPJIM') {
+        redirect('auth/login'); // or show 403
+    }
 
-	$data['project_count'] = $this->Project_model->count_all_projects();
-    $data['user_count'] = $this->User_model->count_all_users(); // Excluding Admin
+    // Count all projects
+    $data['project_count'] = $this->Project_model->count_all_projects();
 
-    // Load the dashboard view for Admin PPJIM
-	$this->load->view('templates/header');
+    // Get all projects and calculate in-progress and completed
+    $projects = $this->Project_model->get_all_projects();
+    $inProgress = 0;
+    $completed = 0;
+
+    foreach ($projects as $project) {
+        $phases = $this->Phase_model->get_phases_by_project($project->projectID);
+
+        if (empty($phases)) {
+            continue;
+        }
+
+        $all_completed = true;
+
+        foreach ($phases as $phase) {
+            $totalActivities = $this->Activity_model->countActivitiesByPhase($phase->phaseID);
+            $completedActivities = $this->Activity_model->countCompletedActivitiesByPhase($phase->phaseID);
+            $progress = ($totalActivities > 0) ? round(($completedActivities / $totalActivities) * 100) : 0;
+
+            if ($progress < 100) {
+                $all_completed = false;
+                break;
+            }
+        }
+
+        if ($all_completed) {
+            $completed++;
+        } else {
+            $inProgress++;
+        }
+    }
+
+    $data['in_progress_projects'] = $inProgress;
+    $data['completed_projects'] = $completed;
+
+    // Count users except Admins
+    $data['user_count'] = $this->User_model->count_all_users(); // Ensure this excludes Admins in your model
+
+    // Load views
+    $this->load->view('templates/header');
 	$this->load->view('templates/PPJIM_sidebar'); 
     $this->load->view('PPJIM_Dashboard', $data);
-	//this->load->view('templates/footer');
+    $this->load->view('templates/footer');
 }
+
 
 	// ADMIN PPJIM View list all users
 	public function list_users() {
@@ -69,11 +126,6 @@ class Dashboard extends CI_Controller {
 		$this->load->view('dashboard', $data);  // Project leader dashboard
 		$this->load->view('templates/footer');
 	}
-
-	
-
-
-    // For Project Leaders count only projects
 
 
 	// For Beneficiaries

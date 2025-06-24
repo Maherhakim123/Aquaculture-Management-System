@@ -132,9 +132,6 @@ private function login_user($user) {
 
 
 
-
-
-
 	// Forgot Password
     public function forgot_password() {
     $email = $this->input->post('email');

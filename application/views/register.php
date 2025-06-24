@@ -94,6 +94,28 @@
 </head>
 
 <body>
+    
+    <!-- alert notification duplicate email  -->
+    <?php if (isset($email_exists) && $email_exists): ?>
+    <div class="container position-fixed top-0 start-50 translate-middle-x mt-3" style="z-index: 1055; max-width: 500px;">
+        <div class="alert alert-danger alert-dismissible fade show shadow" role="alert">
+            This email is already registered. Please use another one.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+
+    <script>
+        // Auto-dismiss the alert after 5 seconds
+        setTimeout(function () {
+            let alertNode = document.querySelector('.alert');
+            if (alertNode) {
+                let alert = new bootstrap.Alert(alertNode);
+                alert.close();
+            }
+        }, 5000);
+    </script>
+<?php endif; ?>
+
     <div class="register-container">
         <!-- Left Side: Welcome Message -->
         <div class="welcome-content">
@@ -147,12 +169,8 @@
         </div>
     </div>
 
-    <!-- Function Notification for email exists -->
-    <?php if (isset($email_exists) && $email_exists): ?>
-        <script>
-            alert('This email is already registered. Please use another one.');
-        </script>
-    <?php endif; ?>
+
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
