@@ -11,7 +11,6 @@
     <!-- AdminLTE CSS -->
     <link href="https://cdn.jsdelivr.net/npm/admin-lte@3.2.0/dist/css/adminlte.min.css" rel="stylesheet">
     <!-- FontAwesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
     <style>
@@ -21,6 +20,7 @@
 
         .login-container {
             display: flex;
+            flex-wrap: wrap;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
@@ -46,8 +46,18 @@
             text-align: center;
         }
 
-        .password-toggle {
-            cursor: pointer;
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-control {
+            border-radius: 10px;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+            border-radius: 10px;
         }
 
         .welcome-content {
@@ -65,28 +75,18 @@
             color: #6c757d;
         }
 
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-control {
-            border-radius: 10px;
-        }
-
-        .btn-primary {
-            background-color: #007bff;
-            border: none;
-            border-radius: 10px;
-        }
-
-        .text-center {
-            margin-top: 10px;
+        /* Hide welcome content on small screens */
+        @media (max-width: 768px) {
+            .welcome-content {
+                display: none;
+            }
         }
     </style>
 </head>
 
 <body>
     <div class="login-container">
+        <!-- Login Form -->
         <div class="card shadow-lg">
             <div class="card-body">
                 <div class="form-header">
@@ -104,14 +104,12 @@
                             <span class="input-group-text password-toggle"><i class="fas fa-eye" id="togglePassword"></i></span>
                         </div>
                     </div>
-             
-                   
                     <div class="d-grid">
                         <button type="submit" class="btn btn-primary">Log In</button>
                     </div>
                 </form>
                 <div class="text-center mt-3">
-                    <a href="#">Forgot Password?</a>
+                    <a href="<?php echo base_url('auth/forgot_password'); ?>">Forgot Password?</a>
                 </div>
                 <div class="text-center mt-2">
                     <small>Don't have an account? <a href="<?php echo base_url('auth/register'); ?>">Register here</a></small>
@@ -119,6 +117,7 @@
             </div>
         </div>
 
+        <!-- Welcome Message (hidden on small screens) -->
         <div class="welcome-content">
             <h1>Welcome Back!</h1>
             <p>Please enter your credentials to access dashboard.</p>

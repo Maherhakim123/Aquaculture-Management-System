@@ -21,6 +21,8 @@ class Register_model extends CI_Model {
         return $query->row(); // Returns the user object or null
     }
 
+    
+
     public function get_user_by_id($userID) {
         $query = $this->db->get_where('users', ['userID' => $userID]);
         return $query->row(); // This returns a single row object for the user
@@ -35,5 +37,11 @@ class Register_model extends CI_Model {
       $this->db->where('userID', $userID);
       return $this->db->delete('users');
     }
+
+    public function update_user_password($userID, $hashedPassword) {
+    $this->db->where('userID', $userID);
+    $this->db->update('users', ['userPassword' => $hashedPassword]);
+}
+
   
 }
