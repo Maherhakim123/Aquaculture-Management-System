@@ -76,17 +76,30 @@
 
 <!-- Graphs Row -->
 <div class="row mt-4">
-  <!-- Line Chart -->
   <div class="col-md-6">
-    <div class="card">
-      <div class="card-header bg-primary text-white">
-        <h3 class="card-title">Project Progress Over Time (Line Chart)</h3>
-      </div>
-      <div class="card-body">
-        <canvas id="lineChart"></canvas>
-      </div>
+  <div class="card">
+    <div class="card-header bg-primary text-white">
+      <h3 class="card-title">List of Projects</h3>
+    </div>
+    <div class="card-body">
+      <?php if (!empty($projects)): ?>
+        <ul class="list-group">
+          <?php foreach ($projects as $project): ?>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <?= $project->projectName ?>
+              <?php if (isset($project->status)): ?>
+                <span class="badge badge-info"><?= ucfirst($project->status) ?></span>
+              <?php endif; ?>
+            </li>
+          <?php endforeach; ?>
+        </ul>
+      <?php else: ?>
+        <p>No projects available.</p>
+      <?php endif; ?>
     </div>
   </div>
+</div>
+
 
   <!-- Bar Chart -->
   <div class="col-md-6">
@@ -111,34 +124,6 @@
 </body>
 
 <script>
-  // Dummy data — replace with PHP variables if needed
-  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
-  const progressData = [5, 10, 8, 12, 15, 20];
-
-  const ctxLine = document.getElementById('lineChart').getContext('2d');
-  const lineChart = new Chart(ctxLine, {
-    type: 'line',
-    data: {
-      labels: months,
-      datasets: [{
-        label: 'Projects Started',
-        data: progressData,
-        backgroundColor: 'rgba(0, 123, 255, 0.2)',
-        borderColor: 'rgba(0, 123, 255, 1)',
-        borderWidth: 2,
-        fill: true,
-        tension: 0.4
-      }]
-    },
-    options: {
-      responsive: true,
-      scales: {
-        y: {
-          beginAtZero: true
-        }
-      }
-    }
-  });
 
   // Bar chart data — using PHP values from dashboard
   const ctxBar = document.getElementById('barChart').getContext('2d');

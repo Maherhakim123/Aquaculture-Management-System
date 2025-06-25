@@ -73,6 +73,9 @@ public function PPJIM_Dashboard() {
     $data['in_progress_projects'] = $inProgress;
     $data['completed_projects'] = $completed;
 
+	// Pass the projects list to view
+	$data['projects'] = $projects;
+
     // Count users except Admins
     $data['user_count'] = $this->User_model->count_all_users(); // Ensure this excludes Admins in your model
 
@@ -120,6 +123,27 @@ public function PPJIM_Dashboard() {
 		$data['project_count'] = $this->Project_model->count_projects_by_leader($userID);
 		$data['in_progress_projects'] = $this->Project_model->count_in_progress_projects($userID);
     	$data['completed_projects'] = $this->Project_model->count_completed_projects($userID);
+
+		$events = [];
+
+		$projects = $this->Project_model->get_projects_by_leader($userID);
+
+		foreach ($projects as $project) {
+			$phases = $this->Phase_model->get_phases_by_project($project->projectID);
+
+			foreach ($phases as $phase) {
+				$events[] = [
+					'phaseName' => $phase->phaseName,
+					'startDate' => $phase->startDate,
+					'deadline' => $phase->deadline,
+					'backgroundColor' => '#007bff',
+					'borderColor' => '#007bff'
+				];
+			}
+		}
+
+		$data['calendar_events'] = json_encode($events); // pass to view
+
 
 		$this->load->view('templates/header');
 		$this->load->view('templates/sidebar'); // Project leader sidebar

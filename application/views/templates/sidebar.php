@@ -1,4 +1,15 @@
 <body class="hold-transition sidebar-mini">
+
+    <?php if (!$this->session->userdata('userRole')): ?>
+      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>Warning!</strong> User role is missing from session.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    <?php endif; ?>
+
+
 <div class="wrapper">
 
   <!-- Navbar -->
@@ -16,7 +27,7 @@
                                         
   <div class="dropdown ml-auto">
     <span class="text-muted mr-3">
-      <strong><?= ucfirst($this->session->userdata('userRole')); ?></strong>
+        <strong><?= ucfirst($this->session->userdata('userRole')); ?></strong>
     </span>
   <button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown" style="border: none; padding: 0;">
     <i class="fas fa-user-circle" style="font-size: 40px; color: grey;"></i>
