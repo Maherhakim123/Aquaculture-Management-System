@@ -89,7 +89,13 @@
         <h3 class="card-title">Project Calendar</h3>
       </div>
       <div class="card-body">
-        <div id="calendar" style="min-height: 600px;"></div>
+           <div class="form-group">
+          <label for="projectSelector"><strong>Select a Project to Highlight:</strong></label>
+          <select id="projectSelector" class="form-control">
+            <option value="">-- Select Project --</option>
+          </select>
+        </div>
+          <div id="calendar" style="min-height: 600px;"></div>
       </div>
     </div>
   </div>
@@ -203,7 +209,8 @@
 <script>
 document.addEventListener('DOMContentLoaded', function () {
   const calendarEl = document.getElementById('calendar');
-
+  const projectSelector = document.getElementById('projectSelector');
+  const projectList = <?= $project_list ?>; // This comes from controller
   const calendar = new FullCalendar.Calendar(calendarEl, {
     initialView: 'dayGridMonth',
     headerToolbar: {
@@ -211,12 +218,41 @@ document.addEventListener('DOMContentLoaded', function () {
       center: 'title',
       right: 'dayGridMonth,timeGridWeek,listWeek'
     },
-    events: <?= $calendar_events ?>
+    events: <?= $calendar_events ?> // Show all phases by default
   });
 
   calendar.render();
+
+  // Populate dropdown
+  projectList.forEach(p => {
+    const option = document.createElement('option');
+    option.value = p.projectID;
+    option.textContent = p.projectName;
+    projectSelector.appendChild(option);
+  });
+
+  // Event on project selection
+  projectSelector.addEventListener('change', function () {
+    const selectedID = this.value;
+    calendar.removeAllEvents(); 
+
+    if (!selectedID) return;
+
+    const selected = projectList.find(p => p.projectID == selectedID);
+    if (selected) {
+      calendar.addEvent({
+        title: selected.projectName,
+        start: selected.startDate,
+        end: moment(selected.endDate).add(1, 'days').format('YYYY-MM-DD'), 
+        allDay: true,
+        color: '#28a745'
+      });
+    }
+  });
 });
 </script>
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
 
 
 

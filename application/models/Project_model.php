@@ -31,55 +31,73 @@ class Project_model extends CI_Model {
     return $this->db->where('userID', $userID)->count_all_results('project');
     }
 
-    // Count in-progress projects (at least one phase < 100%)
+    
+    // Count all projects for a specific leader
     public function count_in_progress_projects($leaderID) {
-    $this->load->model('Phase_model');
-    $projects = $this->get_projects_by_leader($leaderID);
-    $inProgressCount = 0;
+        $this->load->model('Phase_model');
+        $this->load->model('Activity_model');
 
-    foreach ($projects as $project) {
-        $phases = $this->Phase_model->get_phases_by_project($project->projectID);
+        $projects = $this->get_projects_by_leader($leaderID);
+        $inProgressCount = 0;
 
-        foreach ($phases as $phase) {
-            if ($phase->progress < 100) {
+        foreach ($projects as $project) {
+            $phases = $this->Phase_model->get_phases_by_project($project->projectID);
+
+            if (empty($phases)) {
+                continue; // skip if no phases
+            }
+
+            $all_completed = true;
+
+            foreach ($phases as $phase) {
+                $totalActivities = $this->Activity_model->countActivitiesByPhase($phase->phaseID);
+                $completedActivities = $this->Activity_model->countCompletedActivitiesByPhase($phase->phaseID);
+                $progress = ($totalActivities > 0) ? round(($completedActivities / $totalActivities) * 100) : 0;
+
+                if ($progress < 100) {
+                    $all_completed = false;
+                    break;
+                }
+            }
+
+            if (!$all_completed) {
                 $inProgressCount++;
-                break; // Count project only once
-            }
-        }
-    }
-
-    return $inProgressCount;
-}
-
-public function count_completed_projects($leaderID) {
-    $this->load->model('Phase_model');
-    $this->load->model('Activity_model');
-
-    $projects = $this->get_projects_by_leader($leaderID);
-    $completed = 0;
-
-    foreach ($projects as $project) {
-        $phases = $this->Phase_model->get_phases_by_project($project->projectID);
-        $all_completed = true;
-
-        foreach ($phases as $phase) {
-            $totalActivities = $this->Activity_model->countActivitiesByPhase($phase->phaseID);
-            $completedActivities = $this->Activity_model->countCompletedActivitiesByPhase($phase->phaseID);
-            $progress = ($totalActivities > 0) ? round(($completedActivities / $totalActivities) * 100) : 0;
-
-            if ($progress < 100) {
-                $all_completed = false;
-                break;
             }
         }
 
-        if ($all_completed && count($phases) > 0) {
-            $completed++;
-        }
+        return $inProgressCount;
     }
 
-    return $completed;
-}
+
+    public function count_completed_projects($leaderID) {
+        $this->load->model('Phase_model');
+        $this->load->model('Activity_model');
+
+        $projects = $this->get_projects_by_leader($leaderID);
+        $completed = 0;
+
+        foreach ($projects as $project) {
+            $phases = $this->Phase_model->get_phases_by_project($project->projectID);
+            $all_completed = true;
+
+            foreach ($phases as $phase) {
+                $totalActivities = $this->Activity_model->countActivitiesByPhase($phase->phaseID);
+                $completedActivities = $this->Activity_model->countCompletedActivitiesByPhase($phase->phaseID);
+                $progress = ($totalActivities > 0) ? round(($completedActivities / $totalActivities) * 100) : 0;
+
+                if ($progress < 100) {
+                    $all_completed = false;
+                    break;
+                }
+            }
+
+            if ($all_completed && count($phases) > 0) {
+                $completed++;
+            }
+        }
+
+        return $completed;
+    }
 
 
 

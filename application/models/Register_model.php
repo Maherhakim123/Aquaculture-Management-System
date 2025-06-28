@@ -43,5 +43,41 @@ class Register_model extends CI_Model {
     $this->db->update('users', ['userPassword' => $hashedPassword]);
 }
 
+public function store_reset_token($email, $token)
+{
+    $data = [
+        'reset_token' => $token,
+        'token_created_at' => date('Y-m-d H:i:s'),
+    ];
+    $this->db->where('userEmail', $email);
+    return $this->db->update('users', $data);
+}
+
+
+// Validate token
+public function is_valid_token($token)
+{
+    $this->db->where('reset_token', $token);
+    $user = $this->db->get('users')->row();
+
+    if ($user) {
+        $created_at = strtotime($user->token_created_at);
+        return (time() - $created_at) < (60 * 60); // valid for 1 hour
+    }
+
+    return false;
+}
+
+// Update password by token
+public function update_password_by_token($token, $new_password)
+{
+    $this->db->where('reset_token', $token);
+    $this->db->update('users', [
+        'userPassword' => $new_password,
+        'reset_token' => null,
+        'token_created_at' => null
+    ]);
+}
+
   
 }

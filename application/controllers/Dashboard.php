@@ -13,22 +13,7 @@ class Dashboard extends CI_Controller {
         $this->load->library('session'); // Load session library
     }
 
-	// ADMIN PPJIM Dashboard
-// 	public function PPJIM_Dashboard($userID) {
-
-//     // Ensure only Admin PPJIM can access
-//     $this->session->userdata('userRole') !== 'Admin PPJIM';
-
-// 	$data['project_count'] = $this->Project_model->count_all_projects();
-//     $data['user_count'] = $this->User_model->count_all_users(); // Excluding Admin
-
-//     // Load the dashboard view for Admin PPJIM
-// 	$this->load->view('templates/header');
-// 	//$this->load->view('templates/PPJIM_sidebar'); 
-//     $this->load->view('PPJIM_Dashboard', $data);
-// 	$this->load->view('templates/footer');
-// }
-
+// ADMIN PPJIM Dashboard
 public function PPJIM_Dashboard() {
     // Ensure only Admin PPJIM can access
     if ($this->session->userdata('userRole') !== 'Admin PPJIM') {
@@ -141,6 +126,19 @@ public function PPJIM_Dashboard() {
 				];
 			}
 		}
+
+		$projectList = [];
+		foreach ($projects as $project) {
+			$projectList[] = [
+				'projectID' => $project->projectID,
+				'projectName' => $project->projectName,
+				'startDate' => $project->startDate, 
+				'endDate'   => $project->endDate     
+			];
+		}
+
+		$data['project_list'] = json_encode($projectList); // Pass to view as JSON
+
 
 		$data['calendar_events'] = json_encode($events); // pass to view
 

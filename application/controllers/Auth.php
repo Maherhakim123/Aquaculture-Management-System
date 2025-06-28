@@ -148,7 +148,7 @@ private function login_user($user) {
 
             // Generate token
             $token = bin2hex(random_bytes(32));
-            $this->Register_model->store_reset_token($user->userID, $token);
+            $this->Register_model->store_reset_token($user->userEmail, $token);
 
             $reset_link = base_url('auth/reset_password/' . $token);
             $this->session->set_flashdata('reset_link', $reset_link);
