@@ -18,9 +18,7 @@
     <div class="content-wrapper p-4">
         <section class="content">
             <div class="container-fluid">
-                <h3 class="mb-4">
-                    <i class="fas fa-envelope-open-text"></i> Pending Project Invitations
-                </h3>
+                <h3 class="mb-4"> Pending Project Invitations </h3>
 
                 <?php if (!empty($pending_invitations)): ?>
                     <div class="card">

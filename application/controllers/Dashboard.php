@@ -177,6 +177,7 @@ public function PPJIM_Dashboard() {
     $projectID = $this->input->get('projectID');
     $data['selectedProjectID'] = $projectID;
 
+
     if ($projectID) {
         $phases = $this->Phase_model->get_phase($projectID);
         $progressData = [];
@@ -194,8 +195,10 @@ public function PPJIM_Dashboard() {
         $data['progressData'] = [];
     }
 
+	$data['invitation_count'] = $this->Project_model->count_pending_invitations($userID);
+
     $this->load->view('templates/header');
-    $this->load->view('templates/community_sidebar');
+    $this->load->view('templates/community_sidebar', $data);
     $this->load->view('beneficiary_dashboard', $data);
     $this->load->view('templates/footer');
 }

@@ -169,6 +169,15 @@ class Project_model extends CI_Model {
         return $query->result();
     }
 
+    // Count pending invitations (for beneficiary)
+    public function count_pending_invitations($userID) {
+    $this->db->where('userID', $userID);
+    $this->db->where('status', 'pending');
+    return $this->db->count_all_results('projectMembers');
+    }
+
+
+
     public function get_project_members($projectID) {
         // Include userID in the select statement
         $this->db->select('u.userID, u.userName, u.userEmail, pm.status');

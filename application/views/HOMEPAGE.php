@@ -30,7 +30,7 @@
         /* Glassy navbar */
         .navbar-glass{
             backdrop-filter: blur(10px);
-            background:rgba(255,255,255,0.3)!important;
+            background:rgba(238, 235, 235, 0.56)!important;
         }
 
         /* Gradient buttons */
@@ -45,12 +45,16 @@
         }
 
         /* Hero section */
-        .hero{
-            background:url('<?= base_url('assets/img/hero-pond.jpg') ?>') center/cover;
-            height:60vh;
-            min-height:400px;
-            position:relative;
-            color:#fff;
+        .hero {
+            background: url('<?= base_url('assets/template/img/tolong-menolong.jpg') ?>') center center / cover no-repeat;
+            height: 60vh;
+            min-height: 400px;
+            position: relative;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
         }
         .hero-overlay{
             position:absolute;
@@ -68,6 +72,7 @@
 <!-- ===== Navbar ===== -->
 <nav class="navbar navbar-expand-lg navbar-light navbar-glass fixed-top shadow-sm">
     <div class="container">
+        <img src="<?= base_url('assets/template/img/UMT-logo.jpg') ?>" alt="Logo" class="navbar-brand-logo mr-2" style="width: 35px;">
         <a class="navbar-brand font-weight-bold">Aquaculture Management System</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navMenu">
             <span class="navbar-toggler-icon"></span>
@@ -82,11 +87,12 @@
 
 <!-- ===== Hero ===== -->
 <header class="hero d-flex align-items-center">
+
     <span class="hero-overlay"></span>
     <div class="container text-center hero-content" data-aos="fade-zoom-in">
         <h1 class="display-4 font-weight-bold mb-3">Project Community Engagement</h1>
         <p class="lead mb-4">Track projects, monitor stock, and grow healthy yields—together.</p>
-        <a href="<?= base_url('auth/register'); ?>" class="btn btn-accent btn-lg mr-2 shadow">Get Started</a>
+        <a href="<?= base_url('auth/register'); ?>" class="btn btn-info btn-lg mr-2 shadow">Get Started</a>
         <a href="<?= base_url('auth/login'); ?>" class="btn btn-outline-light btn-lg shadow">Log In</a>
     </div>
 </header>

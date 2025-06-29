@@ -260,11 +260,12 @@ class Project extends CI_Controller
     redirect('project/view/' . $projectID);
 }
 
-    // View invitations for the current local community user
+    // View invitations for the current beneficiary user
     public function invitations()
     {
         $userID = $this->session->userdata('userID');
         $data['pending_invitations'] = $this->Project_model->get_pending_invitations_by_user($userID);
+        
 
         $this->load->view('templates/header');
         $this->load->view('templates/community_sidebar');
