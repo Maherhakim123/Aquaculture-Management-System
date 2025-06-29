@@ -50,23 +50,10 @@
                             </div>
                         </div>
 
-                     
-
-
-                        <div class="text-end mt-3">
                         <a href="<?= site_url('phase/beneficiary_progress/' . $project->projectID); ?>" class="btn btn-primary btn-sm">View Progress</a>
-                        </div>
 
-                      <div class="text-end mt-3">
                         <a href="<?= site_url('activity/beneficiary_add_comment_form/'.$project->projectID) ?>" class="btn btn-primary btn-sm">Add Comment</a>
-                        </div> 
 
-
-
-
-
-
-   
 
                     </div>
                 </div>

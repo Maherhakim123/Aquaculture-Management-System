@@ -97,10 +97,6 @@ public function PPJIM_Dashboard() {
     redirect('dashboard/list_users'); 
 }
 
-
-
-
-
 	// For Project Leaders count all the projects
 	public function dashboard() {
 		$userID = $this->session->userdata('userID');

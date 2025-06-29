@@ -180,14 +180,5 @@ public function get_comments_by_activity($activityID)
     return $this->db->get()->result();
 }
 
-
-
-
-
-
-
-
-
-
 }
 ?>

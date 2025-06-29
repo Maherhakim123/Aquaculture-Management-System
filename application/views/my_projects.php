@@ -41,10 +41,8 @@
                                     <p><strong>Budget:</strong> RM<?= $project->budget ?></p>
                                     <p><strong>Budget Source:</strong> <?= $project->budgetSource ?></p>
 
-
-                                    <a href="<?= site_url('project/community_view/' . $project->projectID) ?>" class="btn btn-primary btn-sm">
-                                        <i class="fas fa-eye"></i> View Project
-                                    </a>
+                                    <a href="<?= site_url('project/community_view/' . $project->projectID) ?>" class="btn btn-primary btn-sm"> View Project</a>
+                                    
                                 </div>
                             </div>
                         </div>

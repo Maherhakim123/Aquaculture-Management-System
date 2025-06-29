@@ -32,7 +32,7 @@
               <i class="fas fa-file-excel"></i> Export to Excel
             </button>
             <!-- export to pdf -->
-            <button class="btn btn-danger mb-3 ms-2" onclick="exportTableToPDF()">
+            <button class="btn btn-info mb-3 ms-2" onclick="exportTableToPDF()">
               <i class="fas fa-file-pdf"></i> Export to PDF
             </button>
 

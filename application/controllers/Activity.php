@@ -186,6 +186,7 @@ public function leader_add_comment() {
     redirect('activity/view_conversation/' . $activityID);
 }
 
+
 //Project Leader delete comment in messages
 public function delete_comment_messages($commentID, $activityID)
 {
@@ -203,6 +204,7 @@ public function delete_comment_messages($commentID, $activityID)
     redirect('activity/view_conversation/' . $activityID);
 }
 
+//Project Leader delete comment in progress
 public function delete_comment_progress($commentID, $activityID)
 {
     $userRole = $this->session->userdata('role');
@@ -262,7 +264,29 @@ public function view_conversation($activityID)
 }
 
 
+// Beneficiary view comment in conversation
+public function beneficiary_view_comment($activityID)
+{
+    $this->load->model('Activity_model');
 
+    $activity = $this->Activity_model->get_activity($activityID);
+    if (!$activity) {
+        show_404();
+    }
+
+    $comments = $this->Activity_model->get_comments_by_activity($activityID);
+
+    $data = [
+        'activity' => $activity,
+        'comments' => $comments,
+        'activityID' => $activityID
+    ];
+
+    $this->load->view('templates/header');
+    $this->load->view('templates/community_sidebar');
+    $this->load->view('beneficiary_view_comment', $data);
+    $this->load->view('templates/footer');
+}
 
 
 

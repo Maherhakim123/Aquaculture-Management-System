@@ -22,7 +22,6 @@
     <i class="fas fa-user-circle" style="font-size: 40px; color: grey;"></i>
   </button>
   <div class="dropdown-menu">
-    <a class="dropdown-item" href="<?= base_url('dashboard/profile'); ?>">Profile</a>
     <a class="dropdown-item" href="#" onclick="confirmLogout(event)">Log Out</a>
     </div>
 </div>

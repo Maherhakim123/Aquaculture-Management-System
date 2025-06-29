@@ -159,7 +159,7 @@
                 <th>Name</th>
                 <th>Email</th>
                 <th>Status</th>
-                <th>Action</th>
+                <!-- <th>Action</th> -->
             </tr>
         </thead>
         <tbody>
@@ -176,7 +176,9 @@
                             <span class="badge badge-warning">Pending</span>
                         <?php endif; ?>
                     </td>
-                    <td>
+
+                    <!-- CANCEL DUE TO UNNECESSARY ACTIONS FOR ADMIN TO REMOVE MEMBERS -->
+                    <!-- <td>
                         <?php if ($member->status == 'accepted'): ?>
                             <a href="<?= base_url('project/remove_member/' . $projectID . '/' . $member->userID) ?>"
                                class="btn btn-sm btn-danger w-30"
@@ -190,7 +192,7 @@
                                Cancel
                             </a>
                         <?php endif; ?>
-                    </td>
+                    </td> -->
                 </tr>
             <?php endforeach; ?>
         </tbody>

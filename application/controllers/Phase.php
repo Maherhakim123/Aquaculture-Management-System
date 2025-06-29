@@ -305,7 +305,5 @@ public function delete_comment_progress($commentID, $activityID)
     }
 }
 
-
-
 }
 ?>

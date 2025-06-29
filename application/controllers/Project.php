@@ -14,35 +14,35 @@ class Project extends CI_Controller
 
 
 
-    public function dashboard()
-{
-    $userID = $this->session->userdata('userID'); // Get logged in user's ID
-    $data['project_count'] = $this->Project_model->count_projects_by_leader($userID); // Fetch project count
+//     public function dashboard()
+// {
+//     $userID = $this->session->userdata('userID'); // Get logged in user's ID
+//     $data['project_count'] = $this->Project_model->count_projects_by_leader($userID); // Fetch project count
 
-    $this->load->view('templates/header');
-    $this->load->view('templates/sidebar');
-    $this->load->view('dashboard', $data); 
-    $this->load->view('templates/footer');
-}
-
-
-public function beneficiary_dashboard()
-{
-    $userID = $this->session->userdata('userID'); // Get logged in user's ID
-
-    $this->load->model('Project_model');
-
-     // Get the number of projects this beneficiary is involved in
-    $project_count = $this->Project_model->count_projects_by_user($userID);
-
-    $data['project_count'] = $project_count;
+//     $this->load->view('templates/header');
+//     $this->load->view('templates/sidebar');
+//     $this->load->view('dashboard', $data); 
+//     $this->load->view('templates/footer');
+// }
 
 
-    $this->load->view('templates/header');
-    $this->load->view('templates/community_sidebar');
-    $this->load->view('beneficiary_dashboard', $data); 
-    $this->load->view('templates/footer');
-}
+// public function beneficiary_dashboard()
+// {
+//     $userID = $this->session->userdata('userID'); // Get logged in user's ID
+
+//     $this->load->model('Project_model');
+
+//      // Get the number of projects this beneficiary is involved in
+//     $project_count = $this->Project_model->count_projects_by_user($userID);
+
+//     $data['project_count'] = $project_count;
+
+
+//     $this->load->view('templates/header');
+//     $this->load->view('templates/community_sidebar');
+//     $this->load->view('beneficiary_dashboard', $data); 
+//     $this->load->view('templates/footer');
+// }
 
 
     // Display the form to create a new project
@@ -138,7 +138,7 @@ public function beneficiary_dashboard()
         $data['phases'] = $this->Phase_model->get_phases_with_progress($projectID);
 
         $this->load->view('templates/header');
-        $this->load->view('templates/sidebar');
+        $this->load->view('templates/PPJIM_sidebar');
         $this->load->view('PPJIM_view_project', $data);
         $this->load->view('templates/footer');
     }
@@ -303,10 +303,6 @@ public function beneficiary_dashboard()
 
     public function community_view($projectID)
 {
-    // Load your model if not already loaded
-    $this->load->model('Project_model');
-    $this->load->model('Phase_model');
-
     // Get project by ID
     $data['project'] = $this->Project_model->get_project_by_id($projectID);
     $data['phaseIDForComment'] = $this->Phase_model->get_first_phase_id($projectID);
@@ -314,7 +310,7 @@ public function beneficiary_dashboard()
     // Load the view
     $this->load->view('templates/header');
     $this->load->view('templates/community_sidebar');
-    $this->load->view('community_view_project', $data);
+    $this->load->view('beneficiary_view_project', $data);
     $this->load->view('templates/footer');
 }
 

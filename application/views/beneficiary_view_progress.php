@@ -47,39 +47,46 @@
             <?php if ($rowIndex === 0): ?>
                 <td rowspan="<?= $activityCount ?>"><?= $entry['phase']->phaseName ?></td>
             <?php endif; ?>
-            <td><?= $activity->activityType ?> - <?= $activity->activityName ?></td>
+            <td><?= $activity->activityType ?> - <?= $activity->activityName ?> <br>
+                <a href="<?= base_url('activity/beneficiary_view_comment/' . $activity->activityID) ?>" class="btn btn-sm btn-info">Messages</a>
+          </td>
            <td>
-  <?php if (!empty($activity->comments)): ?>
-    <?php foreach ($activity->comments as $comment): ?>
-      <div>
-        <?= nl2br(htmlspecialchars($comment['comment'])) ?><br>
-        <small class="text-muted"><?= date('d M Y, h:i A', strtotime($comment['created_at'])) ?></small>
-      </div>
-    <?php endforeach; ?>
-  <?php else: ?>
-    <em>No comments</em>
-  <?php endif; ?>
-</td>
+    <?php if (!empty($activity->comments)): ?>
+      <?php foreach ($activity->comments as $comment): ?>
 
-<td>
-  <?php if (!empty($activity->comments)): ?>
-    <?php foreach ($activity->comments as $comment): ?>
-      <?php if (!empty($comment['spending'])): ?>
-        <div>RM <?= number_format($comment['spending'], 2) ?></div>
-      <?php else: ?>
-        <div><em>Not recorded</em></div>
-      <?php endif; ?>
-    <?php endforeach; ?>
-  <?php else: ?>
-    <em>-</em>
-  <?php endif; ?>
-</td>
+        <div>
+          <?= nl2br(htmlspecialchars($comment['comment'])) ?><br>
+          <small class="text-muted"><?= date('d M Y, h:i A', strtotime($comment['created_at'])) ?></small>
+        </div>
+      
+      <?php endforeach; ?>
+    <?php else: ?>
+      <em>No comments</em>
+    <?php endif; ?>
+  </td>
 
-        </tr>
-        <?php $rowIndex++; ?>
-    <?php endforeach; ?>
-<?php endforeach; ?>
-</tbody>
+  
+   
+
+  <td>
+    <?php if (!empty($activity->comments)): ?>
+      <?php foreach ($activity->comments as $comment): ?>
+        <?php if (!empty($comment['spending'])): ?>
+          <div>RM <?= number_format($comment['spending'], 2) ?></div>
+        <?php else: ?>
+          <div><em>Not recorded</em></div>
+        <?php endif; ?>
+      <?php endforeach; ?>
+    <?php else: ?>
+      <em>-</em>
+    <?php endif; ?>
+  </td>
+
+          </tr>
+          <?php $rowIndex++; ?>
+      <?php endforeach; ?>
+  <?php endforeach; ?>
+  </tbody>
 
           </table>
         </div>
