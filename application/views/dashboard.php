@@ -82,7 +82,43 @@
 
 <!-- Graphs Row -->
 <div class="row mt-4">
-  <!-- Calendar Column -->
+ 
+
+  <!-- Bar Chart Column with another card below it -->
+  <div class="col-md-6">
+    <!-- Bar Chart -->
+    <div class="card">
+      <div class="card-header bg-primary text-white">
+        <h3 class="card-title">Projects by Status (Bar Chart)</h3>
+      </div>
+      <div class="card-body">
+        <canvas id="barChart"></canvas>
+      </div>
+    </div>
+
+    <div class="card mt-3">
+  <div class="card-header bg-primary text-white">
+      <h3 class="card-title">Projects</h3>
+    </div>
+    <div class="card-body">
+      <?php if (!empty($projects)): ?>
+        <ul class="list-group">
+          <?php foreach ($projects as $project): ?>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <?= $project->projectName ?>
+              <a href="<?= base_url('project/view/' . $project->projectID) ?>" class="btn btn-sm btn-info">View Project</a>
+            </li>
+          <?php endforeach; ?>
+        </ul>
+      <?php else: ?>
+        <p>No projects found.</p>
+      <?php endif; ?>
+    </div>
+</div>
+
+      </div>
+
+       <!-- Calendar Column -->
   <div class="col-md-6">
     <div class="card">
       <div class="card-header bg-primary text-white">
@@ -99,41 +135,6 @@
       </div>
     </div>
   </div>
-
-  <!-- Bar Chart Column with another card below it -->
-  <div class="col-md-6">
-    <!-- Bar Chart -->
-    <div class="card">
-      <div class="card-header bg-success text-white">
-        <h3 class="card-title">Projects by Status (Bar Chart)</h3>
-      </div>
-      <div class="card-body">
-        <canvas id="barChart"></canvas>
-      </div>
-    </div>
-
-    <div class="card mt-3">
-  <div class="card-header bg-info text-white">
-    <h3 class="card-title"><i class="ion ion-clipboard mr-1"></i> To Do List</h3>
-  </div>
-  <div class="card-body">
-    <form id="todo-form" class="mb-3">
-      <div class="input-group">
-        <input type="text" id="todo-input" class="form-control" placeholder="Add new task..." required>
-        <div class="input-group-append">
-          <button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i> Add</button>
-        </div>
-      </div>
-    </form>
-
-    <ul id="todo-list" class="todo-list" data-widget="todo-list">
-      <!-- Tasks will appear here -->
-    </ul>
-  </div>
-</div>
-
-
-      </div>
     </div>
 
 

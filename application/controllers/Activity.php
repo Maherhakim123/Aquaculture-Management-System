@@ -91,8 +91,12 @@ public function beneficiary_add_comment_form($projectID)
     // logged‑in beneficiary
     $data['projectID'] = $projectID;
     $data['phases']    = $this->Phase_model->get_phase($projectID);
+
     // view needs phases only; activities are fetched on demand
+    $this->load->view('templates/header');
+    $this->load->view('templates/community_sidebar');
     $this->load->view('beneficiary_add_comment', $data);
+    $this->load->view('templates/footer');
 }
 
 

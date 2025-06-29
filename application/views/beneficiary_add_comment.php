@@ -2,91 +2,106 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Add Comment</title>
-    <!-- Font Awesome & Bootstrap same as create_activity_record.php -->
-    <link rel="stylesheet"
-          href="<?= base_url('assets/template/plugins/fontawesome-free/css/all.min.css') ?>">
-    <link rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <meta charset="UTF-8">
+  <title>Add Comment</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="<?= base_url('assets/template/plugins/fontawesome-free/css/all.min.css') ?>">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="<?= base_url('assets/template/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') ?>">
+  <link rel="stylesheet" href="<?= base_url('assets/template/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') ?>">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="<?= base_url('assets/template/dist/css/adminlte.min.css') ?>">
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
-<body>
-<div class="container mt-5">
-    <div class="card shadow">
-        <div class="card-header bg-primary text-white">
-            <h4 class="mb-0">Add Comment</h4>
+
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+  <div class="content-wrapper p-3">
+    <div class="container">
+      <div class="card card-primary shadow">
+        <div class="card-header">
+          <h3 class="card-title">Add Comment</h3>
         </div>
-        <div class="card-body">
 
-            <!-- action → save_beneficiary_comment -->
-            <form method="POST" action="<?= base_url('activity/save_beneficiary_comment') ?>">
+        <form method="POST" action="<?= base_url('activity/save_beneficiary_comment') ?>">
+          <div class="card-body">
 
-                <!-- 1. hidden project -->
-                <input type="hidden" name="projectID" value="<?= $projectID ?>">
+            <!-- Hidden project ID -->
+            <input type="hidden" name="projectID" value="<?= $projectID ?>">
 
-                <!-- 2. choose phase (loaded for this project) -->
-                <div class="form-group">
-                    <label for="phaseID">Phase:</label>
-                    <select name="phaseID" id="phaseID"
-                            class="form-control" required>
-                        <option value="">-- Select Phase --</option>
-                        <?php foreach ($phases as $p): ?>
-                            <option value="<?= $p->phaseID ?>"><?= $p->phaseName ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
+            <!-- Phase Selection -->
+            <div class="form-group">
+              <label for="phaseID">Phase</label>
+              <select name="phaseID" id="phaseID" class="form-control" required>
+                <option value="">-- Select Phase --</option>
+                <?php foreach ($phases as $p): ?>
+                  <option value="<?= $p->phaseID ?>"><?= $p->phaseName ?></option>
+                <?php endforeach; ?>
+              </select>
+            </div>
 
-                <!-- 3. choose activity (populated by ajax when phase changes) -->
-                <div class="form-group">
-                    <label for="activityID">Activity:</label>
-                    <select name="activityID" id="activityID"
-                            class="form-control" required>
-                        <option value="">-- Select Activity --</option>
-                    </select>
-                </div>
+            <!-- Activity Selection (populated by AJAX) -->
+            <div class="form-group">
+              <label for="activityID">Activity</label>
+              <select name="activityID" id="activityID" class="form-control" required>
+                <option value="">-- Select Activity --</option>
+              </select>
+            </div>
 
-                <!-- 4. comment -->
-                <div class="form-group">
-                    <label for="comment">Comment</label>
-                    <textarea name="comment" class="form-control"
-                              rows="3" required></textarea>
-                </div>
+            <!-- Comment Textarea -->
+            <div class="form-group">
+              <label for="comment">Comment</label>
+              <textarea name="comment" class="form-control" rows="3" required></textarea>
+            </div>
 
-                <!-- 5. spending (optional) -->
-                <div class="form-group">
-                    <label for="spending">Spending Budget (RM) <small>(optional)</small></label>
-                    <input type="number" name="spending" step="0.01" class="form-control" placeholder="Enter amount spent">
-                </div> <br>
+            <!-- Optional Spending Input -->
+            <div class="form-group">
+              <label for="spending">Spending Budget (RM) <small>(optional)</small></label>
+              <input type="number" name="spending" step="0.01" class="form-control" placeholder="Enter amount spent">
+            </div>
 
-                <button type="submit" class="btn btn-primary">
-                    <i class="fas fa-plus"></i> Submit Comment
-                </button>
-            </form>
-        </div>
+          </div>
+
+          <div class="card-footer">
+            <button type="submit" class="btn btn-primary">Submit Comment</button>
+          </div>
+        </form>
+
+      </div>
     </div>
+  </div>
 </div>
 
-<!-- Ajax: when phase changes → fetch its activities -->
-<script>
-    document.getElementById('phaseID').addEventListener('change', function () {
-        const phaseID = this.value;
-        const url = "<?= base_url('activity/getActivitiesByPhase/') ?>" + phaseID;
+<!-- Scripts -->
+<script src="<?= base_url('assets/template/plugins/jquery/jquery.min.js') ?>"></script>
+<script src="<?= base_url('assets/template/plugins/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
+<script src="<?= base_url('assets/template/dist/js/adminlte.min.js') ?>"></script>
 
-        fetch(url)
-            .then(resp => resp.json())
-            .then(data => {
-                const actSel = document.getElementById('activityID');
-                actSel.innerHTML =
-                    '<option value="">-- Select Activity --</option>';
-                data.forEach(a => {
-                    const opt = document.createElement('option');
-                    opt.value = a.activityID;
-                    opt.textContent =
-                        `${a.activityType} - ${a.activityName} `;
-                    actSel.appendChild(opt);
-                });
-            });
-    });
+<!-- AJAX for dynamic activity list -->
+<script>
+  document.getElementById('phaseID').addEventListener('change', function () {
+    const phaseID = this.value;
+    const url = "<?= base_url('activity/getActivitiesByPhase/') ?>" + phaseID;
+
+    fetch(url)
+      .then(resp => resp.json())
+      .then(data => {
+        const actSel = document.getElementById('activityID');
+        actSel.innerHTML = '<option value="">-- Select Activity --</option>';
+        data.forEach(a => {
+          const opt = document.createElement('option');
+          opt.value = a.activityID;
+          opt.textContent = `${a.activityType} - ${a.activityName}`;
+          actSel.appendChild(opt);
+        });
+      });
+  });
 </script>
+
 </body>
 </html>

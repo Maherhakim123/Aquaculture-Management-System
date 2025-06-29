@@ -302,17 +302,20 @@ class Project extends CI_Controller
     }
 
     public function community_view($projectID)
-{
+    {
     // Get project by ID
     $data['project'] = $this->Project_model->get_project_by_id($projectID);
     $data['phaseIDForComment'] = $this->Phase_model->get_first_phase_id($projectID);
+
+    //data phase in view project
+    $data['phases'] = $this->Phase_model->get_phases_with_progress($projectID);
 
     // Load the view
     $this->load->view('templates/header');
     $this->load->view('templates/community_sidebar');
     $this->load->view('beneficiary_view_project', $data);
     $this->load->view('templates/footer');
-}
+    }
 
 
 // Project leader remove member project has been invited

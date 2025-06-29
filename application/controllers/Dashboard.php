@@ -105,9 +105,13 @@ public function PPJIM_Dashboard() {
 		$data['in_progress_projects'] = $this->Project_model->count_in_progress_projects($userID);
     	$data['completed_projects'] = $this->Project_model->count_completed_projects($userID);
 
+		
+
 		$events = [];
 
 		$projects = $this->Project_model->get_projects_by_leader($userID);
+		// Pass the projects list to view
+		$data['projects'] = $projects;
 
 		foreach ($projects as $project) {
 			$phases = $this->Phase_model->get_phases_by_project($project->projectID);
@@ -147,22 +151,115 @@ public function PPJIM_Dashboard() {
 
 
 	// For Beneficiaries
-	public function beneficiary_dashboard() {
-		$userID = $this->session->userdata('userID');
-        $data['project_count'] = $this->Project_model->count_projects_by_member($userID);
+// 	public function beneficiary_dashboard()
+// {
+//     $userID = $this->session->userdata('userID');
+//     $data['projects'] = $this->Project_model->get_projects_by_user($userID);
+//     $data['project_count'] = count($data['projects']); 
 
-		$this->load->model('Project_model');
+//     $this->load->view('templates/header');
+//     $this->load->view('templates/community_sidebar');
+//     $this->load->view('beneficiary_dashboard', $data);
+//     $this->load->view('templates/footer');
+// }
 
-     	// Get the number of projects this beneficiary is involved in
-    	$project_count = $this->Project_model->count_projects_by_user($userID);
 
-    	$data['project_count'] = $project_count;
+	public function beneficiary_dashboard()
+{
 
-		$this->load->view('templates/header');
-		$this->load->view('templates/community_sidebar'); // Community member sidebar
-		$this->load->view('beneficiary_dashboard' , $data);// Community dashboard view
-		$this->load->view('templates/footer');
-	}
+
+    $userID = $this->session->userdata('userID');
+
+    // Load only the user's projects
+    $data['projects'] = $this->Project_model->get_projects_by_user($userID);
+	$data['project_count'] = count($data['projects']); 
+
+    $projectID = $this->input->get('projectID');
+    $data['selectedProjectID'] = $projectID;
+
+    if ($projectID) {
+        $phases = $this->Phase_model->get_phase($projectID);
+        $progressData = [];
+
+        foreach ($phases as $phase) {
+            $activities = $this->Activity_model->getActivitiesByPhase($phase->phaseID); // returns as array
+            $progressData[] = [
+                'phase' => $phase,
+                'activities' => $activities
+            ];
+        }
+
+        $data['progressData'] = $progressData;
+    } else {
+        $data['progressData'] = [];
+    }
+
+    $this->load->view('templates/header');
+    $this->load->view('templates/community_sidebar');
+    $this->load->view('beneficiary_dashboard', $data);
+    $this->load->view('templates/footer');
+}
+
+	// For Beneficiaries
+	public function get_project_activities()
+{
+    $this->load->model('Phase_model');
+    $this->load->model('Activity_model');
+
+    $projectID = $this->input->get('projectID');
+    if (!$projectID) {
+        echo "<p>No project selected.</p>";
+        return;
+    }
+
+    $phases = $this->Phase_model->get_phase($projectID);
+    $progressData = [];
+
+    foreach ($phases as $phase) {
+        $activities = $this->Activity_model->getActivitiesByPhase($phase->phaseID); // must return array
+        $progressData[] = [
+            'phase' => $phase,
+            'activities' => $activities
+        ];
+    }
+
+    if (empty($progressData)) {
+        echo "<p>No activities found for this project.</p>";
+        return;
+    }
+
+    // Start building the HTML
+    $output = '<div class="table-responsive">';
+    $output .= '<table class="table table-bordered">';
+    $output .= '<thead class="thead-dark"><tr><th>Phase</th><th>Activity</th><th>Messages</th></tr></thead>';
+    $output .= '<tbody>';
+
+    foreach ($progressData as $entry) {
+        $activities = $entry['activities'];
+        $count = count($activities);
+        $i = 0;
+        foreach ($activities as $activity) {
+            $output .= '<tr>';
+            if ($i === 0) {
+                $output .= '<td rowspan="' . $count . '">' . htmlspecialchars($entry['phase']->phaseName) . '</td>';
+            }
+
+            $output .= '<td>' . htmlspecialchars($activity['activityType']) . ' - ' . htmlspecialchars($activity['activityName']) . '</td>';
+            $output .= '<td><a href="' . base_url('activity/beneficiary_view_comment/' . $activity['activityID']) . '" class="btn btn-sm btn-info">Messages</a></td>';
+            $output .= '</tr>';
+
+            $i++;
+        }
+    }
+
+    $output .= '</tbody></table></div>';
+
+    echo $output;
+}
+
+
+
+
 	
 	
 

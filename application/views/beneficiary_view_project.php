@@ -55,6 +55,58 @@
                         <a href="<?= site_url('activity/beneficiary_add_comment_form/'.$project->projectID) ?>" class="btn btn-primary btn-sm">Add Comment</a>
 
 
+                <div class="card mt-4">
+    <div class="card-header bg-info text-white">
+        <h4>Phases in This Project</h4>
+    </div>
+    <div class="card-body">
+        <?php if (!empty($phases)) : ?>
+            <table class="table table-bordered table-striped">
+                <thead class="table-info text-center">
+                    <tr>
+                        <th>Phase Name</th>
+                        <th>Phase </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($phases as $phase) : 
+                        $progress = ($phase->totalActivities > 0) 
+                            ? round(($phase->completedActivities / $phase->totalActivities) * 100) 
+                            : 0;
+                    ?>
+                        <tr>
+                            <td><?= $phase->phaseName ?></td>
+                            <td class="text-center">
+    <?php
+        $badgeClass = 'badge-secondary'; // default
+
+        switch ($phase->status) {
+            case 'completed':
+                $badgeClass = 'badge-success';
+                break;
+            case 'in_progress':
+                $badgeClass = 'badge-warning';
+                break;
+            case 'not_started':
+                $badgeClass = 'badge-secondary';
+                break;
+        }
+    ?>
+    <span class="badge <?= $badgeClass ?> text-uppercase"><?= $phase->status ?></span>
+</td>
+
+                   
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        <?php else : ?>
+            <p>No phases have been added to this project.</p>
+        <?php endif; ?>
+    </div>
+</div>
+
+
                     </div>
                 </div>
             </div>

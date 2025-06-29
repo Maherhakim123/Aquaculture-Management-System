@@ -38,21 +38,50 @@
 
                 <p>My Projects</p>
               </div>
-              <div class="icon">
-                <i class="ion ion-clipboard"></i>
-              </div>
-              <a href="<?php echo base_url('project/my_projects'); ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            
             </div>
           </div>
-          <!-- ./col -->
 
-
-
-
-
-
-      
+        <div class="col-12">
+  <div class="card">
+    <div class="card-header bg-primary text-white">
+      <h3 class="card-title">Projects</h3>
     </div>
+    <div class="card-body">
+      <?php if (!empty($projects)): ?>
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover">
+            <thead class="table-primary text-center">
+            <!-- <thead class="thead-dark"> -->
+              <tr>
+                <th>Project Name</th>
+                <th>Project By</th>
+                <th style="width: 120px;">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php foreach ($projects as $project): ?>
+                <tr>
+                  <td><?= $project->projectName ?></td>
+                  <td><?= $project->userName ?? 'N/A' ?></td>
+                  <td class="text-center">
+                    <a href="<?= base_url('project/community_view/' . $project->projectID) ?>" class="btn btn-sm btn-info">View </a>
+                  </td>
+                </tr>
+              <?php endforeach; ?>
+            </tbody>
+          </table>
+        </div>
+      <?php else: ?>
+        <p>No projects found.</p>
+      <?php endif; ?>
+    </div>
+  </div>
+</div>
+
+       
+
+        </div>
     </div>
 
 </section>

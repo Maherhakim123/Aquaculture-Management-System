@@ -74,7 +74,7 @@
       </div>
 </div>
 
-<!-- Graphs Row -->
+<!-- List Project -->
 <div class="row mt-4">
   <div class="col-md-6">
   <div class="card">
@@ -104,7 +104,7 @@
   <!-- Bar Chart -->
   <div class="col-md-6">
     <div class="card">
-      <div class="card-header bg-success text-white">
+      <div class="card-header bg-primary text-white">
         <h3 class="card-title">Projects by Status (Bar Chart)</h3>
       </div>
       <div class="card-body">

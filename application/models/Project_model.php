@@ -159,9 +159,10 @@ class Project_model extends CI_Model {
 
     // Pending invitations from local community
     public function get_pending_invitations_by_user($userID) {
-        $this->db->select('pm.*, p.projectName, p.projectLocation');
+        $this->db->select('pm.*, p.projectName, p.projectLocation, u.userName');
         $this->db->from('projectMembers pm');
         $this->db->join('project p', 'p.projectID = pm.projectID');
+        $this->db->join('users u', 'u.userID = pm.userID');
         $this->db->where('pm.userID', $userID);
         $this->db->where('pm.status', 'pending');
         $query = $this->db->get();
@@ -187,9 +188,10 @@ class Project_model extends CI_Model {
     
     //Projects where the user is a member
     public function get_projects_by_user($userID) {
-        $this->db->select('p.*');
+        $this->db->select('p.*, u.userName');
         $this->db->from('projectMembers pm');
         $this->db->join('project p', 'p.projectID = pm.projectID');
+        $this->db->join('users u', 'u.userID = p.userID');
         $this->db->where('pm.userID', $userID);
         $this->db->where('pm.status', 'accepted');
         $query = $this->db->get();
