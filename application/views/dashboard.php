@@ -220,7 +220,8 @@ document.addEventListener('DOMContentLoaded', function () {
     headerToolbar: {
       left: 'prev,next today',
       center: 'title',
-      right: 'dayGridMonth,timeGridWeek,listWeek'
+      //right: 'dayGridMonth,timeGridWeek,listWeek'
+      right: 'dayGridMonth'
     },
     events: <?php echo $calendar_events; ?> // Show all phases by default
   });

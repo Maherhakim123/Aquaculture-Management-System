@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile</title>
-    <link rel="stylesheet" href="<?= base_url('assets/template/dist/css/adminlte.min.css') ?>">
+    <link rel="stylesheet" href="<?php echo base_url('assets/template/dist/css/adminlte.min.css'); ?>">
 </head>
 <body>
 <div class="content-wrapper">
@@ -17,7 +17,7 @@
             </div>
             <div class="card mt-3">
                 <div class="card-body">
-                    <?php if ($users): ?>
+                    <?php if ($users) { ?>
                         <h3 class="card-title"><?php echo $users->userName; ?></h3>
                         <p class="card-text">
                             <strong>Email:</strong> <?php echo $users->userEmail; ?><br>
@@ -30,18 +30,17 @@
                         </p>
 
                        
-                    <?php else: ?>
+                    <?php } else { ?>
                         <p class="text-danger">Error: User details not available.</p>
-                    <?php endif; ?>
-                    <form action="<?= base_url('dashboard/edit_profile'); ?>" method="post" style="display:inline;">
-                        <input type="hidden" name="user_id" value="<?= $users->userID; ?>">
+                    <?php } ?>
+                    <form action="<?php echo base_url('dashboard/edit_profile'); ?>" method="post" style="display:inline;">
+                        <input type="hidden" name="user_id" value="<?php echo $users->userID; ?>">
                         <button type="submit" class="btn btn-warning">Edit Profile</button>
                     </form>
-                    <form action="<?= base_url('dashboard/delete_profile'); ?>" method="post" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete your profile? This action cannot be undone.');">
-                        <input type="hidden" name="user_id" value="<?= $users->userID; ?>">
+                    <form action="<?php echo base_url('dashboard/delete_profile'); ?>" method="post" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete your profile? This action cannot be undone.');">
+                        <input type="hidden" name="user_id" value="<?php echo $users->userID; ?>">
                         <button type="submit" class="btn btn-danger">Delete Profile</button>
                     </form>
-                    <a href="<?= base_url('dashboard/dashboard'); ?>" class="btn btn-primary">Back to Dashboard</a>
                 </div>
             </div>
         </div>

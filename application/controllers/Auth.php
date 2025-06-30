@@ -21,6 +21,7 @@ class Auth extends CI_Controller
         $this->load->view('login');
     }
 
+    // Handle user registration
     public function add()
     {
         $userName = $this->input->post('userName');
@@ -58,136 +59,7 @@ class Auth extends CI_Controller
         }
     }
 
-    // public function add()
-    // {
-    //     $userName = $this->input->post('userName');
-    //     $userEmail = $this->input->post('userEmail');
-    //     $userPassword = $this->input->post('userPassword');
-    //     $userIC = $this->input->post('userIC');
-    //     $userPhoneNo = $this->input->post('userPhoneNo');
-    //     $userRole = $this->input->post('userRole');
-
-    //     // Check for duplicate email
-    //     if ($this->Register_model->email_exists($userEmail)) {
-    //         $data['email_exists'] = true;
-    //         $this->load->view('register', $data);
-
-    //         return;
-    //     }
-
-    //     $data = [
-    //         'userName' => $userName,
-    //         'userEmail' => $userEmail,
-    //         // 'userPassword' => $userPassword,
-    //         'userPassword' => password_hash($userPassword, PASSWORD_DEFAULT),
-    //         'userIC' => $userIC,
-    //         'userPhoneNo' => $userPhoneNo,
-    //         'userRole' => $userRole,
-    //     ];
-
-    //     $status = $this->Register_model->add($data);
-    //     if ($status > 0) {
-    //         redirect('auth/login');
-    //     }
-    // }
-
-    // Validate Login Based on the role (ASAL)
-    // public function validate_login()
-    // {
-    //     $userEmail = $this->input->post('userEmail');
-    //     $userPassword = $this->input->post('userPassword');
-
-    //     $this->load->model('Register_model');
-    //     $user = $this->Register_model->get_user_by_email($userEmail);
-
-    //     if ($user && $user->userPassword == $userPassword) {
-    //         $session_data = [
-    //             'logged_in' => true,
-    //             'userID' => $user->userID,
-    //             'userName' => $user->userName,
-    //             'userRole' => $user->userRole,
-    //         ];
-    //         $this->session->set_userdata($session_data);
-
-    //         // Role-based redirection
-    //         if ($user->userRole == 'Admin PPJIM') {
-    //             redirect('dashboard/PPJIM_Dashboard');
-    //         } elseif ($user->userRole == 'Project Leader') {
-    //             redirect('dashboard/dashboard');
-    //         } else {
-    //             redirect('dashboard/beneficiary_dashboard');
-    //         }
-    //     } else {
-    //         $this->session->set_flashdata('error', 'Invalid email or password.');
-    //         redirect('auth/login');
-    //     }
-    // }
-
-    // public function validate_login()
-    // {
-    //     $userEmail = $this->input->post('userEmail');
-    //     $userPassword = $this->input->post('userPassword');
-
-    //     $this->load->model('Register_model');
-    //     $user = $this->Register_model->get_user_by_email($userEmail);
-
-    //     echo password_hash($userPassword, PASSWORD_DEFAULT);
-    //     echo '<br>';
-    //     echo $user->userPassword;
-    // if ($user && password_verify($userPassword, $user->userPassword)) {
-    //     $session_data = [
-    //         'logged_in' => true,
-    //         'userID' => $user->userID,
-    //         'userName' => $user->userName,
-    //         'userRole' => $user->userRole,
-    //     ];
-    //     $this->session->set_userdata($session_data);
-
-    //     // Role-based redirect
-    //     if ($user->userRole == 'Admin PPJIM') {
-    //         redirect('dashboard/PPJIM_Dashboard');
-    //     } elseif ($user->userRole == 'Project Leader') {
-    //         redirect('dashboard/dashboard');
-    //     } else {
-    //         redirect('dashboard/beneficiary_dashboard');
-    //     }
-    // } else {
-    //     $this->session->set_flashdata('error', 'Invalid email or password.');
-    //     redirect('auth/login');
-    // }
-    // }
-
-    // dinn
-    // public function validate_login()
-    // {
-    //     $userEmail = $this->input->post('userEmail');
-    //     $userPassword = $this->input->post('userPassword');
-
-    //     $this->load->model('Register_model');
-    //     $user = $this->Register_model->get_user_by_email($userEmail);
-
-    //     if ($user && password_verify($userPassword, $user->userPassword)) {
-    //         // Login success — set session variables (like your structure)
-    //         $_SESSION['logged_in'] = true;
-    //         $_SESSION['userID'] = $user->userID;
-    //         $_SESSION['userName'] = $user->userName;
-    //         $_SESSION['userRole'] = $user->userRole;
-
-    //         // Redirect by role
-    //         if ($user->userRole === 'Admin PPJIM') {
-    //             redirect(base_url('dashboard/PPJIM_Dashboard'));
-    //         } elseif ($user->userRole === 'Project Leader') {
-    //             redirect(base_url('dashboard/dashboard'));
-    //         } else {
-    //             redirect(base_url('dashboard/beneficiary_dashboard'));
-    //         }
-    //     } else {
-    //         // Login failed
-    //         $this->session->set_flashdata('error', 'Invalid email or password.');
-    //         redirect(base_url('auth/login'));
-    //     }
-    // }
-
+    // Validate login credentials
     public function validate_login()
     {
         $userEmail = $this->input->post('userEmail');
