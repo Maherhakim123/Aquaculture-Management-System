@@ -151,18 +151,6 @@ class Dashboard extends CI_Controller
     }
 
     // For Beneficiaries
-    // 	public function beneficiary_dashboard()
-    // {
-    //     $userID = $this->session->userdata('userID');
-    //     $data['projects'] = $this->Project_model->get_projects_by_user($userID);
-    //     $data['project_count'] = count($data['projects']);
-
-    //     $this->load->view('templates/header');
-    //     $this->load->view('templates/community_sidebar');
-    //     $this->load->view('beneficiary_dashboard', $data);
-    //     $this->load->view('templates/footer');
-    // }
-
     public function beneficiary_dashboard()
     {
         $userID = $this->session->userdata('userID');

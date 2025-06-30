@@ -9,20 +9,20 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="index3.html" class="nav-link">AQUACULTURE MANAGEMENT SYSTEM</a>
+        <a href="index3.html" class="nav-link">AQUACULTURE REPORTING SYSTEM</a>
       </li>
     </ul>
 
                                         
     <div class="dropdown ml-auto">
     <span class="text-muted mr-3">
-      <strong><?= ucfirst($this->session->userdata('userRole')); ?></strong>
+      <strong><?php echo ucfirst($this->session->userdata('userRole')); ?></strong>
     </span>
   <button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown" style="border: none; padding: 0;">
     <i class="fas fa-user-circle" style="font-size: 40px; color: grey;"></i>
   </button>
   <div class="dropdown-menu">
-    <a class="dropdown-item" href="<?= base_url('dashboard/Beneficiary_profile'); ?>">Profile</a>
+    <a class="dropdown-item" href="<?php echo base_url('dashboard/Beneficiary_profile'); ?>">Profile</a>
     <a class="dropdown-item" href="#" onclick="confirmLogout(event)">Log Out</a>
     </div>
 </div>
@@ -62,7 +62,7 @@
                with font-awesome or any other icon font library -->
 
           <li class="nav-item">
-              <a href="<?= base_url('dashboard/beneficiary_dashboard'); ?>" class="nav-link">
+              <a href="<?php echo base_url('dashboard/beneficiary_dashboard'); ?>" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                Dashboard
@@ -72,7 +72,7 @@
 
 
           <li class="nav-item">
-          <a class="nav-link" href="<?= site_url('project/my_projects') ?>">
+          <a class="nav-link" href="<?php echo site_url('project/my_projects'); ?>">
               <i class="nav-icon fas fa-file"></i>
               <p>
                 My Project
@@ -81,14 +81,14 @@
           </li>
 
           <li class="nav-item">
-            <a class="nav-link d-flex justify-content-between align-items-center" href="<?= site_url('project/invitations') ?>">
+            <a class="nav-link d-flex justify-content-between align-items-center" href="<?php echo site_url('project/invitations'); ?>">
               <div>
                 <i class="nav-icon fas fa-envelope-open-text"></i>
                 <p class="d-inline">Project Invitations</p>
               </div>
-              <?php if (!empty($invitation_count)): ?>
-                <span class="badge badge-warning right"><?= $invitation_count ?></span>
-              <?php endif; ?>
+              <?php if (!empty($invitation_count)) { ?>
+                <span class="badge badge-warning right"><?php echo $invitation_count; ?></span>
+              <?php } ?>
             </a>
           </li>
 

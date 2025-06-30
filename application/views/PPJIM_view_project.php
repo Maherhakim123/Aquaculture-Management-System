@@ -18,7 +18,14 @@
 <body>
 
 <div class="content-wrapper">
-<div class="container p-5">
+      <!-- Back to Dashboard Button -->
+        <form action="<?php echo site_url('dashboard/PPJIM_Dashboard'); ?>" method="post" style="display: inline;">
+            <button type="submit" class="btn btn-secondary mt-3">
+                <i class="fas fa-arrow-left"></i> Back to Dashboard
+            </button>
+        </form>
+
+<div class="container p-3">
     <div class="row justify-content-center">
     <div class="col-md-12">
     <div class="card shadow">

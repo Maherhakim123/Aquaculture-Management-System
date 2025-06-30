@@ -73,7 +73,7 @@
 <nav class="navbar navbar-expand-lg navbar-light navbar-glass fixed-top shadow-sm">
     <div class="container">
         <img src="<?php echo base_url('assets/template/img/UMT-logo.jpg'); ?>" alt="Logo" class="navbar-brand-logo mr-2" style="width: 35px;">
-        <a class="navbar-brand font-weight-bold">Aquaculture Management System</a>
+        <a class="navbar-brand font-weight-bold">Aquaculture Reporting System</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navMenu">
             <span class="navbar-toggler-icon"></span>
         </button>

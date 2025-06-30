@@ -253,6 +253,10 @@ class Project extends CI_Controller
             $this->session->set_flashdata('error', 'Failed to invite user.');
         }
 
+        // Store projectID in session before redirect
+        $this->session->set_userdata('projectID_to_view', $projectID);
+
+        // Then redirect
         redirect('project/view');
     }
 

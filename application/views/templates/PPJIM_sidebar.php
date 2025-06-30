@@ -9,14 +9,14 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">AQUACULTURE MANAGEMENT SYSTEM</a>
+        <a href="#" class="nav-link">AQUACULTURE REPORTING SYSTEM</a>
       </li>
     </ul>
 
                                         
   <div class="dropdown ml-auto">
     <span class="text-muted mr-3">
-      <strong><?= ucfirst($this->session->userdata('userRole')); ?></strong>
+      <strong><?php echo ucfirst($this->session->userdata('userRole')); ?></strong>
     </span>
   <button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown" style="border: none; padding: 0;">
     <i class="fas fa-user-circle" style="font-size: 40px; color: grey;"></i>
@@ -59,7 +59,7 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
           <li class="nav-item">
-              <a href="<?= base_url('dashboard/PPJIM_dashboard'); ?>" class="nav-link">
+              <a href="<?php echo base_url('dashboard/PPJIM_dashboard'); ?>" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                Dashboard

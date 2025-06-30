@@ -33,9 +33,15 @@
                     <?php else: ?>
                         <p class="text-danger">Error: User details not available.</p>
                     <?php endif; ?>
+                    <form action="<?= base_url('dashboard/edit_profile'); ?>" method="post" style="display:inline;">
+                        <input type="hidden" name="user_id" value="<?= $users->userID; ?>">
+                        <button type="submit" class="btn btn-warning">Edit Profile</button>
+                    </form>
+                    <form action="<?= base_url('dashboard/delete_profile'); ?>" method="post" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete your profile? This action cannot be undone.');">
+                        <input type="hidden" name="user_id" value="<?= $users->userID; ?>">
+                        <button type="submit" class="btn btn-danger">Delete Profile</button>
+                    </form>
                     <a href="<?= base_url('dashboard/dashboard'); ?>" class="btn btn-primary">Back to Dashboard</a>
-                    <a href="<?= base_url('dashboard/edit_profile'); ?>" class="btn btn-warning">Edit Profile</a>
-                    <a href="<?= base_url('dashboard/delete_profile'); ?>" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete your profile? This action cannot be undone.');">Delete Profile</a>
                 </div>
             </div>
         </div>

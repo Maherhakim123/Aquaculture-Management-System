@@ -42,41 +42,7 @@ class Activity extends CI_Controller
         echo json_encode($phases);
     }
 
-    // public function add()
-    // {
-    //     $activityID = $this->input->post('activityID');
-    //     $user_role = $this->session->userdata('role'); // 'leader' or 'beneficiary'
-    //     $user_id = $this->session->userdata('userID');
-    //     $phaseID = $this->input->post('phaseID');
-
-    //     $data = [
-    //         'activityType' => $this->input->post('activityType'),
-    //         'activityName' => $this->input->post('activityName'),
-    //         // 'comment' => $this->input->post('comment'),
-    //         'phaseID' => $phaseID,
-    //         // 'userID' => $userID
-    //     ];
-
-    //     $this->Activity_model->add_activity($data);
-    //     redirect('phase/view');
-    // }
-
-    // public function add()
-    // {
-    //     $phaseID = $this->input->post('phaseID');
-
-    //     $data = [
-    //         'activityType' => $this->input->post('activityType'),
-    //         'activityName' => $this->input->post('activityName'),
-    //         'phaseID' => $phaseID,
-    //     ];
-
-    //     $this->Activity_model->add_activity($data);
-    //     $this->session->set_flashdata('success', 'Activity added successfully!');
-
-    //     redirect('phase/view'); // or redirect back to previous page
-    // }
-
+    // Add activity to a phase
     public function add()
     {
         $phaseID = $this->input->post('phaseID');
@@ -93,38 +59,14 @@ class Activity extends CI_Controller
         $phase = $this->Phase_model->get_phase_by_id($phaseID);
         $projectID = $phase ? $phase->projectID : null;
 
-        // Store projectID in session for redirect
-        $this->session->set_userdata('projectID_to_index', $projectID);
+        // Store phaseID in session for use in Phase/view
+        $this->session->set_userdata('phaseID_to_view', $phaseID);
 
-        if ($projectID) {
-            redirect('phase/index');
-        } else {
-            // Fallback if no project found
-            redirect('project/index');
-        }
+        // Redirect to phase view page
+        redirect('phase/view');
     }
 
-    // public function edit()
-    // {
-    //     $activityID = $this->input->post('activityID');
-    //     $activity = $this->Activity_model->get_activity($activityID);
-
-    //     if (!$activity) {
-    //         show_404();
-    //     }
-
-    //     // Store activityID in session for POST-based update
-    //     $this->session->set_userdata('activityID_to_update', $activityID);
-    //     $this->session->set_userdata('phaseID_to_return', $activity->phaseID); // for redirect later
-
-    //     $data['activity'] = $activity;
-
-    //     $this->load->view('templates/header');
-    //     $this->load->view('templates/sidebar');
-    //     $this->load->view('edit_activity', $data);
-    //     $this->load->view('templates/footer');
-    // }
-
+    // Edit activity
     public function edit()
     {
         $activityID = $this->input->post('activityID');
@@ -147,6 +89,7 @@ class Activity extends CI_Controller
         $this->load->view('templates/footer');
     }
 
+    // Update activity
     public function update()
     {
         $activityID = $this->session->userdata('activityID_to_update');
@@ -178,6 +121,7 @@ class Activity extends CI_Controller
         redirect('phase/view');
     }
 
+    // Delete activity
     public function delete()
     {
         $activityID = $this->input->post('activityID');
@@ -282,26 +226,6 @@ class Activity extends CI_Controller
         $this->load->view('view_comment_conversation', $data);
     }
 
-    // Project Leader add comment in conversation
-    // public function leader_add_comment()
-    // {
-    //     $activityID = $this->input->post('activityID');
-    //     $comment = $this->input->post('comment');
-    //     $userID = $this->session->userdata('userID');
-
-    //     if ($activityID && $comment && $userID) {
-    //         $this->db->insert('comments', [
-    //             'activityID' => $activityID,
-    //             'userID' => $userID,
-    //             'comment' => $comment,
-    //             'created_at' => date('Y-m-d H:i:s'),
-    //             'approvalStatus' => 'approved', // Optional: leader's own messages are auto-approved
-    //         ]);
-    //     }
-
-    //     redirect('activity/view_conversation/'.$activityID);
-    // }
-
     public function leader_add_comment()
     {
         $activityID = $this->input->post('activityID');
@@ -324,23 +248,6 @@ class Activity extends CI_Controller
         redirect('activity/view_conversation');
     }
 
-    // Project Leader delete comment in messages
-    // public function delete_comment_messages($commentID, $activityID)
-    // {
-    //     // Optional: check if current user is the owner or a project leader
-    //     $userRole = $this->session->userdata('role'); // 'leader' or 'beneficiary'
-    //     $userID = $this->session->userdata('userID');
-
-    //     // You could allow only project leaders or comment owners to delete
-    //     $comment = $this->db->get_where('comments', ['commentID' => $commentID])->row();
-
-    //     if ($comment && ($userRole === 'leader' || $comment->userID == $userID)) {
-    //         $this->db->delete('comments', ['commentID' => $commentID]);
-    //     }
-
-    //     redirect('activity/view_conversation/'.$activityID);
-    // }
-
     public function delete_comment_messages()
     {
         $commentID = $this->input->post('commentID');
@@ -359,63 +266,6 @@ class Activity extends CI_Controller
         $this->session->set_userdata('activityID_to_view', $activityID);
         redirect('activity/view_conversation');
     }
-
-    // Project Leader delete comment in progress
-    // public function delete_comment_progress($commentID, $activityID)
-    // {
-    //     $userRole = $this->session->userdata('role');
-    //     $userID = $this->session->userdata('userID');
-
-    //     // Get the comment to check permissions
-    //     $comment = $this->db->get_where('comments', ['commentID' => $commentID])->row();
-
-    //     if ($comment && ($userRole === 'leader' || $comment->userID == $userID)) {
-    //         $this->db->delete('comments', ['commentID' => $commentID]);
-    //     }
-
-    //     // 🛠 Get the projectID from the activity's phase
-    //     $this->db->select('phase.projectID');
-    //     $this->db->from('activity');
-    //     $this->db->join('phase', 'phase.phaseID = activity.phaseID');
-    //     $this->db->where('activity.activityID', $activityID);
-    //     $query = $this->db->get();
-    //     $result = $query->row();
-
-    //     $projectID = $result ? $result->projectID : null;
-
-    //     if ($projectID) {
-    //         redirect('phase/progress_by_project/'.$projectID);
-    //     } else {
-    //         // fallback just in case
-    //         redirect('project/index');
-    //     }
-    // }
-
-    // public function view_conversation()
-    // {
-    //     $activityID = $this->input->post('activityID');
-
-    //     // Get activity data
-    //     $activity = $this->Activity_model->get_activity($activityID);
-    //     if (!$activity) {
-    //         show_404();
-    //     }
-
-    //     // Get comments
-    //     $comments = $this->Activity_model->get_comments_by_activity($activityID);
-
-    //     // Data to pass to views
-    //     $data = [
-    //         'activity' => $activity,
-    //         'comments' => $comments,
-    //         'activityID' => $activityID,
-    //     ];
-
-    //     $this->load->view('templates/header');
-    //     $this->load->view('templates/sidebar');
-    //     $this->load->view('view_comment_conversation', $data);
-    //     $this->load->view('templates/footer');
-    // }
 
     public function view_conversation()
     {
