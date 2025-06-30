@@ -19,7 +19,13 @@
 </head>
 <body>
 
-<div class="content-wrapper">
+<div class="content-wrapper mt-3">
+
+          <form method="post" action="<?php echo site_url('project/community_view'); ?>" style="display:inline;">
+                  <input type="hidden" name="projectID" value="<?php echo htmlspecialchars($projectID); ?>">
+                  <button type="submit" class="btn btn-secondary"> <i class="fas fa-arrow-left"></i> Back to Project</button>
+                </form>
+
   <div class="content p-3">
     <div class="container">
       <div class="card">
@@ -93,12 +99,6 @@
   </tbody>
 
           </table>
-        </div>
-        <div class="card-footer">
-            <form method="post" action="<?php echo site_url('project/community_view'); ?>">
-              <input type="hidden" name="projectID" value="<?php echo htmlspecialchars($projectID ?? ''); ?>">
-            <button type="submit" class="btn btn-secondary">Back to Project</button>
-            </form>
         </div>
       </div>
     </div>

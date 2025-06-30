@@ -25,7 +25,7 @@
                 <i class="fas fa-arrow-left"></i> Back to Dashboard
             </button>
         </form>
-        
+
 <div class="container p-3">
     <div class="row justify-content-center">
     <div class="col-md-12">
@@ -160,96 +160,101 @@
 </div>
 
 <div class="content-wrapper">
-<div class="container p-5">
+  <div class="container p-4">
     <div class="row justify-content-center">
-    <div class="col-md-12">
-    <div class="card shadow">
-        <div class="card-header">
+      <div class="col-lg-10 col-md-12">
+        <div class="card shadow">
+          <div class="card-header">
             <h3 class="card-title">Project Members</h3>
-        </div>
-        <div class="card-body">
+          </div>
+          <div class="card-body">
 
-
-        <h4>Invite Users to This Project</h4>
-<?php if (!empty($users)) { ?>
-    <form action="<?php echo site_url('project/invite_user'); ?>" method="POST">
-        <div class="form-group">
-            <label for="userID">Select User</label>
-            <select name="userID" class="form-control" required>
-                <option value="">Select Member</option>
-                <?php foreach ($users as $user) { ?>
-                    <option value="<?php echo $user->userID; ?>"><?php echo $user->userName; ?> (<?php echo $user->userEmail; ?>)</option>
-                <?php } ?>
-            </select>
-        </div>
-        <input type="hidden" name="projectID" value="<?php echo $project->projectID; ?>">
-        <button type="submit" class="btn btn-primary mt-2">Invite</button>
-    </form>
-<?php } else { ?>
-    <p>No Project Member.</p>
-<?php } ?>
-
-
-<h4 class="mt-5">Invited Members</h4>
-<?php if (!empty($members)) { ?>
-    <table class="table table-bordered table-striped">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Status</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($members as $member) { ?>
-                <tr>
-                    <td><?php echo $member->userName; ?></td>
-                    <td><?php echo $member->userEmail; ?></td>
-                    <td>
-                        <?php if ($member->status == 'accepted') { ?>
-                            <span class="badge badge-success">Accepted</span>
-                        <?php } elseif ($member->status == 'rejected') { ?>
-                            <span class="badge badge-danger">Rejected</span>
-                        <?php } else { ?>
-                            <span class="badge badge-warning">Pending</span>
-                        <?php } ?>
-                    </td>
-                    <td>
-                        <?php if ($member->status == 'accepted') { ?>
-                            <form action="<?php echo base_url('project/remove_member'); ?>" method="post" style="display:inline;">
-                                <input type="hidden" name="projectID" value="<?php echo $projectID; ?>">
-                                <input type="hidden" name="userID" value="<?php echo $member->userID; ?>">
-                                <button type="submit" class="btn btn-sm btn-danger w-30"
-                                    onclick="return confirm('Are you sure you want to remove this member from the project?');">
-                                    Remove
-                                </button>
-                            </form>
-                        <?php } elseif ($member->status == 'pending') { ?>
-                            <form action="<?php echo base_url('project/cancel_invitation'); ?>" method="post" style="display:inline;">
-                                <input type="hidden" name="projectID" value="<?php echo $projectID; ?>">
-                                <input type="hidden" name="userID" value="<?php echo $member->userID; ?>">
-                                <button type="submit" class="btn btn-sm btn-info w-30"
-                                    onclick="return confirm('Are you sure you want to cancel the invitation?');">
-                                    Cancel
-                                </button>
-                            </form>
-                        <?php } ?>
-                    </td>
-                </tr>
+            <!-- Invite Users -->
+            <h4 class="mb-3">Invite Users to This Project</h4>
+            <?php if (!empty($users)) { ?>
+              <form action="<?php echo site_url('project/invite_user'); ?>" method="POST">
+                <div class="form-group">
+                  <label for="userID">Select User</label>
+                  <select name="userID" class="form-control" required>
+                    <option value="">Select Member</option>
+                    <?php foreach ($users as $user) { ?>
+                      <option value="<?php echo $user->userID; ?>">
+                        <?php echo $user->userName; ?> (<?php echo $user->userEmail; ?>)
+                      </option>
+                    <?php } ?>
+                  </select>
+                </div>
+                <input type="hidden" name="projectID" value="<?php echo $project->projectID; ?>">
+                <button type="submit" class="btn btn-primary mt-2">Invite</button>
+              </form>
+            <?php } else { ?>
+              <p>No Project Member available to invite.</p>
             <?php } ?>
-        </tbody>
-    </table>
-<?php } else { ?>
-    <p>No members have been invited yet.</p>
-<?php } ?>
-        
+
+            <!-- Invited Members -->
+            <h4 class="mt-5">Invited Members</h4>
+            <?php if (!empty($members)) { ?>
+              <div class="table-responsive">
+                <table class="table table-bordered table-striped table-hover">
+                  <thead class="thead-light">
+                    <tr class="text-center">
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php foreach ($members as $member) { ?>
+                      <tr>
+                        <td><?php echo $member->userName; ?></td>
+                        <td><?php echo $member->userEmail; ?></td>
+                        <td class="text-center">
+                          <?php if ($member->status == 'accepted') { ?>
+                            <span class="badge badge-success">Accepted</span>
+                          <?php } elseif ($member->status == 'rejected') { ?>
+                            <span class="badge badge-danger">Rejected</span>
+                          <?php } else { ?>
+                            <span class="badge badge-warning">Pending</span>
+                          <?php } ?>
+                        </td>
+                        <td class="text-center">
+                          <?php if ($member->status == 'accepted') { ?>
+                            <form action="<?php echo base_url('project/remove_member'); ?>" method="post" style="display:inline;">
+                              <input type="hidden" name="projectID" value="<?php echo $projectID; ?>">
+                              <input type="hidden" name="userID" value="<?php echo $member->userID; ?>">
+                              <button type="submit" class="btn btn-sm btn-danger"
+                                onclick="return confirm('Are you sure you want to remove this member?');">
+                                Remove
+                              </button>
+                            </form>
+                          <?php } elseif ($member->status == 'pending') { ?>
+                            <form action="<?php echo base_url('project/cancel_invitation'); ?>" method="post" style="display:inline;">
+                              <input type="hidden" name="projectID" value="<?php echo $projectID; ?>">
+                              <input type="hidden" name="userID" value="<?php echo $member->userID; ?>">
+                              <button type="submit" class="btn btn-sm btn-info"
+                                onclick="return confirm('Cancel this invitation?');">
+                                Cancel
+                              </button>
+                            </form>
+                          <?php } ?>
+                        </td>
+                      </tr>
+                    <?php } ?>
+                  </tbody>
+                </table>
+              </div>
+            <?php } else { ?>
+              <p>No members have been invited yet.</p>
+            <?php } ?>
+
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </div>
-</div>
-</div>
-</div>
+
 
 <!-- JavaScript pie chart usage spending -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

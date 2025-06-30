@@ -6,14 +6,14 @@
     <title>Add Phase</title>
 
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="<?= base_url('assets/template/plugins/fontawesome-free/css/all.min.css') ?>">
+    <link rel="stylesheet" href="<?php echo base_url('assets/template/plugins/fontawesome-free/css/all.min.css'); ?>">
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- DataTables -->
-    <link rel="stylesheet" href="<?= base_url('assets/template/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') ?>">
-    <link rel="stylesheet" href="<?= base_url('assets/template/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') ?>">
+    <link rel="stylesheet" href="<?php echo base_url('assets/template/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css'); ?>">
+    <link rel="stylesheet" href="<?php echo base_url('assets/template/plugins/datatables-responsive/css/responsive.bootstrap4.min.css'); ?>">
     <!-- Theme style -->
-    <link rel="stylesheet" href="<?= base_url('assets/template/dist/css/adminlte.min.css') ?>">
+    <link rel="stylesheet" href="<?php echo base_url('assets/template/dist/css/adminlte.min.css'); ?>">
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
@@ -21,15 +21,22 @@
 
 <div class="wrapper">
     <div class="content-wrapper p-3">
-        <div class="container">
+
+        <!-- back to project button -->
+         <form action="<?php echo site_url('phase/index'); ?>" method="post" style="display:inline;">
+                    <input type="hidden" name="projectID" value="<?php echo isset($projectID) ? $projectID : ''; ?>">
+                    <button type="submit" class="btn btn-secondary"> <i class="fas fa-arrow-left"></i> Back to Phase</button>
+         </form>
+
+        <div class="container mt-3">
             <div class="card card-primary">
                 <div class="card-header">
                     <h3 class="card-title">Create New Phase</h3>
                 </div>
 
-                <form action="<?= site_url('phase/add') ?>" method="post">
+                <form action="<?php echo site_url('phase/add'); ?>" method="post">
                     <div class="card-body">
-                        <input type="hidden" name="projectID" value="<?= $projectID ?>">
+                        <input type="hidden" name="projectID" value="<?php echo $projectID; ?>">
 
                         <div class="form-group">
                             <label for="phaseName">Phase Name</label>
@@ -40,40 +47,36 @@
                             <label for="phaseName">Start Date</label>
                         <!-- Start Date -->
                         <input type="date" 
-                            class="form-control" id="startDate"  name="startDate"   required  min="<?= $minDate ?>" max="<?= $maxDate ?>"  onchange="validateDates()">
+                            class="form-control" id="startDate"  name="startDate"   required  min="<?php echo $minDate; ?>" max="<?php echo $maxDate; ?>"  onchange="validateDates()">
                         </div>
                        <div class="form-group">
                             <label for="phaseName">Deadline</label>
                             <!-- Deadline -->
                         <input type="date" 
-                             class="form-control"  id="deadline"  name="deadline" required min="<?= $minDate ?>" max="<?= $maxDate ?>" onchange="validateDates()">
+                             class="form-control"  id="deadline"  name="deadline" required min="<?php echo $minDate; ?>" max="<?php echo $maxDate; ?>" onchange="validateDates()">
                         </div>
                     </div>
 
                     <div class="card-footer">
                         <button type="submit" class="btn btn-primary">Create Phase</button>
-                        <input type="hidden" name="projectID" value="<?= isset($projectID) ? $projectID : '' ?>">
+                        <input type="hidden" name="projectID" value="<?php echo isset($projectID) ? $projectID : ''; ?>">
                     </div>
                 </form>
 
-                <form action="<?= site_url('phase/index') ?>" method="post" style="display:inline;">
-                    <input type="hidden" name="projectID" value="<?= isset($projectID) ? $projectID : '' ?>">
-                    <button type="submit" class="btn btn-secondary">Back to Phase</button>
-                </form>
             </div>
         </div>
     </div>
 </div>
 
 <!-- AdminLTE & Bootstrap Scripts (Optional if already included globally) -->
-<script src="<?= base_url('assets/template/plugins/jquery/jquery.min.js') ?>"></script>
-<script src="<?= base_url('assets/template/plugins/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
-<script src="<?= base_url('assets/template/dist/js/adminlte.min.js') ?>"></script>
+<script src="<?php echo base_url('assets/template/plugins/jquery/jquery.min.js'); ?>"></script>
+<script src="<?php echo base_url('assets/template/plugins/bootstrap/js/bootstrap.bundle.min.js'); ?>"></script>
+<script src="<?php echo base_url('assets/template/dist/js/adminlte.min.js'); ?>"></script>
 
 <script>
 function validateDates() {
-    const projectStart = new Date("<?= $minDate ?>");
-    const projectEnd = new Date("<?= $maxDate ?>");
+    const projectStart = new Date("<?php echo $minDate; ?>");
+    const projectEnd = new Date("<?php echo $maxDate; ?>");
 
     const startDateInput = document.getElementById('startDate');
     const deadlineInput = document.getElementById('deadline');

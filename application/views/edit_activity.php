@@ -15,8 +15,15 @@
 
 <div class="wrapper">
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper pt-4">
-    <div class="container">
+  <div class="content-wrapper pt-3">
+
+     <!-- Cancel button using POST to return to phase view -->
+            <form method="post" action="<?php echo site_url('phase/view'); ?>" style="display:inline;" class="m-3">
+              <input type="hidden" name="phaseID" value="<?php echo $phaseID; ?>">
+              <button type="submit" class="btn btn-secondary"> <i class="fas fa-arrow-left"></i> Back to View Phase</button>
+            </form>
+
+    <div class="container mt-3">
       <div class="row justify-content-center">
         <div class="col-md-8">
 
@@ -50,12 +57,6 @@
               <div class="card-footer text-right">
                 <button type="submit" class="btn btn-success">Update</button>
               </div>
-            </form>
-
-            <!-- Cancel button using POST to return to phase view -->
-            <form method="post" action="<?php echo site_url('phase/view'); ?>" style="display:inline;" class="m-3">
-              <input type="hidden" name="phaseID" value="<?php echo $phaseID; ?>">
-              <button type="submit" class="btn btn-secondary">Cancel</button>
             </form>
 
           </div> <!-- card -->

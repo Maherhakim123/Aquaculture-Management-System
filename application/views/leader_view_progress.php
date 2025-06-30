@@ -19,7 +19,12 @@
 </head>
 <body>
 
-<div class="content-wrapper">
+<div class="content-wrapper mt-3">
+
+                <form method="post" action="<?php echo site_url('project/view'); ?>" style="display:inline;">
+                  <input type="hidden" name="projectID" value="<?php echo htmlspecialchars($projectID); ?>">
+                  <button type="submit" class="btn btn-secondary"> <i class="fas fa-arrow-left"></i> Back to Project</button>
+                </form>
     <div class="content p-3">
       <div class="container">
         <div class="card">
@@ -105,9 +110,9 @@
                       </button>
                     </form> -->
 
-                    <form method="post" action="<?= site_url('phase/delete_comment_progress'); ?>" onsubmit="return confirm('Are you sure you want to delete this comment?');">
-    <input type="hidden" name="commentID" value="<?= $comment['commentID']; ?>">
-    <input type="hidden" name="activityID" value="<?= $activity['activityID']; ?>">
+                    <form method="post" action="<?php echo site_url('phase/delete_comment_progress'); ?>" onsubmit="return confirm('Are you sure you want to delete this comment?');">
+    <input type="hidden" name="commentID" value="<?php echo $comment['commentID']; ?>">
+    <input type="hidden" name="activityID" value="<?php echo $activity['activityID']; ?>">
     <button type="submit" class="btn btn-sm btn-danger" title="Delete">
         <i class="fas fa-trash-alt"></i>
     </button>
@@ -132,12 +137,7 @@
             </table>
        </div>
 
-            <div class="card-footer">
-                <form method="post" action="<?php echo site_url('project/view'); ?>" style="display:inline;">
-                  <input type="hidden" name="projectID" value="<?php echo htmlspecialchars($projectID); ?>">
-                  <button type="submit" class="btn btn-secondary">Back to Project</button>
-                </form>
-            </div>
+
             
         </div>
       </div>

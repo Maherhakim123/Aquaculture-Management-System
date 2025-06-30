@@ -57,22 +57,6 @@ class Phase extends CI_Controller
         $this->load->view('templates/footer');
     }
 
-    // public function view()
-    // {
-    //     $phaseID = $this->input->post('phaseID');
-    //     $data['phase'] = $this->Phase_model->get_phase_by_id($phaseID);
-    //     $data['activities'] = $this->Activity_model->get_activities_by_phase($phaseID);
-
-    //     if (!$data['phase']) {
-    //         show_404();
-    //     }
-
-    //     $this->load->view('templates/header');
-    //     $this->load->view('templates/sidebar');
-    //     $this->load->view('leader_view_phase', $data);
-    //     $this->load->view('templates/footer');
-    // }
-
     // View details of a specific phase
     public function view()
     {
@@ -158,19 +142,6 @@ class Phase extends CI_Controller
     }
 
     // Display the edit form
-    // public function edit()
-    // {
-    //     $phaseID = $this->input->post('phaseID');
-    //     $data['phase'] = $this->Phase_model->get_phase_by_id($phaseID);
-
-    //     $this->load->view('templates/header');
-    //     $this->load->view('templates/sidebar');
-    //     $this->load->view('edit_phase', $data);
-    //     $this->load->view('templates/footer');
-    // }
-
-    // Display the edit form
-    // Display the edit form
     public function edit()
     {
         $phaseID = $this->input->post('phaseID');
@@ -184,6 +155,7 @@ class Phase extends CI_Controller
         $this->session->set_userdata('projectID_to_index', $phase->projectID);
 
         $data['phase'] = $phase;
+        $data['projectID'] = $phase->projectID;
 
         $this->load->view('templates/header');
         $this->load->view('templates/sidebar');

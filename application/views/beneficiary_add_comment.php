@@ -22,7 +22,14 @@
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
   <div class="content-wrapper p-3">
-    <div class="container">
+
+          <!-- Back to Project Button -->
+          <form method="post" action="<?php echo site_url('project/community_view'); ?>">
+            <input type="hidden" name="projectID" value="<?php echo htmlspecialchars($projectID); ?>">
+            <button type="submit" class="btn btn-secondary"> <i class="fas fa-arrow-left"></i> Back to Project</button>
+          </form>
+
+    <div class="container mt-3">
       <div class="card card-primary shadow">
         <div class="card-header">
           <h3 class="card-title">Add Comment</h3>
@@ -71,13 +78,6 @@
             <button type="submit" class="btn btn-primary">Submit Comment</button>
           </div>
         </form>
-
-        <div class="card-footer">
-            <form method="post" action="<?php echo site_url('project/community_view'); ?>">
-            <input type="hidden" name="projectID" value="<?php echo htmlspecialchars($projectID); ?>">
-            <button type="submit" class="btn btn-secondary">Back to Project</button>
-            </form>
-        </div>
       </div>
 
     </div>

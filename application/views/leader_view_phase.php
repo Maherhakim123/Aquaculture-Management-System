@@ -19,7 +19,14 @@
 </head>
 <body>
 
-<div class="content-wrapper">
+<div class="content-wrapper mt-3">
+
+                  <!-- Back Button to Phase -->
+                <form action="<?php echo site_url('phase/index'); ?>" method="post" style="display:inline;">
+                    <input type="hidden" name="projectID" value="<?php echo isset($projectID) ? $projectID : ''; ?>">
+                    <button type="submit" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back to Phase</button>
+                </form>
+
   <div class="container p-3">
     <div class="row justify-content-center">
       <div class="col-md-10">
@@ -100,13 +107,8 @@
 
 <!-- Hidden Form -->
 
-</div>
+    </div>
 
-<!-- Back Button -->
-     <form action="<?php echo site_url('phase/index'); ?>" method="post" style="display:inline;">
-                    <input type="hidden" name="projectID" value="<?php echo isset($projectID) ? $projectID : ''; ?>">
-                    <button type="submit" class="btn btn-secondary">Back to Phase</button>
-                </form>
 </div>
 
 
