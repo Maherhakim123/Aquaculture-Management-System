@@ -5,23 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aquaculture | Dashboard</title>
     <!-- Font Awesome -->
-  <link rel="stylesheet" href="<?= base_url('assets/template/plugins/fontawesome-free/css/all.min.css') ?>">
+  <link rel="stylesheet" href="<?php echo base_url('assets/template/plugins/fontawesome-free/css/all.min.css'); ?>">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- DataTables -->
-  <link rel="stylesheet" href="<?= base_url('assets/template/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') ?>">
-  <link rel="stylesheet" href="<?= base_url('assets/template/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') ?>">
+  <link rel="stylesheet" href="<?php echo base_url('assets/template/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css'); ?>">
+  <link rel="stylesheet" href="<?php echo base_url('assets/template/plugins/datatables-responsive/css/responsive.bootstrap4.min.css'); ?>">
   <!-- Theme style -->
-  <link rel="stylesheet" href="<?= base_url('assets/template/dist/css/adminlte.min.css') ?>">
+  <link rel="stylesheet" href="<?php echo base_url('assets/template/dist/css/adminlte.min.css'); ?>">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
   <!-- chart -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <!-- iCheck for checkboxes -->
-<link rel="stylesheet" href="<?= base_url('assets/template/plugins/icheck-bootstrap/icheck-bootstrap.min.css') ?>">
+<link rel="stylesheet" href="<?php echo base_url('assets/template/plugins/icheck-bootstrap/icheck-bootstrap.min.css'); ?>">
 <!-- Font Awesome for icons -->
-<link rel="stylesheet" href="<?= base_url('assets/template/plugins/fontawesome-free/css/all.min.css') ?>">
+<link rel="stylesheet" href="<?php echo base_url('assets/template/plugins/fontawesome-free/css/all.min.css'); ?>">
 
 
 </head>
@@ -43,7 +43,7 @@
         <div class="col-md-4">
           <div class="small-box bg-info">
             <div class="inner">
-              <h3><?= $project_count; ?></h3>
+              <h3><?php echo $project_count; ?></h3>
               <p>Projects</p>
             </div>
             <div class="icon">
@@ -56,7 +56,7 @@
         <div class="col-md-4">
           <div class="small-box bg-warning">
             <div class="inner">
-              <h3><?= $in_progress_projects; ?></h3>
+              <h3><?php echo $in_progress_projects; ?></h3>
               <p>Projects In-Progress</p>
             </div>
             <div class="icon">
@@ -69,7 +69,7 @@
         <div class="col-md-4">
           <div class="small-box bg-success">
             <div class="inner">
-              <h3><?= $completed_projects; ?></h3>
+              <h3><?php echo $completed_projects; ?></h3>
               <p>Projects Completed</p>
             </div>
             <div class="icon">
@@ -101,18 +101,21 @@
       <h3 class="card-title">Projects</h3>
     </div>
     <div class="card-body">
-      <?php if (!empty($projects)): ?>
+      <?php if (!empty($projects)) { ?>
         <ul class="list-group">
-          <?php foreach ($projects as $project): ?>
+          <?php foreach ($projects as $project) { ?>
             <li class="list-group-item d-flex justify-content-between align-items-center">
-              <?= $project->projectName ?>
-              <a href="<?= base_url('project/view/' . $project->projectID) ?>" class="btn btn-sm btn-info">View Project</a>
+              <?php echo $project->projectName; ?>
+                <form action="<?php echo base_url('project/view'); ?>" method="post" style="display:inline;">
+                <input type="hidden" name="projectID" value="<?php echo $project->projectID; ?>">
+                <button type="submit" class="btn btn-sm btn-info">View Project</button>
+                </form>
             </li>
-          <?php endforeach; ?>
+          <?php } ?>
         </ul>
-      <?php else: ?>
+      <?php } else { ?>
         <p>No projects found.</p>
-      <?php endif; ?>
+      <?php } ?>
     </div>
 </div>
 
@@ -148,9 +151,9 @@
 </div>
 
 <!-- jQuery -->
-<script src="<?= base_url('assets/template/plugins/jquery/jquery.min.js') ?>"></script>
+<script src="<?php echo base_url('assets/template/plugins/jquery/jquery.min.js'); ?>"></script>
 <!-- AdminLTE -->
-<script src="<?= base_url('assets/template/dist/js/adminlte.min.js') ?>"></script>
+<script src="<?php echo base_url('assets/template/dist/js/adminlte.min.js'); ?>"></script>
 
 
 </body>
@@ -168,7 +171,7 @@
       center: 'title',
       right: 'dayGridMonth,timeGridWeek,listWeek'
     },
-    events: <?= $calendar_events ?> // JSON from PHP
+    events: <?php echo $calendar_events; ?> // JSON from PHP
   });
 
   calendar.render();
@@ -182,7 +185,7 @@
       labels: ['Total Projects', 'In Progress', 'Completed'],
       datasets: [{
         label: 'Number of Projects',
-        data: [<?= $project_count ?>, <?= $in_progress_projects ?>, <?= $completed_projects ?>],
+        data: [<?php echo $project_count; ?>, <?php echo $in_progress_projects; ?>, <?php echo $completed_projects; ?>],
         backgroundColor: [
           'rgba(0, 123, 255, 0.7)',
           'rgba(255, 193, 7, 0.7)',
@@ -211,7 +214,7 @@
 document.addEventListener('DOMContentLoaded', function () {
   const calendarEl = document.getElementById('calendar');
   const projectSelector = document.getElementById('projectSelector');
-  const projectList = <?= $project_list ?>; // This comes from controller
+  const projectList = <?php echo $project_list; ?>; // This comes from controller
   const calendar = new FullCalendar.Calendar(calendarEl, {
     initialView: 'dayGridMonth',
     headerToolbar: {
@@ -219,7 +222,7 @@ document.addEventListener('DOMContentLoaded', function () {
       center: 'title',
       right: 'dayGridMonth,timeGridWeek,listWeek'
     },
-    events: <?= $calendar_events ?> // Show all phases by default
+    events: <?php echo $calendar_events; ?> // Show all phases by default
   });
 
   calendar.render();

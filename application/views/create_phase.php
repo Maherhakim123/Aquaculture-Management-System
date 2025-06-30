@@ -52,8 +52,13 @@
 
                     <div class="card-footer">
                         <button type="submit" class="btn btn-primary">Create Phase</button>
-                        <a href="<?= site_url('phase/index/'.$projectID) ?>" class="btn btn-secondary">Back to Phase List</a>
+                        <input type="hidden" name="projectID" value="<?= isset($projectID) ? $projectID : '' ?>">
                     </div>
+                </form>
+
+                <form action="<?= site_url('phase/index') ?>" method="post" style="display:inline;">
+                    <input type="hidden" name="projectID" value="<?= isset($projectID) ? $projectID : '' ?>">
+                    <button type="submit" class="btn btn-secondary">Back to Phase</button>
                 </form>
             </div>
         </div>

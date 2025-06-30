@@ -6,14 +6,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="<?= base_url('assets/template/plugins/fontawesome-free/css/all.min.css') ?>">
+  <link rel="stylesheet" href="<?php echo base_url('assets/template/plugins/fontawesome-free/css/all.min.css'); ?>">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- DataTables -->
-  <link rel="stylesheet" href="<?= base_url('assets/template/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') ?>">
-  <link rel="stylesheet" href="<?= base_url('assets/template/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') ?>">
+  <link rel="stylesheet" href="<?php echo base_url('assets/template/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css'); ?>">
+  <link rel="stylesheet" href="<?php echo base_url('assets/template/plugins/datatables-responsive/css/responsive.bootstrap4.min.css'); ?>">
   <!-- Theme style -->
-  <link rel="stylesheet" href="<?= base_url('assets/template/dist/css/adminlte.min.css') ?>">
+  <link rel="stylesheet" href="<?php echo base_url('assets/template/dist/css/adminlte.min.css'); ?>">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
@@ -49,79 +49,94 @@
 
                <tbody>
                 <!-- Phase  -->
-                <?php foreach ($progressData as $entry): ?>
-                  <?php 
-                    $activities = $entry['activities']; 
+                <?php foreach ($progressData as $entry) { ?>
+                  <?php
+                    $activities = $entry['activities'];
                     $activityCount = count($activities);
                     $rowIndex = 0;
-                  ?>
-                  <?php foreach ($activities as $activity): ?>
+                    ?>
+                  <?php foreach ($activities as $activity) { ?>
                     <tr>
-                      <?php if ($rowIndex === 0): ?>
-                        <td rowspan="<?= $activityCount ?>">
-                          <?= htmlspecialchars($entry['phase']->phaseName) ?>
+                      <?php if ($rowIndex === 0) { ?>
+                        <td rowspan="<?php echo $activityCount; ?>">
+                          <?php echo htmlspecialchars($entry['phase']->phaseName); ?>
                         </td>
-                      <?php endif; ?>
+                      <?php } ?>
 
                       <!-- Activity -->
                     <td>
-              <?= htmlspecialchars($activity['activityType'] . ' - ' . $activity['activityName']) ?><br>
+              <?php echo htmlspecialchars($activity['activityType'].' - '.$activity['activityName']); ?><br>
                   <!-- Checkbox (Mark As Complete) -->
               <label class="mt-2">
                 <input 
                   type="checkbox" 
                   class="activity-checkbox" 
-                  data-activity-id="<?= $activity['activityID'] ?>"
-                  <?= !empty($activity['progress']) && $activity['progress'] ? 'checked' : '' ?>
+                  data-activity-id="<?php echo $activity['activityID']; ?>"
+                  <?php echo !empty($activity['progress']) && $activity['progress'] ? 'checked' : ''; ?>
                 > Mark as Complete
               </label>
               <br>
-               <a href="<?= base_url('activity/view_conversation/' . $activity['activityID']) ?>" class="btn btn-sm btn-info">Messages</a>
+              <form method="post" action="<?php echo base_url('activity/view_conversation'); ?>" style="display:inline;">
+                <input type="hidden" name="activityID" value="<?php echo htmlspecialchars($activity['activityID']); ?>">
+                <button type="submit" class="btn btn-sm btn-info">Messages</button>
+              </form>
             </td>
 
           <!-- Comments-->
          <td>
-  <?php if (!empty($activity['comments'])): ?>
-    <?php foreach ($activity['comments'] as $comment): ?>
+  <?php if (!empty($activity['comments'])) { ?>
+    <?php foreach ($activity['comments'] as $comment) { ?>
       <div style="margin-bottom: 10px;">
-        <strong><?= htmlspecialchars($comment['username']) ?>:</strong> 
-        <?= htmlspecialchars($comment['comment']) ?><br>
-        <small class="text-muted">(<?= $comment['created_at'] ?>)</small>
-        <div><strong>Spending:</strong> RM <?= number_format($comment['spending'], 2) ?></div> <br>
+        <strong><?php echo htmlspecialchars($comment['username']); ?>:</strong> 
+        <?php echo htmlspecialchars($comment['comment']); ?><br>
+        <small class="text-muted">(<?php echo $comment['created_at']; ?>)</small>
+        <div><strong>Spending:</strong> RM <?php echo number_format($comment['spending'], 2); ?></div> <br>
         <div>
-  <input  type="checkbox"  class="budget-approved-checkbox"   id="budget-<?= $comment['commentID'] ?>"  data-comment-id="<?= $comment['commentID'] ?>"
+  <input  type="checkbox"  class="budget-approved-checkbox"   id="budget-<?php echo $comment['commentID']; ?>"  data-comment-id="<?php echo $comment['commentID']; ?>"
   
-    <?= $comment['approvalStatus'] === 'approved' ? 'checked' : '' ?>>
-  <label for="budget-<?= $comment['commentID'] ?>">Approved</label>
+    <?php echo $comment['approvalStatus'] === 'approved' ? 'checked' : ''; ?>>
+  <label for="budget-<?php echo $comment['commentID']; ?>">Approved</label>
 
   <!-- Delete Comment -->
-  <form method="post" class="delete-btn" action="<?= site_url('phase/delete_comment_progress/' .  $comment['commentID'] . '/' . $activity['activityID']) ?>"
+  <!-- <form method="post" class="delete-btn" action="<?php echo site_url('phase/delete_comment_progress/'.$comment['commentID'].'/'.$activity['activityID']); ?>"
                           onsubmit="return confirm('Are you sure you want to delete this comment?');">
                       <button type="submit" class="btn btn-sm btn-danger" title="Delete">
                         <i class="fas fa-trash-alt"></i>
                       </button>
-                    </form>
+                    </form> -->
+
+                    <form method="post" action="<?= site_url('phase/delete_comment_progress'); ?>" onsubmit="return confirm('Are you sure you want to delete this comment?');">
+    <input type="hidden" name="commentID" value="<?= $comment['commentID']; ?>">
+    <input type="hidden" name="activityID" value="<?= $activity['activityID']; ?>">
+    <button type="submit" class="btn btn-sm btn-danger" title="Delete">
+        <i class="fas fa-trash-alt"></i>
+    </button>
+</form>
+
 
 </div>
     <hr>
     </div>
-    <?php endforeach; ?>
-  <?php else: ?>
+    <?php } ?>
+  <?php } else { ?>
     <em>No comments</em>
-  <?php endif; ?>
+  <?php } ?>
 </td> 
         </td>
 
                     </tr>
-                    <?php $rowIndex++; ?>
-                  <?php endforeach; ?>
-                <?php endforeach; ?>
+                    <?php ++$rowIndex; ?>
+                  <?php } ?>
+                <?php } ?>
               </tbody>
             </table>
        </div>
 
             <div class="card-footer">
-                <a href="<?= site_url('project/view/'.$projectID) ?>" class="btn btn-secondary">Back to Project</a>
+                <form method="post" action="<?php echo site_url('project/view'); ?>" style="display:inline;">
+                  <input type="hidden" name="projectID" value="<?php echo htmlspecialchars($projectID); ?>">
+                  <button type="submit" class="btn btn-secondary">Back to Project</button>
+                </form>
             </div>
             
         </div>
@@ -182,7 +197,7 @@ $(document).ready(function() {
         const isChecked = checkbox.is(':checked') ? 1 : 0;
 
         $.ajax({
-            url: '<?= site_url("phase/update_completion_status") ?>',
+            url: '<?php echo site_url('phase/update_completion_status'); ?>',
             method: 'POST',
             data: {
                 phaseID: phaseID,
@@ -205,7 +220,7 @@ $(document).ready(function() {
       const activityId = this.dataset.activityId;
       const isChecked = this.checked ? 1 : 0;
 
-      fetch("<?= site_url('activity/update_progress') ?>", {
+      fetch("<?php echo site_url('activity/update_progress'); ?>", {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded"
@@ -234,7 +249,7 @@ $(document).ready(function() {
 //     const commentId = this.dataset.commentId;
 //     const isChecked = this.checked ? 1 : 0;
 
-//     fetch("<?= site_url('activity/update_budget_approval') ?>", {
+//     fetch("<?php echo site_url('activity/update_budget_approval'); ?>", {
 //       method: "POST",
 //       headers: {
 //         "Content-Type": "application/x-www-form-urlencoded"
@@ -258,7 +273,7 @@ document.addEventListener('change', function(e) {
     const commentId = e.target.dataset.commentId;
     const isChecked = e.target.checked ? 1 : 0;
 
-    fetch("<?= site_url('activity/update_budget_approval') ?>", {
+    fetch("<?php echo site_url('activity/update_budget_approval'); ?>", {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded"
@@ -288,7 +303,7 @@ document.addEventListener('change', function(e) {
     const activityId = this.dataset.activityId;
     const spendingValue = this.value;
 
-    fetch("<?= site_url('activity/update_spending') ?>", {
+    fetch("<?php echo site_url('activity/update_spending'); ?>", {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded"
@@ -317,7 +332,7 @@ document.querySelectorAll('.budget-approved-checkbox').forEach(checkbox => {
     // Disable checkbox during update to avoid rapid clicks
     this.disabled = true;
 
-    fetch("<?= site_url('activity/update_budget_approval') ?>", {
+    fetch("<?php echo site_url('activity/update_budget_approval'); ?>", {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded"

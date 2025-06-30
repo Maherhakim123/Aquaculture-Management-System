@@ -6,14 +6,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="<?= base_url('assets/template/plugins/fontawesome-free/css/all.min.css') ?>">
+  <link rel="stylesheet" href="<?php echo base_url('assets/template/plugins/fontawesome-free/css/all.min.css'); ?>">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- DataTables -->
-  <link rel="stylesheet" href="<?= base_url('assets/template/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') ?>">
-  <link rel="stylesheet" href="<?= base_url('assets/template/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') ?>">
+  <link rel="stylesheet" href="<?php echo base_url('assets/template/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css'); ?>">
+  <link rel="stylesheet" href="<?php echo base_url('assets/template/plugins/datatables-responsive/css/responsive.bootstrap4.min.css'); ?>">
   <!-- Theme style -->
-  <link rel="stylesheet" href="<?= base_url('assets/template/dist/css/adminlte.min.css') ?>">
+  <link rel="stylesheet" href="<?php echo base_url('assets/template/dist/css/adminlte.min.css'); ?>">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
@@ -38,60 +38,67 @@
               </tr>
             </thead>
          <tbody>
-<?php foreach ($progressData as $entry): ?>
+<?php foreach ($progressData as $entry) { ?>
     <?php $activities = $entry['activities']; ?>
     <?php $activityCount = count($activities); ?>
     <?php $rowIndex = 0; ?>
-    <?php foreach ($activities as $activity): ?>
+    <?php foreach ($activities as $activity) { ?>
         <tr>
-            <?php if ($rowIndex === 0): ?>
-                <td rowspan="<?= $activityCount ?>"><?= $entry['phase']->phaseName ?></td>
-            <?php endif; ?>
-            <td><?= $activity->activityType ?> - <?= $activity->activityName ?> <br>
-                <a href="<?= base_url('activity/beneficiary_view_comment/' . $activity->activityID) ?>" class="btn btn-sm btn-info">Messages</a>
+            <?php if ($rowIndex === 0) { ?>
+                <td rowspan="<?php echo $activityCount; ?>"><?php echo $entry['phase']->phaseName; ?></td>
+            <?php } ?>
+            <td>
+              <?php echo $activity->activityType; ?> - <?php echo $activity->activityName; ?> <br>
+              <form method="post" action="<?php echo base_url('activity/beneficiary_view_comment'); ?>" style="display:inline;">
+                <input type="hidden" name="activityID" value="<?php echo htmlspecialchars($activity->activityID); ?>">
+                <button type="submit" class="btn btn-sm btn-info">Messages</button>
+              </form>
           </td>
            <td>
-    <?php if (!empty($activity->comments)): ?>
-      <?php foreach ($activity->comments as $comment): ?>
+    <?php if (!empty($activity->comments)) { ?>
+      <?php foreach ($activity->comments as $comment) { ?>
 
         <div>
-          <?= nl2br(htmlspecialchars($comment['comment'])) ?><br>
-          <small class="text-muted"><?= date('d M Y, h:i A', strtotime($comment['created_at'])) ?></small>
+          <?php echo nl2br(htmlspecialchars($comment['comment'])); ?><br>
+          <small class="text-muted"><?php echo date('d M Y, h:i A', strtotime($comment['created_at'])); ?></small>
         </div>
       
-      <?php endforeach; ?>
-    <?php else: ?>
+      <?php } ?>
+    <?php } else { ?>
       <em>No comments</em>
-    <?php endif; ?>
+    <?php } ?>
   </td>
 
   
    
 
   <td>
-    <?php if (!empty($activity->comments)): ?>
-      <?php foreach ($activity->comments as $comment): ?>
-        <?php if (!empty($comment['spending'])): ?>
-          <div>RM <?= number_format($comment['spending'], 2) ?></div>
-        <?php else: ?>
+    <?php if (!empty($activity->comments)) { ?>
+      <?php foreach ($activity->comments as $comment) { ?>
+        <?php if (!empty($comment['spending'])) { ?>
+          <div>RM <?php echo number_format($comment['spending'], 2); ?></div>
+        <?php } else { ?>
           <div><em>Not recorded</em></div>
-        <?php endif; ?>
-      <?php endforeach; ?>
-    <?php else: ?>
+        <?php } ?>
+      <?php } ?>
+    <?php } else { ?>
       <em>-</em>
-    <?php endif; ?>
+    <?php } ?>
   </td>
 
           </tr>
-          <?php $rowIndex++; ?>
-      <?php endforeach; ?>
-  <?php endforeach; ?>
+          <?php ++$rowIndex; ?>
+      <?php } ?>
+  <?php } ?>
   </tbody>
 
           </table>
         </div>
         <div class="card-footer">
-          <a href="<?= site_url('project/community_view/'.$projectID) ?>" class="btn btn-secondary">Back to Project</a>
+            <form method="post" action="<?php echo site_url('project/community_view'); ?>">
+              <input type="hidden" name="projectID" value="<?php echo htmlspecialchars($projectID ?? ''); ?>">
+            <button type="submit" class="btn btn-secondary">Back to Project</button>
+            </form>
         </div>
       </div>
     </div>

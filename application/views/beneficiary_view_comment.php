@@ -6,13 +6,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="<?= base_url('assets/template/plugins/fontawesome-free/css/all.min.css') ?>">
+  <link rel="stylesheet" href="<?php echo base_url('assets/template/plugins/fontawesome-free/css/all.min.css'); ?>">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- AdminLTE -->
-  <link rel="stylesheet" href="<?= base_url('assets/template/dist/css/adminlte.min.css') ?>">
+  <link rel="stylesheet" href="<?php echo base_url('assets/template/dist/css/adminlte.min.css'); ?>">
   <!-- Bootstrap 4 -->
-  <link rel="stylesheet" href="<?= base_url('assets/template/plugins/bootstrap/css/bootstrap.min.css') ?>">
+  <link rel="stylesheet" href="<?php echo base_url('assets/template/plugins/bootstrap/css/bootstrap.min.css'); ?>">
   <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 
@@ -86,29 +86,35 @@
 
           <div class="card-body position-relative" style="min-height: 400px;">
             <div class="chat-container">
-              <h5 class="text-center mb-4">Conversation for Activity: <?= htmlspecialchars($activity->activityName) ?></h5>
+              <h5 class="text-center mb-4">Conversation for Activity: <?php echo htmlspecialchars($activity->activityName); ?></h5>
 
-              <?php if (!empty($comments)): ?>
-                <?php foreach ($comments as $comment): ?>
+              <?php if (!empty($comments)) { ?>
+                <?php foreach ($comments as $comment) { ?>
                   <?php
                     $isSender = $comment->userID == $this->session->userdata('userID');
                     $bubbleClass = $isSender ? 'sent' : 'received';
-                  ?>
-                  <div class="chat-bubble <?= $bubbleClass ?>">
-                    <div class="user"><?= htmlspecialchars($comment->username) ?></div>
-                    <div><?= nl2br(htmlspecialchars($comment->comment)) ?></div>
-                    <?php if (!empty($comment->spending)): ?>
-                      <div class="spending">Spending: RM <?= number_format($comment->spending, 2) ?></div>
-                    <?php endif; ?>
-                    <span class="timestamp"><?= date('d M Y h:i A', strtotime($comment->created_at)) ?></span>
+                    ?>
+                  <div class="chat-bubble <?php echo $bubbleClass; ?>">
+                    <div class="user"><?php echo htmlspecialchars($comment->username); ?></div>
+                    <div><?php echo nl2br(htmlspecialchars($comment->comment)); ?></div>
+                    <?php if (!empty($comment->spending)) { ?>
+                      <div class="spending">Spending: RM <?php echo number_format($comment->spending, 2); ?></div>
+                    <?php } ?>
+                    <span class="timestamp"><?php echo date('d M Y h:i A', strtotime($comment->created_at)); ?></span>
                   </div>
-                <?php endforeach; ?>
-              <?php else: ?>
+                <?php } ?>
+              <?php } else { ?>
                 <div class="alert alert-info text-center">No comments yet.</div>
-              <?php endif; ?>
+              <?php } ?>
 
             </div>
           </div>
+        </div>
+        <div class="card-footer">
+            <form method="post" action="<?php echo site_url('project/community_view'); ?>">
+            <input type="hidden" name="projectID" value="<?php echo htmlspecialchars($projectID); ?>">
+            <button type="submit" class="btn btn-secondary">Back to Project</button>
+            </form>
         </div>
       </div>
     </div>
@@ -125,8 +131,8 @@
 </script>
 
 <!-- JS Scripts -->
-<script src="<?= base_url('assets/template/plugins/jquery/jquery.min.js') ?>"></script>
-<script src="<?= base_url('assets/template/plugins/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
-<script src="<?= base_url('assets/template/dist/js/adminlte.min.js') ?>"></script>
+<script src="<?php echo base_url('assets/template/plugins/jquery/jquery.min.js'); ?>"></script>
+<script src="<?php echo base_url('assets/template/plugins/bootstrap/js/bootstrap.bundle.min.js'); ?>"></script>
+<script src="<?php echo base_url('assets/template/dist/js/adminlte.min.js'); ?>"></script>
 </body>
 </html>

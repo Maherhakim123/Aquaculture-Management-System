@@ -80,26 +80,17 @@
             </a>
           </li>
 
-          <!-- <li class="nav-item">
-          <a class="nav-link" href="<?= site_url('project/invitations') ?>">
-        <i class="nav-icon fas fa-envelope-open-text"></i>
-              <p>
-                Project Invitations
-            </p>
-        </a>
-      </li> -->
-
-      <li class="nav-item">
-  <a class="nav-link d-flex justify-content-between align-items-center" href="<?= site_url('project/invitations') ?>">
-    <div>
-      <i class="nav-icon fas fa-envelope-open-text"></i>
-      <p class="d-inline">Project Invitations</p>
-    </div>
-    <?php if (!empty($invitation_count)): ?>
-      <span class="badge badge-warning right"><?= $invitation_count ?></span>
-    <?php endif; ?>
-  </a>
-</li>
+          <li class="nav-item">
+            <a class="nav-link d-flex justify-content-between align-items-center" href="<?= site_url('project/invitations') ?>">
+              <div>
+                <i class="nav-icon fas fa-envelope-open-text"></i>
+                <p class="d-inline">Project Invitations</p>
+              </div>
+              <?php if (!empty($invitation_count)): ?>
+                <span class="badge badge-warning right"><?= $invitation_count ?></span>
+              <?php endif; ?>
+            </a>
+          </li>
 
 
 

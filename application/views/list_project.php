@@ -53,8 +53,14 @@
                                         <td>RM<?php echo ($project->budget); ?></td>
                                         <td><?php echo ($project->budgetSource); ?></td>
                                         <td class="text-center">
-                                            <a href="<?php echo site_url('project/view/' . $project->projectID); ?>" class="btn btn-success btn-sm">View</a>
-                                            <a href="<?php echo site_url('project/edit/' . $project->projectID); ?>" class="btn btn-warning btn-sm">Edit</a>
+                                            <form action="<?php echo site_url('project/view'); ?>" method="post" style="display:inline;">
+                                                <input type="hidden" name="projectID" value="<?php echo $project->projectID; ?>">
+                                                <button type="submit" class="btn btn-success btn-sm">View</button>
+                                            </form>
+                                            <form action="<?php echo site_url('project/edit'); ?>" method="post" style="display:inline;">
+                                                <input type="hidden" name="projectID" value="<?php echo $project->projectID; ?>">
+                                                <button type="submit" class="btn btn-warning btn-sm">Edit</button>
+                                            </form>
                                             <a href="<?php echo site_url('project/delete/' . $project->projectID); ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this project?');">Delete</a>
                                         </td>
                                     </tr>

@@ -6,14 +6,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="<?= base_url('assets/template/plugins/fontawesome-free/css/all.min.css') ?>">
+  <link rel="stylesheet" href="<?php echo base_url('assets/template/plugins/fontawesome-free/css/all.min.css'); ?>">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- DataTables -->
-  <link rel="stylesheet" href="<?= base_url('assets/template/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') ?>">
-  <link rel="stylesheet" href="<?= base_url('assets/template/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') ?>">
+  <link rel="stylesheet" href="<?php echo base_url('assets/template/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css'); ?>">
+  <link rel="stylesheet" href="<?php echo base_url('assets/template/plugins/datatables-responsive/css/responsive.bootstrap4.min.css'); ?>">
   <!-- Theme style -->
-  <link rel="stylesheet" href="<?= base_url('assets/template/dist/css/adminlte.min.css') ?>">
+  <link rel="stylesheet" href="<?php echo base_url('assets/template/dist/css/adminlte.min.css'); ?>">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
@@ -34,15 +34,15 @@
               <tbody>
                 <tr>
                   <th style="width: 30%;">Phase Name</th>
-                  <td><?= $phase->phaseName ?></td>
+                  <td><?php echo $phase->phaseName; ?></td>
                 </tr>
                 <tr>
                   <th>Start Date</th>
-                  <td><?= date('d M Y', strtotime($phase->startDate)); ?></td>
+                  <td><?php echo date('d M Y', strtotime($phase->startDate)); ?></td>
                   </tr>
                 <tr>
                   <th>Deadline</th>
-                  <td><?= date('d M Y', strtotime($phase->deadline )); ?></td>
+                  <td><?php echo date('d M Y', strtotime($phase->deadline)); ?></td>
                 </tr>
               </tbody>
             </table>
@@ -64,30 +64,33 @@
     </tr>
   </thead>
   <tbody>
-    <?php if (!empty($activities)): ?>
-      <?php foreach ($activities as $index => $activity): ?>
+    <?php if (!empty($activities)) { ?>
+      <?php foreach ($activities as $index => $activity) { ?>
         <tr>
-          <td><?= $index + 1 ?></td>
-          <td><?= $activity->activityType ?></td>
-          <td><?= $activity->activityName ?></td>
-          <!-- <td><?= $activity->comment ?></td> -->
+          <td><?php echo $index + 1; ?></td>
+          <td><?php echo $activity->activityType; ?></td>
+          <td><?php echo $activity->activityName; ?></td>
+          <!-- <td><?php echo $activity->comment; ?></td> -->
           <td class="text-center">
-            <a href="<?= site_url('activity/edit/' . $activity->activityID) ?>" class="btn btn-warning btn-sm">
-                Edit
-            </a>
-            <a href="<?= site_url('activity/delete/' . $activity->activityID . '/' . $phase->phaseID) ?>" 
-                class="btn btn-danger btn-sm" 
-                onclick="return confirm('Are you sure you want to delete this activity?')">
-                Delete
-            </a>
+            <form action="<?php echo site_url('activity/edit'); ?>" method="post" style="display:inline;">
+              <input type="hidden" name="activityID" value="<?php echo $activity->activityID; ?>">
+              <button type="submit" class="btn btn-warning btn-sm">Edit</button>
+            </form>
+            <form action="<?php echo site_url('activity/delete'); ?>" method="post" style="display:inline;">
+              <input type="hidden" name="activityID" value="<?php echo $activity->activityID; ?>">
+              <input type="hidden" name="phaseID" value="<?php echo $phase->phaseID; ?>">
+              <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this activity?')">
+              Delete
+              </button>
+            </form>
             </td>
         </tr>
-      <?php endforeach; ?>
-    <?php else: ?>
+      <?php } ?>
+    <?php } else { ?>
       <tr>
         <td colspan="6" class="text-center">No activities recorded yet.</td>
       </tr>
-    <?php endif; ?>
+    <?php } ?>
   </tbody>
 </table>
 
@@ -100,9 +103,10 @@
 </div>
 
 <!-- Back Button -->
-    <a href="<?= site_url('phase/index/' . $phase->projectID) ?>" class="btn btn-secondary">
-        <i class="fas fa-arrow-left"></i> Back to Phases
-    </a>
+     <form action="<?php echo site_url('phase/index'); ?>" method="post" style="display:inline;">
+                    <input type="hidden" name="projectID" value="<?php echo isset($projectID) ? $projectID : ''; ?>">
+                    <button type="submit" class="btn btn-secondary">Back to Phase</button>
+                </form>
 </div>
 
 

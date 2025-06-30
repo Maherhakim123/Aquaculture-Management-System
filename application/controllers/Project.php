@@ -1,4 +1,5 @@
 <?php
+
 class Project extends CI_Controller
 {
     public function __construct()
@@ -12,38 +13,33 @@ class Project extends CI_Controller
         $this->load->library('session');
     }
 
+    //     public function dashboard()
+    // {
+    //     $userID = $this->session->userdata('userID'); // Get logged in user's ID
+    //     $data['project_count'] = $this->Project_model->count_projects_by_leader($userID); // Fetch project count
 
+    //     $this->load->view('templates/header');
+    //     $this->load->view('templates/sidebar');
+    //     $this->load->view('dashboard', $data);
+    //     $this->load->view('templates/footer');
+    // }
 
-//     public function dashboard()
-// {
-//     $userID = $this->session->userdata('userID'); // Get logged in user's ID
-//     $data['project_count'] = $this->Project_model->count_projects_by_leader($userID); // Fetch project count
+    // public function beneficiary_dashboard()
+    // {
+    //     $userID = $this->session->userdata('userID'); // Get logged in user's ID
 
-//     $this->load->view('templates/header');
-//     $this->load->view('templates/sidebar');
-//     $this->load->view('dashboard', $data); 
-//     $this->load->view('templates/footer');
-// }
+    //     $this->load->model('Project_model');
 
+    //      // Get the number of projects this beneficiary is involved in
+    //     $project_count = $this->Project_model->count_projects_by_user($userID);
 
-// public function beneficiary_dashboard()
-// {
-//     $userID = $this->session->userdata('userID'); // Get logged in user's ID
+    //     $data['project_count'] = $project_count;
 
-//     $this->load->model('Project_model');
-
-//      // Get the number of projects this beneficiary is involved in
-//     $project_count = $this->Project_model->count_projects_by_user($userID);
-
-//     $data['project_count'] = $project_count;
-
-
-//     $this->load->view('templates/header');
-//     $this->load->view('templates/community_sidebar');
-//     $this->load->view('beneficiary_dashboard', $data); 
-//     $this->load->view('templates/footer');
-// }
-
+    //     $this->load->view('templates/header');
+    //     $this->load->view('templates/community_sidebar');
+    //     $this->load->view('beneficiary_dashboard', $data);
+    //     $this->load->view('templates/footer');
+    // }
 
     // Display the form to create a new project
     public function create()
@@ -75,7 +71,7 @@ class Project extends CI_Controller
             'endDate' => $endDate,
             'budget' => $budget,
             'budgetSource' => $budgetSource,
-            'userID' => $userID
+            'userID' => $userID,
         ];
 
         $status = $this->Project_model->add($data);
@@ -85,16 +81,15 @@ class Project extends CI_Controller
     }
 
     // List all project for Admin PPJIM
-    public function listAll_Project() {
+    public function listAll_Project()
+    {
         $userID = $this->session->userdata('userID');
         $data['projects'] = $this->Project_model->get_all_projects(); // Fetch projects from the model
         $this->load->view('templates/header');
         $this->load->view('templates/PPJIM_sidebar');
         $this->load->view('PPJIM_list_project', $data); // Load the view and pass the data
         $this->load->view('templates/footer');
-
     }
-
 
     // Fetch all projects and display them by specif project leader
     public function list()
@@ -107,10 +102,10 @@ class Project extends CI_Controller
         $this->load->view('templates/footer');
     }
 
-
     // Admin PPJIM View Project
-    public function PPJIM_view_project($projectID)
+    public function PPJIM_view_project()
     {
+        $projectID = $this->input->post('projectID');
         $data['project'] = $this->Project_model->get_project_by_id($projectID);
 
         // Get only Beneficiaries users
@@ -120,21 +115,21 @@ class Project extends CI_Controller
         // Get invited members of the project
         $data['members'] = $this->Project_model->get_project_members($projectID);
 
-        $invitedUserIDs = array_map(function($member) {
+        $invitedUserIDs = array_map(function ($member) {
             return $member->userID;
         }, $data['members']);
 
         $data['users'] = array_filter(
             $this->User_model->get_beneficiary_users(),
-            fn($user) => !in_array($user->userID, $invitedUserIDs)
-    );
+            fn ($user) => !in_array($user->userID, $invitedUserIDs)
+        );
 
         $data['projectID'] = $projectID;
-        
-    // Add this to get total spending from comments
+
+        // Add this to get total spending from comments
         $data['totalSpent'] = $this->Activity_model->get_total_spending_by_project($projectID);
 
-        //data phase in view project
+        // data phase in view project
         $data['phases'] = $this->Phase_model->get_phases_with_progress($projectID);
 
         $this->load->view('templates/header');
@@ -143,11 +138,16 @@ class Project extends CI_Controller
         $this->load->view('templates/footer');
     }
 
-
-
     // Project Leader View Project
-    public function view($projectID)
+    public function view()
     {
+        $projectID = $this->input->post('projectID');
+
+        // Check if projectID is set in session
+        if (!$projectID) {
+            $projectID = $this->session->userdata('projectID_to_view');
+        }
+
         $data['project'] = $this->Project_model->get_project_by_id($projectID);
 
         // Get only Beneficiaries users
@@ -157,21 +157,21 @@ class Project extends CI_Controller
         // Get invited members of the project
         $data['members'] = $this->Project_model->get_project_members($projectID);
 
-        $invitedUserIDs = array_map(function($member) {
+        $invitedUserIDs = array_map(function ($member) {
             return $member->userID;
         }, $data['members']);
 
         $data['users'] = array_filter(
             $this->User_model->get_beneficiary_users(),
-            fn($user) => !in_array($user->userID, $invitedUserIDs)
-    );
+            fn ($user) => !in_array($user->userID, $invitedUserIDs)
+        );
 
         $data['projectID'] = $projectID;
-        
-    // Add this to get total spending from comments
+
+        // Add this to get total spending from comments
         $data['totalSpent'] = $this->Activity_model->get_total_spending_by_project($projectID);
 
-        //data phase in view project
+        // data phase in view project
         $data['phases'] = $this->Phase_model->get_phases_with_progress($projectID);
 
         $this->load->view('templates/header');
@@ -180,12 +180,10 @@ class Project extends CI_Controller
         $this->load->view('templates/footer');
     }
 
-
-
-
     // Edit a project
-    public function edit($projectID)
+    public function edit()
     {
+        $projectID = $this->input->post('projectID');
         $data['project'] = $this->Project_model->get_project_by_id($projectID); // Get the project by its ID
         $this->load->view('templates/header');
         $this->load->view('templates/sidebar');
@@ -210,7 +208,7 @@ class Project extends CI_Controller
             'startDate' => $startDate,
             'endDate' => $endDate,
             'budget' => $budget,
-            'budgetSource' => $budgetSource
+            'budgetSource' => $budgetSource,
         ];
 
         $status = $this->Project_model->update_project($projectID, $data);
@@ -228,44 +226,41 @@ class Project extends CI_Controller
         }
     }
 
- 
-
     public function invite_user()
     {
-    $projectID = $this->input->post('projectID');
-    $userID = $this->input->post('userID');
-    $leaderID = $this->session->userdata('userID');
+        $projectID = $this->input->post('projectID');
+        $userID = $this->input->post('userID');
+        $leaderID = $this->session->userdata('userID');
 
-    if ($userID && $projectID) {
-        // Check if user already invited to the project
-        $alreadyInvited = $this->Project_model->is_user_already_invited($projectID, $userID);
+        if ($userID && $projectID) {
+            // Check if user already invited to the project
+            $alreadyInvited = $this->Project_model->is_user_already_invited($projectID, $userID);
 
-        if ($alreadyInvited) {
-            $this->session->set_flashdata('error', 'User has already been invited to this project.');
+            if ($alreadyInvited) {
+                $this->session->set_flashdata('error', 'User has already been invited to this project.');
+            } else {
+                $data = [
+                    'projectID' => $projectID,
+                    'userID' => $userID,
+                    'invited_by' => $leaderID,
+                    'status' => 'pending',
+                ];
+
+                $this->Project_model->invite_user_to_project($data);
+                $this->session->set_flashdata('success', 'User invited successfully.');
+            }
         } else {
-            $data = [
-                'projectID' => $projectID,
-                'userID' => $userID,
-                'invited_by' => $leaderID,
-                'status' => 'pending'
-            ];
-
-            $this->Project_model->invite_user_to_project($data);
-            $this->session->set_flashdata('success', 'User invited successfully.');
+            $this->session->set_flashdata('error', 'Failed to invite user.');
         }
-    } else {
-        $this->session->set_flashdata('error', 'Failed to invite user.');
-    }
 
-    redirect('project/view/' . $projectID);
-}
+        redirect('project/view');
+    }
 
     // View invitations for the current beneficiary user
     public function invitations()
     {
         $userID = $this->session->userdata('userID');
         $data['pending_invitations'] = $this->Project_model->get_pending_invitations_by_user($userID);
-        
 
         $this->load->view('templates/header');
         $this->load->view('templates/community_sidebar');
@@ -294,62 +289,67 @@ class Project extends CI_Controller
     {
         $userID = $this->session->userdata('userID');
         $data['projects'] = $this->Project_model->get_projects_by_user($userID);
-        
+
         $this->load->view('templates/header');
         $this->load->view('templates/community_sidebar');
         $this->load->view('my_projects', $data);
         $this->load->view('templates/footer');
-        
     }
 
-    public function community_view($projectID)
+    public function community_view()
     {
-    // Get project by ID
-    $data['project'] = $this->Project_model->get_project_by_id($projectID);
-    $data['phaseIDForComment'] = $this->Phase_model->get_first_phase_id($projectID);
+        $projectID = $this->input->post('projectID');
 
-    //data phase in view project
-    $data['phases'] = $this->Phase_model->get_phases_with_progress($projectID);
+        // Get project by ID
+        $data['project'] = $this->Project_model->get_project_by_id($projectID);
+        $data['phaseIDForComment'] = $this->Phase_model->get_first_phase_id($projectID);
 
-    // Load the view
-    $this->load->view('templates/header');
-    $this->load->view('templates/community_sidebar');
-    $this->load->view('beneficiary_view_project', $data);
-    $this->load->view('templates/footer');
+        // data phase in view project
+        $data['phases'] = $this->Phase_model->get_phases_with_progress($projectID);
+
+        // Load the view
+        $this->load->view('templates/header');
+        $this->load->view('templates/community_sidebar');
+        $this->load->view('beneficiary_view_project', $data);
+        $this->load->view('templates/footer');
     }
 
+    // Project leader remove member project has been invited
+    public function remove_member()
+    {
+        $projectID = $this->input->post('projectID');
+        $userID = $this->input->post('userID');
 
-// Project leader remove member project has been invited
-public function remove_member($projectID, $userID)
-{
-    $this->load->model('Project_model');
-    $this->Project_model->remove_project_member($projectID, $userID);
+        $this->Project_model->remove_project_member($projectID, $userID);
 
-    // Redirect back to the project view
-    redirect('project/view/' . $projectID);
-}
+        // Redirect back to the project view
+        $this->session->set_userdata('projectID_to_view', $projectID);
+        redirect('project/view');
+    }
 
+    // Project leader cancels a pending invitation
+    public function cancel_invitation()
+    {
+        $projectID = $this->input->post('projectID');
+        $userID = $this->input->post('userID');
 
-// Project leader cancels a pending invitation
-public function cancel_invitation($projectID, $userID)
-{
-    $this->load->model('Project_model');
-    $this->Project_model->remove_project_member($projectID, $userID);
+        $this->Project_model->remove_project_member($projectID, $userID);
 
-    // Redirect back to the project view
-    redirect('project/view/' . $projectID);
-}
+        // Redirect back to the project view
+        $this->session->set_userdata('projectID_to_view', $projectID);
+        redirect('project/view');
+    }
 
-// Beneficiary reject a pending invitation
-public function reject_invitation($projectID, $userID)
-{
-    $this->load->model('Project_model');
-    $this->Project_model->remove_project_member($projectID, $userID);
+    // Beneficiary reject a pending invitation
+    public function reject_invitation()
+    {
+        $projectID = $this->input->post('projectID');
+        $userID = $this->input->post('userID');
 
-    // Redirect back to the project view
-    redirect('project/invitations');
+        $this->load->model('Project_model');
+        $this->Project_model->remove_project_member($projectID, $userID);
 
-}
-
-
+        // Redirect back to the project view
+        redirect('project/invitations');
+    }
 }

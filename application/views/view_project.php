@@ -49,9 +49,15 @@
                 </div>
             </div>
 
-            <a href="<?php echo site_url('phase/index/'.$project->projectID); ?>" class="btn btn-primary btn-sm">View Phases</a>
+            <form action="<?php echo site_url('phase/index'); ?>" method="post" style="display:inline;">
+                <input type="hidden" name="projectID" value="<?php echo $project->projectID; ?>">
+                <button type="submit" class="btn btn-primary btn-sm">View Phases</button>
+            </form>
 
-            <a href="<?php echo site_url('phase/progress_by_project/'.$project->projectID); ?>" class="btn btn-primary btn-sm">View Progress</a>
+            <form action="<?php echo site_url('phase/progress_by_project'); ?>" method="post" style="display:inline;">
+                <input type="hidden" name="projectID" value="<?php echo $project->projectID; ?>">
+                <button type="submit" class="btn btn-primary btn-sm">View Progress</button>
+            </form>
 
         <div class="card mt-4">
     <div class="card-header bg-info text-white">
@@ -98,7 +104,7 @@
 </div>
 
 <!-- Modern Pie Chart UI -->
-<div class="row justify-content-center mt-5 mb-4">
+<!-- <div class="row justify-content-center mt-5 mb-4">
     <div class="col-md-6 text-center">
         <h5 class="font-weight-bold text-body mb-3"> Budget Usage Overview</h5>
         <div style="background-color: #f8f9fa; border-radius: 10px; padding: 20px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
@@ -109,7 +115,30 @@
             </p>
         </div>
     </div>
+</div> -->
+
+<!-- Modern Pie Chart UI -->
+<div class="row justify-content-center mt-5 mb-4">
+    <div class="col-md-6 text-center">
+        <h5 class="font-weight-bold text-body mb-3"> Budget Usage Overview</h5>
+
+        <?php if ($totalSpent > $project->budget): ?>
+            <div class="alert alert-danger font-weight-bold" role="alert">
+                <i class="fas fa-exclamation-triangle"></i>
+                Warning: This project is overbudget by <strong>RM<?= number_format($totalSpent - $project->budget, 2) ?></strong>.
+            </div>
+        <?php endif; ?>
+
+        <div style="background-color: #f8f9fa; border-radius: 10px; padding: 20px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
+            <canvas id="budgetChart" style="max-height: 250px;"></canvas>
+            <p class="mt-3 mb-0">
+                <span class="text-danger font-weight-bold">Spent:</span> RM<?= number_format($totalSpent, 2) ?> |
+                <span class="text-success font-weight-bold">Remaining:</span> RM<?= number_format($project->budget - $totalSpent, 2) ?>
+            </p>
+        </div>
+    </div>
 </div>
+
 
 
 
@@ -178,17 +207,23 @@
                     </td>
                     <td>
                         <?php if ($member->status == 'accepted'): ?>
-                            <a href="<?= base_url('project/remove_member/' . $projectID . '/' . $member->userID) ?>"
-                               class="btn btn-sm btn-danger w-30"
-                               onclick="return confirm('Are you sure you want to remove this member from the project?');">
-                               Remove
-                            </a>
+                            <form action="<?= base_url('project/remove_member') ?>" method="post" style="display:inline;">
+                                <input type="hidden" name="projectID" value="<?= $projectID ?>">
+                                <input type="hidden" name="userID" value="<?= $member->userID ?>">
+                                <button type="submit" class="btn btn-sm btn-danger w-30"
+                                    onclick="return confirm('Are you sure you want to remove this member from the project?');">
+                                    Remove
+                                </button>
+                            </form>
                         <?php elseif ($member->status == 'pending'): ?>
-                            <a href="<?= base_url('project/cancel_invitation/' . $projectID . '/' . $member->userID) ?>"
-                               class="btn btn-sm btn-info w-30"
-                               onclick="return confirm('Are you sure you want to cancel the invitation?');">
-                               Cancel
-                            </a>
+                            <form action="<?= base_url('project/cancel_invitation') ?>" method="post" style="display:inline;">
+                                <input type="hidden" name="projectID" value="<?= $projectID ?>">
+                                <input type="hidden" name="userID" value="<?= $member->userID ?>">
+                                <button type="submit" class="btn btn-sm btn-info w-30"
+                                    onclick="return confirm('Are you sure you want to cancel the invitation?');">
+                                    Cancel
+                                </button>
+                            </form>
                         <?php endif; ?>
                     </td>
                 </tr>

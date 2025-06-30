@@ -41,7 +41,10 @@
                                     <p><strong>Budget:</strong> RM<?= $project->budget ?></p>
                                     <p><strong>Budget Source:</strong> <?= $project->budgetSource ?></p>
 
-                                    <a href="<?= site_url('project/community_view/' . $project->projectID) ?>" class="btn btn-primary btn-sm"> View Project</a>
+                                    <form action="<?= site_url('project/community_view') ?>" method="post" style="display:inline;">
+                                        <input type="hidden" name="projectID" value="<?= $project->projectID ?>">
+                                        <button type="submit" class="btn btn-primary btn-sm">View Project</button>
+                                    </form>
                                     
                                 </div>
                             </div>

@@ -7,14 +7,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="<?= base_url('assets/template/plugins/fontawesome-free/css/all.min.css') ?>">
+  <link rel="stylesheet" href="<?php echo base_url('assets/template/plugins/fontawesome-free/css/all.min.css'); ?>">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- DataTables -->
-  <link rel="stylesheet" href="<?= base_url('assets/template/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') ?>">
-  <link rel="stylesheet" href="<?= base_url('assets/template/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') ?>">
+  <link rel="stylesheet" href="<?php echo base_url('assets/template/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css'); ?>">
+  <link rel="stylesheet" href="<?php echo base_url('assets/template/plugins/datatables-responsive/css/responsive.bootstrap4.min.css'); ?>">
   <!-- Theme style -->
-  <link rel="stylesheet" href="<?= base_url('assets/template/dist/css/adminlte.min.css') ?>">
+  <link rel="stylesheet" href="<?php echo base_url('assets/template/dist/css/adminlte.min.css'); ?>">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
@@ -28,20 +28,20 @@
           <h3 class="card-title">Add Comment</h3>
         </div>
 
-        <form method="POST" action="<?= base_url('activity/save_beneficiary_comment') ?>">
+        <form method="POST" action="<?php echo base_url('activity/save_beneficiary_comment'); ?>">
           <div class="card-body">
 
             <!-- Hidden project ID -->
-            <input type="hidden" name="projectID" value="<?= $projectID ?>">
+            <input type="hidden" name="projectID" value="<?php echo $projectID; ?>">
 
             <!-- Phase Selection -->
             <div class="form-group">
               <label for="phaseID">Phase</label>
               <select name="phaseID" id="phaseID" class="form-control" required>
                 <option value="">-- Select Phase --</option>
-                <?php foreach ($phases as $p): ?>
-                  <option value="<?= $p->phaseID ?>"><?= $p->phaseName ?></option>
-                <?php endforeach; ?>
+                <?php foreach ($phases as $p) { ?>
+                  <option value="<?php echo $p->phaseID; ?>"><?php echo $p->phaseName; ?></option>
+                <?php } ?>
               </select>
             </div>
 
@@ -72,21 +72,28 @@
           </div>
         </form>
 
+        <div class="card-footer">
+            <form method="post" action="<?php echo site_url('project/community_view'); ?>">
+            <input type="hidden" name="projectID" value="<?php echo htmlspecialchars($projectID); ?>">
+            <button type="submit" class="btn btn-secondary">Back to Project</button>
+            </form>
+        </div>
       </div>
+
     </div>
   </div>
 </div>
 
 <!-- Scripts -->
-<script src="<?= base_url('assets/template/plugins/jquery/jquery.min.js') ?>"></script>
-<script src="<?= base_url('assets/template/plugins/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
-<script src="<?= base_url('assets/template/dist/js/adminlte.min.js') ?>"></script>
+<script src="<?php echo base_url('assets/template/plugins/jquery/jquery.min.js'); ?>"></script>
+<script src="<?php echo base_url('assets/template/plugins/bootstrap/js/bootstrap.bundle.min.js'); ?>"></script>
+<script src="<?php echo base_url('assets/template/dist/js/adminlte.min.js'); ?>"></script>
 
 <!-- AJAX for dynamic activity list -->
 <script>
   document.getElementById('phaseID').addEventListener('change', function () {
     const phaseID = this.value;
-    const url = "<?= base_url('activity/getActivitiesByPhase/') ?>" + phaseID;
+    const url = "<?php echo base_url('activity/getActivitiesByPhase/'); ?>" + phaseID;
 
     fetch(url)
       .then(resp => resp.json())

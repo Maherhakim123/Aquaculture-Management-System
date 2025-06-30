@@ -6,13 +6,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="<?= base_url('assets/template/plugins/fontawesome-free/css/all.min.css') ?>">
+  <link rel="stylesheet" href="<?php echo base_url('assets/template/plugins/fontawesome-free/css/all.min.css'); ?>">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- AdminLTE -->
-  <link rel="stylesheet" href="<?= base_url('assets/template/dist/css/adminlte.min.css') ?>">
+  <link rel="stylesheet" href="<?php echo base_url('assets/template/dist/css/adminlte.min.css'); ?>">
   <!-- Bootstrap 4 -->
-  <link rel="stylesheet" href="<?= base_url('assets/template/plugins/bootstrap/css/bootstrap.min.css') ?>">
+  <link rel="stylesheet" href="<?php echo base_url('assets/template/plugins/bootstrap/css/bootstrap.min.css'); ?>">
   <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 
@@ -182,39 +182,48 @@
 
           <div class="card-body position-relative" style="min-height: 400px;">
   <div class="chat-container pr-1" style="padding-bottom: 80px;">
-            <h5 class="text-center mb-4">Conversation for Activity: <?= htmlspecialchars($activity->activityName) ?></h5>
+            <h5 class="text-center mb-4">Conversation for Activity: <?php echo htmlspecialchars($activity->activityName); ?></h5>
 
-            <?php if (!empty($comments)): ?>
-              <?php foreach ($comments as $comment): ?>
+            <?php if (!empty($comments)) { ?>
+              <?php foreach ($comments as $comment) { ?>
                 <?php
                   $isSender = $comment->userID == $this->session->userdata('userID');
                   $bubbleClass = $isSender ? 'sent' : 'received';  // <-- flipped
-                ?>
-                <div class="chat-bubble <?= $bubbleClass ?>">
-                  <div class="user"><?= htmlspecialchars($comment->username) ?></div>
-                  <div><?= nl2br(htmlspecialchars($comment->comment)) ?></div>
-                  <?php if (!empty($comment->spending)): ?>
-                    <div class="spending">Spending: RM <?= number_format($comment->spending, 2) ?></div>
-                  <?php endif; ?>
-                  <span class="timestamp"><?= date('d M Y h:i A', strtotime($comment->created_at)) ?></span>
+                  ?>
+                <div class="chat-bubble <?php echo $bubbleClass; ?>">
+                  <div class="user"><?php echo htmlspecialchars($comment->username); ?></div>
+                  <div><?php echo nl2br(htmlspecialchars($comment->comment)); ?></div>
+                  <?php if (!empty($comment->spending)) { ?>
+                    <div class="spending">Spending: RM <?php echo number_format($comment->spending, 2); ?></div>
+                  <?php } ?>
+                  <span class="timestamp"><?php echo date('d M Y h:i A', strtotime($comment->created_at)); ?></span>
 
-                  <?php if ($this->session->userdata('role') === 'leader' || $isSender): ?>
-                    <form method="post" class="delete-btn" action="<?= site_url('activity/delete_comment_messages/' . $comment->commentID . '/' . $activityID) ?>"
+                  <?php if ($this->session->userdata('role') === 'leader' || $isSender) { ?>
+                    <!-- <form method="post" class="delete-btn" action="<?php echo site_url('activity/delete_comment_messages/'.$comment->commentID.'/'.$activityID); ?>"
                           onsubmit="return confirm('Are you sure you want to delete this comment?');">
                       <button type="submit" class="btn btn-sm btn-danger" title="Delete">
                         <i class="fas fa-trash-alt"></i>
                       </button>
-                    </form>
-                  <?php endif; ?>
+                    </form> -->
+
+                    <form method="post" class="delete-btn" action="<?php echo site_url('activity/delete_comment_messages'); ?>">
+  <input type="hidden" name="commentID" value="<?php echo $comment->commentID; ?>">
+  <input type="hidden" name="activityID" value="<?php echo $activityID; ?>">
+  <button type="submit" class="btn btn-sm btn-danger" title="Delete" onclick="return confirm('Are you sure you want to delete this comment?');">
+    <i class="fas fa-trash-alt"></i>
+  </button>
+</form>
+
+                  <?php } ?>
                 </div>
-              <?php endforeach; ?>
-            <?php else: ?>
+              <?php } ?>
+            <?php } else { ?>
               <div class="alert alert-info text-center">No comments yet.</div>
-            <?php endif; ?>
+            <?php } ?>
 
         <!-- Message input bar -->
-        <form action="<?= base_url('activity/leader_add_comment') ?>" method="post" class="message-input-container">
-        <input type="hidden" name="activityID" value="<?= $activity->activityID ?>">
+        <form action="<?php echo base_url('activity/leader_add_comment'); ?>" method="post" class="message-input-container">
+        <input type="hidden" name="activityID" value="<?php echo $activity->activityID; ?>">
         <input type="text" name="comment" placeholder="Type a message..." required>
         <button type="submit" title="Send"><i class="fas fa-paper-plane"></i></button>
         </form>
@@ -238,8 +247,8 @@
 </script>
 
 <!-- JS Scripts -->
-<script src="<?= base_url('assets/template/plugins/jquery/jquery.min.js') ?>"></script>
-<script src="<?= base_url('assets/template/plugins/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
-<script src="<?= base_url('assets/template/dist/js/adminlte.min.js') ?>"></script>
+<script src="<?php echo base_url('assets/template/plugins/jquery/jquery.min.js'); ?>"></script>
+<script src="<?php echo base_url('assets/template/plugins/bootstrap/js/bootstrap.bundle.min.js'); ?>"></script>
+<script src="<?php echo base_url('assets/template/dist/js/adminlte.min.js'); ?>"></script>
 </body>
 </html>

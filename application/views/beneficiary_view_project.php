@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project Details</title>
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="<?= base_url('assets/template/plugins/fontawesome-free/css/all.min.css') ?>">
+    <link rel="stylesheet" href="<?php echo base_url('assets/template/plugins/fontawesome-free/css/all.min.css'); ?>">
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- DataTables -->
-    <link rel="stylesheet" href="<?= base_url('assets/template/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') ?>">
-    <link rel="stylesheet" href="<?= base_url('assets/template/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') ?>">
+    <link rel="stylesheet" href="<?php echo base_url('assets/template/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css'); ?>">
+    <link rel="stylesheet" href="<?php echo base_url('assets/template/plugins/datatables-responsive/css/responsive.bootstrap4.min.css'); ?>">
     <!-- Theme style -->
-    <link rel="stylesheet" href="<?= base_url('assets/template/dist/css/adminlte.min.css') ?>">
+    <link rel="stylesheet" href="<?php echo base_url('assets/template/dist/css/adminlte.min.css'); ?>">
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
@@ -31,28 +31,33 @@
                             <div class="col-md-6">
                                 <dl>
                                     <dt><b class="border-bottom border-primary">Project Name</b></dt>
-                                    <dd><?= $project->projectName ?></dd>
+                                    <dd><?php echo $project->projectName; ?></dd>
                                     <dt><b class="border-bottom border-primary">Location</b></dt>
-                                    <dd><?= $project->projectLocation ?></dd>
+                                    <dd><?php echo $project->projectLocation; ?></dd>
                                     <dt><b class="border-bottom border-primary">Start Date</b></dt>
-                                    <dd><?= date("d F Y", strtotime($project->startDate)) ?></dd>
+                                    <dd><?php echo date('d F Y', strtotime($project->startDate)); ?></dd>
                                 </dl>
                             </div>
                             <div class="col-md-6">
                                 <dl>
                                     <dt><b class="border-bottom border-primary">End Date</b></dt>
-                                    <dd><?= date("d F Y", strtotime($project->endDate)) ?></dd>
+                                    <dd><?php echo date('d F Y', strtotime($project->endDate)); ?></dd>
                                     <dt><b class="border-bottom border-primary">Budget</b></dt>
-                                    <dd>RM<?= $project->budget ?></dd>
+                                    <dd>RM<?php echo $project->budget; ?></dd>
                                     <dt><b class="border-bottom border-primary">Budget Source</b></dt>
-                                    <dd><?= $project->budgetSource ?></dd>
+                                    <dd><?php echo $project->budgetSource; ?></dd>
                                 </dl>
                             </div>
                         </div>
+                        <form action="<?php echo site_url('phase/beneficiary_progress'); ?>" method="post" style="display:inline;">
+                            <input type="hidden" name="projectID" value="<?php echo $project->projectID; ?>">
+                            <button type="submit" class="btn btn-primary btn-sm">View Progress</button>
+                        </form>
 
-                        <a href="<?= site_url('phase/beneficiary_progress/' . $project->projectID); ?>" class="btn btn-primary btn-sm">View Progress</a>
-
-                        <a href="<?= site_url('activity/beneficiary_add_comment_form/'.$project->projectID) ?>" class="btn btn-primary btn-sm">Add Comment</a>
+                        <form action="<?php echo site_url('activity/beneficiary_add_comment_form'); ?>" method="post" style="display:inline;">
+                            <input type="hidden" name="projectID" value="<?php echo $project->projectID; ?>">
+                            <button type="submit" class="btn btn-primary btn-sm">Add Comment</button>
+                        </form>
 
 
                 <div class="card mt-4">
@@ -60,7 +65,7 @@
         <h4>Phases in This Project</h4>
     </div>
     <div class="card-body">
-        <?php if (!empty($phases)) : ?>
+        <?php if (!empty($phases)) { ?>
             <table class="table table-bordered table-striped">
                 <thead class="table-info text-center">
                     <tr>
@@ -69,40 +74,40 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($phases as $phase) : 
-                        $progress = ($phase->totalActivities > 0) 
-                            ? round(($phase->completedActivities / $phase->totalActivities) * 100) 
+                    <?php foreach ($phases as $phase) {
+                        $progress = ($phase->totalActivities > 0)
+                            ? round(($phase->completedActivities / $phase->totalActivities) * 100)
                             : 0;
-                    ?>
+                        ?>
                         <tr>
-                            <td><?= $phase->phaseName ?></td>
+                            <td><?php echo $phase->phaseName; ?></td>
                             <td class="text-center">
     <?php
         $badgeClass = 'badge-secondary'; // default
 
-        switch ($phase->status) {
-            case 'completed':
-                $badgeClass = 'badge-success';
-                break;
-            case 'in_progress':
-                $badgeClass = 'badge-warning';
-                break;
-            case 'not_started':
-                $badgeClass = 'badge-secondary';
-                break;
-        }
-    ?>
-    <span class="badge <?= $badgeClass ?> text-uppercase"><?= $phase->status ?></span>
+                        switch ($phase->status) {
+                            case 'completed':
+                                $badgeClass = 'badge-success';
+                                break;
+                            case 'in_progress':
+                                $badgeClass = 'badge-warning';
+                                break;
+                            case 'not_started':
+                                $badgeClass = 'badge-secondary';
+                                break;
+                        }
+                        ?>
+    <span class="badge <?php echo $badgeClass; ?> text-uppercase"><?php echo $phase->status; ?></span>
 </td>
 
                    
                         </tr>
-                    <?php endforeach; ?>
+                    <?php } ?>
                 </tbody>
             </table>
-        <?php else : ?>
+        <?php } else { ?>
             <p>No phases have been added to this project.</p>
-        <?php endif; ?>
+        <?php } ?>
     </div>
 </div>
 
