@@ -1,6 +1,5 @@
 <?php
-
-defined('BASEPATH') or exit('No direct script access allowed');
+defined('BASEPATH') OR exit('No direct script access allowed');
 
 /*
 | -------------------------------------------------------------------------
@@ -50,17 +49,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['default_controller'] = 'homepage';
+$route['default_controller'] = 'welcome';
 $route['404_override'] = '';
-$route['translate_uri_dashes'] = false;
+$route['translate_uri_dashes'] = FALSE;
 
 $route['abouts'] = 'Welcome/demo';
+
 
 // Login and Register for user and admin
 $route['register']['GET'] = 'Auth/RegisterController/index';
 $route['register']['POST'] = 'Auth/RegisterController/register';
 
-// Create New Project and
+// Create New Project and 
 $route['project/create'] = 'project/create';
 $route['project/new'] = 'project/store';
 
@@ -73,3 +73,6 @@ $route['project/delete/(:num)'] = 'project/delete/$1'; // Delete route
 $route['auth/profile'] = 'auth/profile';
 
 $route['dashboard/dashboard'] = 'dashboard/dashboard';
+
+
+
