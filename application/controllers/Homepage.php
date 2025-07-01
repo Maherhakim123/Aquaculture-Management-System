@@ -9,6 +9,6 @@ class Homepage extends CI_Controller
         // Load view or echo something
         // echo 'This is the homepage.';
         // Or load a view: $this->load->view('homepage');
-        redirect('dashboard/homepage');
+        redirect('dashboard/Homepage');
     }
 }

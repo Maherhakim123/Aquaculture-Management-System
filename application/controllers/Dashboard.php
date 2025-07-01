@@ -246,7 +246,7 @@ class Dashboard extends CI_Controller
         echo $output;
     }
 
-    public function homepage()
+    public function Homepage()
     {
         $this->load->view('Homepage');
     }
