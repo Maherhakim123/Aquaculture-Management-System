@@ -22,13 +22,8 @@ class Welcome extends CI_Controller
      */
     public function index()
     {
-        $this->load->view('homepage');
+        $this->load->view('homepage/homepage');
     }
-
-    // public function demo()
-    // {
-    //     $this->load->view('about');
-    // }
 
     // public function welcome()
     // {
