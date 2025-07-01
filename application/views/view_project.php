@@ -114,20 +114,6 @@
 </div>
 
 <!-- Modern Pie Chart UI -->
-<!-- <div class="row justify-content-center mt-5 mb-4">
-    <div class="col-md-6 text-center">
-        <h5 class="font-weight-bold text-body mb-3"> Budget Usage Overview</h5>
-        <div style="background-color: #f8f9fa; border-radius: 10px; padding: 20px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
-            <canvas id="budgetChart" style="max-height: 250px;"></canvas>
-            <p class="mt-3 mb-0">
-                <span class="text-danger font-weight-bold">Spent:</span> RM<?php echo number_format($totalSpent, 2); ?> |
-                <span class="text-success font-weight-bold">Remaining:</span> RM<?php echo number_format($project->budget - $totalSpent, 2); ?>
-            </p>
-        </div>
-    </div>
-</div> -->
-
-<!-- Modern Pie Chart UI -->
 <div class="row justify-content-center mt-5 mb-4">
     <div class="col-md-6 text-center">
         <h5 class="font-weight-bold text-body mb-3"> Budget Usage Overview</h5>
@@ -218,27 +204,41 @@
                             <span class="badge badge-warning">Pending</span>
                           <?php } ?>
                         </td>
+
                         <td class="text-center">
-                          <?php if ($member->status == 'accepted') { ?>
-                            <form action="<?php echo base_url('project/remove_member'); ?>" method="post" style="display:inline;">
-                              <input type="hidden" name="projectID" value="<?php echo $projectID; ?>">
-                              <input type="hidden" name="userID" value="<?php echo $member->userID; ?>">
-                              <button type="submit" class="btn btn-sm btn-danger"
-                                onclick="return confirm('Are you sure you want to remove this member?');">
-                                Remove
-                              </button>
-                            </form>
-                          <?php } elseif ($member->status == 'pending') { ?>
-                            <form action="<?php echo base_url('project/cancel_invitation'); ?>" method="post" style="display:inline;">
-                              <input type="hidden" name="projectID" value="<?php echo $projectID; ?>">
-                              <input type="hidden" name="userID" value="<?php echo $member->userID; ?>">
-                              <button type="submit" class="btn btn-sm btn-info"
-                                onclick="return confirm('Cancel this invitation?');">
-                                Cancel
-                              </button>
-                            </form>
-                          <?php } ?>
-                        </td>
+                            <?php if ($member->status == 'accepted') { ?>
+                                <!-- Remove accepted member -->
+                                <form action="<?php echo base_url('project/remove_member'); ?>" method="post" style="display:inline;">
+                                <input type="hidden" name="projectID" value="<?php echo $projectID; ?>">
+                                <input type="hidden" name="userID" value="<?php echo $member->userID; ?>">
+                                <button type="submit" class="btn btn-sm btn-danger"
+                                    onclick="return confirm('Are you sure you want to remove this member?');">
+                                    Remove
+                                </button>
+                                </form>
+                            <?php } elseif ($member->status == 'pending') { ?>
+                                <!-- Cancel invitation -->
+                                <form action="<?php echo base_url('project/cancel_invitation'); ?>" method="post" style="display:inline;">
+                                <input type="hidden" name="projectID" value="<?php echo $projectID; ?>">
+                                <input type="hidden" name="userID" value="<?php echo $member->userID; ?>">
+                                <button type="submit" class="btn btn-sm btn-info"
+                                    onclick="return confirm('Cancel this invitation?');">
+                                    Cancel
+                                </button>
+                                </form>
+                            <?php } elseif ($member->status == 'rejected') { ?>
+                                <!-- Delete rejected member -->
+                                <form action="<?php echo base_url('project/remove_member'); ?>" method="post" style="display:inline;">
+                                <input type="hidden" name="projectID" value="<?php echo $projectID; ?>">
+                                <input type="hidden" name="userID" value="<?php echo $member->userID; ?>">
+                                <button type="submit" class="btn btn-sm btn-danger"
+                                    onclick="return confirm('Delete this rejected member from the list?');">
+                                    Delete
+                                </button>
+                                </form>
+                            <?php } ?>
+                            </td>
+
                       </tr>
                     <?php } ?>
                   </tbody>

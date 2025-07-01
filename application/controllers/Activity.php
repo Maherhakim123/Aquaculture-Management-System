@@ -286,6 +286,9 @@ class Activity extends CI_Controller
             show_404();
         }
 
+        $phase = $this->Phase_model->get_phase_by_id($activity->phaseID);
+        $projectID = $phase ? $phase->projectID : '';
+
         // Get comments
         $comments = $this->Activity_model->get_comments_by_activity($activityID);
 
@@ -293,9 +296,9 @@ class Activity extends CI_Controller
             'activity' => $activity,
             'comments' => $comments,
             'activityID' => $activityID,
+            'projectID' => $projectID, // Pass to view to fix both errors
         ];
 
-        // Optional: clear the session
         $this->session->unset_userdata('activityID_to_view');
 
         $this->load->view('templates/header');

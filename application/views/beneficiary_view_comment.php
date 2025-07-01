@@ -76,7 +76,14 @@
 
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
-  <div class="content-wrapper">
+  <div class="content-wrapper mt-3">
+
+      <!-- Back to Progress Button -->  
+      <form method="post" action="<?php echo site_url('phase/beneficiary_progress'); ?>">
+            <input type="hidden" name="projectID" value="<?php echo htmlspecialchars($projectID); ?>">
+            <button type="submit" class="btn btn-secondary"> <i class="fas fa-arrow-left"></i> Back to Progress</button>
+      </form>
+      
     <div class="content py-4">
       <div class="container">
         <div class="card shadow-sm">
@@ -109,12 +116,6 @@
 
             </div>
           </div>
-        </div>
-        <div class="card-footer">
-            <form method="post" action="<?php echo site_url('project/community_view'); ?>">
-            <input type="hidden" name="projectID" value="<?php echo htmlspecialchars($projectID); ?>">
-            <button type="submit" class="btn btn-secondary">Back to Project</button>
-            </form>
         </div>
       </div>
     </div>

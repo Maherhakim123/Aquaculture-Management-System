@@ -55,7 +55,7 @@
             <!-- <thead class="thead-dark"> -->
               <tr>
                 <th>Project Name</th>
-                <th>Project By</th>
+                <th>Project By (Project Leader)</th>
                 <th style="width: 120px;">Action</th>
               </tr>
             </thead>

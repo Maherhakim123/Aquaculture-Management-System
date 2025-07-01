@@ -96,7 +96,7 @@
 <body>
     
     <!-- alert notification duplicate email  -->
-    <?php if (isset($email_exists) && $email_exists): ?>
+    <?php if (isset($email_exists) && $email_exists) { ?>
     <div class="container position-fixed top-0 start-50 translate-middle-x mt-3" style="z-index: 1055; max-width: 500px;">
         <div class="alert alert-danger alert-dismissible fade show shadow" role="alert">
             This email is already registered. Please use another one.
@@ -114,7 +114,7 @@
             }
         }, 5000);
     </script>
-<?php endif; ?>
+<?php } ?>
 
     <div class="register-container">
         <!-- Left Side: Welcome Message -->
@@ -129,7 +129,7 @@
                 <div class="form-header">
                     <h3>Register</h3>
                 </div>
-                <form action="<?php echo base_url('auth/add') ?>" method="POST">
+                <form action="<?php echo base_url('auth/add'); ?>" method="POST">
                     <div class="form-group">
                         <label for="name">Name:</label>
                         <input type="text" id="name" name="userName" class="form-control" placeholder="Enter your name" value="<?php echo set_value('name'); ?>" required>
@@ -138,10 +138,20 @@
                         <label for="email">Email:</label>
                         <input type="email" id="email" name="userEmail" class="form-control" placeholder="Enter your email" value="<?php echo set_value('email'); ?>" required>
                     </div>
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label for="password">Password:</label>
                         <input type="password" id="password" name="userPassword" class="form-control" placeholder="Enter your password" value="<?php echo set_value('password'); ?>" required>
+                    </div> -->
+                    <div class="form-group position-relative">
+                        <label for="password">Password:</label>
+                        <div class="input-group">
+                            <input type="password" id="password" name="userPassword" class="form-control" placeholder="Enter your password" value="<?php echo set_value('password'); ?>" required>
+                            <span class="input-group-text" id="togglePassword" style="cursor: pointer;">
+                                <i class="fas fa-eye" id="togglePasswordIcon"></i>
+                            </span>
+                        </div>
                     </div>
+
                     <div class="form-group">
                         <label for="ic">IC:</label>
                         <input type="text" id="ic" name="userIC" class="form-control" placeholder="Enter your IC number" value="<?php echo set_value('ic'); ?>" required>
@@ -174,5 +184,20 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
+<script>
+    document.getElementById("togglePassword").addEventListener("click", function () {
+        const passwordInput = document.getElementById("password");
+        const icon = document.getElementById("togglePasswordIcon");
+
+        const isPasswordVisible = passwordInput.type === "text";
+        passwordInput.type = isPasswordVisible ? "password" : "text";
+
+        // Toggle icon class
+        icon.classList.toggle("fa-eye");
+        icon.classList.toggle("fa-eye-slash");
+    });
+</script>
+
 
 </html>

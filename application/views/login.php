@@ -122,6 +122,28 @@
             <h1>Welcome Back!</h1>
             <p>Please enter your credentials to access dashboard.</p>
         </div>
+
+        <?php if ($this->session->flashdata('error')) { ?>
+    <div class="container position-fixed top-0 start-50 translate-middle-x mt-3" style="z-index: 1055; max-width: 500px;">
+        <div class="alert alert-danger alert-dismissible fade show shadow" role="alert">
+            <?php echo $this->session->flashdata('error'); ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+
+    <script>
+        // Auto-dismiss the alert after 5 seconds
+        setTimeout(function () {
+            let alertNode = document.querySelector('.alert');
+            if (alertNode) {
+                let alert = new bootstrap.Alert(alertNode);
+                alert.close();
+            }
+        }, 5000);
+    </script>
+<?php } ?>
+
+
     </div>
 
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>

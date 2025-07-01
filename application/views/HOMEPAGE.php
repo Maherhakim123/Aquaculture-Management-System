@@ -25,6 +25,7 @@
         body{
             font-family:'Poppins',sans-serif;
             scroll-behavior:smooth;
+            background: rgba(223, 218, 218, 0.56);
         }
 
         /* Glassy navbar */
@@ -105,7 +106,7 @@
                 <div class="card-body">
                     <i class="fas fa-chart-line fa-2x mb-3"></i>
                     <h5 class="card-title font-weight-bold">Progress Tracking</h5>
-                    <p class="card-text">Real‑time milestones and harvest data at a glance.</p>
+                    <p class="card-text">Monitor project management progress in each phase and activity.</p>
                 </div>
             </div>
         </div>
@@ -125,7 +126,7 @@
                 <div class="card-body">
                     <i class="fas fa-dollar-sign fa-2x mb-3"></i>
                     <h5 class="card-title font-weight-bold">Budget Oversight</h5>
-                    <p class="card-text">Monitor expenses and income to stay on target.</p>
+                    <p class="card-text">Track budget expenses and remaining funds to stay on target.</p>
                 </div>
             </div>
         </div>
@@ -133,8 +134,8 @@
 </section>
 
 <!-- ===== Footer ===== -->
-<footer class="text-center py-4 bg-light">
-    <small>&copy;  Aquaculture Management System. All rights reserved.</small>
+<footer class="text-center py-4 bg-light position-fixed bottom-0 w-100" style="background: rgba(223, 218, 218, 0.56);">
+    <small>&copy;  Aquaculture Reporting System. All rights reserved.</small>
 </footer>
 
 <!-- ===== JS ===== -->

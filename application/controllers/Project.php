@@ -345,15 +345,30 @@ class Project extends CI_Controller
     }
 
     // Beneficiary reject a pending invitation
+    // public function reject_invitation()
+    // {
+    //     $projectID = $this->input->post('projectID');
+    //     $userID = $this->input->post('userID');
+
+    //     $this->load->model('Project_model');
+    //     $this->Project_model->remove_project_member($projectID, $userID);
+
+    //     // Redirect back to the project view
+    //     redirect('project/invitations');
+    // }
+
     public function reject_invitation()
     {
         $projectID = $this->input->post('projectID');
-        $userID = $this->input->post('userID');
+        $userID = $this->session->userdata('userID'); // safer than getting via URL
 
-        $this->load->model('Project_model');
-        $this->Project_model->remove_project_member($projectID, $userID);
+        if ($projectID && $userID) {
+            $this->Project_model->update_invitation_status($userID, $projectID, 'rejected');
+            $this->session->set_flashdata('success', 'You have rejected the invitation.');
+        } else {
+            $this->session->set_flashdata('error', 'Failed to reject invitation.');
+        }
 
-        // Redirect back to the project view
         redirect('project/invitations');
     }
 }

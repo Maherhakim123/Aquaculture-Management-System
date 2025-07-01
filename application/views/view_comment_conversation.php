@@ -172,7 +172,14 @@
 
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
-  <div class="content-wrapper">
+  <div class="content-wrapper mt-3">
+
+   <!-- Back to Progress Button -->  
+      <form method="post" action="<?php echo site_url('phase/progress_by_project'); ?>">
+            <input type="hidden" name="projectID" value="<?php echo htmlspecialchars($projectID); ?>">
+            <button type="submit" class="btn btn-secondary"> <i class="fas fa-arrow-left"></i> Back to Progress</button>
+      </form>
+
     <div class="content py-4">
       <div class="container">
         <div class="card shadow-sm">
