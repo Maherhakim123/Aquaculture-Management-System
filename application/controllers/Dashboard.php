@@ -248,7 +248,7 @@ class Dashboard extends CI_Controller
 
     public function homepage()
     {
-        $this->load->view('HOMEPAGE');
+        $this->load->view('Homepage');
     }
 
     // Project Leader Profile
